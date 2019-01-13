@@ -55,42 +55,38 @@
 						<h3 class="title">Dirección</h3>
 					</div>
 					<div class="form-group">
-						<input class="input" type="text" name="first-name" placeholder="First Name">
+					<input class="input" type="text" name="nombre_completo" placeholder="Nombre completo" required="">
 					</div>
 					<div class="form-group">
-						<input class="input" type="text" name="last-name" placeholder="Last Name">
+						<select class="input-select" required="" name="id_estado">
+							<option>Seleccione el estado</option>
+							<?php 
+								foreach ($resEstado as $keyEstado) {
+							 ?>
+							 <option value="<?php echo $keyEstado['id_estado'] ?>"><?php echo $keyEstado['estado'] ?></option>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="form-group">
-						<input class="input" type="email" name="email" placeholder="Email">
+						<select class="input-select" required="" name="id_municipio">
+							<option>Seleccione el municipio</option>
+							<div id="municipios"></div>
+						</select>
 					</div>
 					<div class="form-group">
-						<input class="input" type="text" name="address" placeholder="Address">
+						<input class="input" type="text" name="direccion" placeholder="Calle, Colonia, #Numero" required="">
 					</div>
 					<div class="form-group">
-						<input class="input" type="text" name="city" placeholder="City">
+						<input class="input" type="text" name="codigo_postal" placeholder="Codigo postal" required="">
 					</div>
 					<div class="form-group">
-						<input class="input" type="text" name="country" placeholder="Country">
+						<input class="input" type="tel" name="celular" placeholder="Celular 10 digitos" required="">
 					</div>
-					<div class="form-group">
-						<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+					<!-- Order notes -->
+					<div class="order-notes">
+						<textarea class="input" placeholder="Order Notes"></textarea>
 					</div>
-					<div class="form-group">
-						<input class="input" type="tel" name="tel" placeholder="Telephone">
-					</div>
-					<div class="form-group">
-						<div class="input-checkbox">
-							<input type="checkbox" id="create-account">
-							<label for="create-account">
-								<span></span>
-								Create Account?
-							</label>
-							<div class="caption">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-								<input class="input" type="password" name="password" placeholder="Enter Your Password">
-							</div>
-						</div>
-					</div>
+					<!-- /Order notes -->
 				</div>
 				<!-- /Billing Details -->
 				<?php 
@@ -149,7 +145,7 @@
 								<input class="input" type="text" name="codigo_postal" placeholder="Codigo postal" required="">
 							</div>
 							<div class="form-group">
-								<input class="input" type="tel" name="celular" placeholder="10 digitos" required="">
+								<input class="input" type="tel" name="celular" placeholder="Celular 10 digitos" required="">
 							</div>
 							<!-- Order notes -->
 							<div class="order-notes">
@@ -222,7 +218,7 @@
 						<input type="radio" name="payment" id="payment-1">
 						<label for="payment-1">
 							<span></span>
-							Direct Bank Transfer
+							Transferir cuenta bancaria
 						</label>
 						<div class="caption">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -242,7 +238,7 @@
 						<input type="radio" name="payment" id="payment-3">
 						<label for="payment-3">
 							<span></span>
-							Paypal System
+							Paypal
 						</label>
 						<div class="caption">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -254,10 +250,10 @@
 					<input type="checkbox" id="terms">
 					<label for="terms">
 						<span></span>
-						I've read and accept the <a href="#">terms & conditions</a>
+						he leido y acepto los  <a href="#">terminos y condiciones</a>
 					</label>
 				</div>
-				<a href="#" class="primary-btn order-submit">Place order</a>
+				<a href="#" class="primary-btn order-submit">Pasar a pagar</a>
 				
 			</div>
 			<!-- /Order Details -->
