@@ -1,6 +1,5 @@
 <?php 
 	include('conexion.php');
-
 	
 	if($_GET['id'] != null){
 		$idProducto = $_GET['id'];
@@ -181,7 +180,7 @@
 								<?php 
 								if($activoOferta==1){
 							 ?>
-								$<?php echo $precioOferta ?> MXN <del class="product-old-price">$<?php echo $precio ?></del>
+								$<?php echo $precioOferta ?> MXN <del class="product-old-price">$<?php echo $precio ?> MXN</del>
 							 <?php 
 							 	}else{
 							 		?>
@@ -230,11 +229,11 @@
 								}
 								if($encontro == true){
 									?>
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <span>Dentro del carrito</span></button>
+										<br><br><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <span>Dentro del carrito</span></button>
 									<?php
 								}else{
 									?>
-									<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <span>Añadir al carrito</span></button>
+									<br><br><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <span>Añadir al carrito</span></button>
 									<?php
 								}
 							 ?>
@@ -242,8 +241,9 @@
 							
 						
 						</div>
-						<?php if(isset($_SESSION['idUsuario'])){ ?>
 						<ul class="product-btns">
+						<?php if(isset($_SESSION['idUsuario'])){ ?>
+						
 							<?php if($comprobarFavorito == 0){ ?>
 							<li><a href="#" class="favorito"><i class="fa fa-heart-o" ></i> <span id="favoritoSpan">Añadir a favoritos</span></a></li>
 							<?php }else{
@@ -252,8 +252,14 @@
 							<?php
 							} 
 							?>
+						
+						<?php }else{
+							?>
+							<li><a href="#" class="favorito"><i class="fa fa-heart-o"></i> <span id="favoritoSpan">Añadir a favoritos</span></a></li>
+							<?php
+						} 
+						?>
 						</ul>
-						<?php } ?>
 
 						<ul class="product-links">
 							<li>Categoria:</li>
@@ -576,18 +582,20 @@
 				$("#favoritoSpan").html("Añadir a favoritos");
 				var activo = 0;
 				var actividad = "editar";
-				favoritoProductoDetalle(activo,"<?php echo $idProducto ?>","<?php echo $_SESSION['idUsuario'] ?>",actividad);
+				favoritoProductoDetalle(activo,"<?php echo $idProducto ?>",actividad);
 			}else if($("ul li .favorito i").hasClass("fa fa-heart-o")){
 				$("ul li .favorito i").removeClass("fa fa-heart-o");
 				$("ul li .favorito i").addClass("fa fa-heart");
 				$("#favoritoSpan").html("Quitar de favoritos");
 				var activo = 1;
 				var actividad = "nuevo";
-				favoritoProductoDetalle(activo,"<?php echo $idProducto ?>","<?php echo $_SESSION['idUsuario'] ?>",actividad);
+				favoritoProductoDetalle(activo,"<?php echo $idProducto ?>",actividad);
 			}
 			<?php }else{
 				?>
-				alert("Debe estar registrado");
+				var actividad = "favorito";
+				var idProducto = "<?php echo $idProducto ?>";
+				window.location="login.php?cliente=loginIniciar&idProducto="+idProducto+"&actividad="+actividad+" ";
 				<?php
 			} 
 			?>
@@ -628,7 +636,11 @@
 			<?php 
 				}else{
 					?>
-					alert("Debe estar registrado");
+					var actividad = "carrito";
+					var idProducto = "<?php echo $idProducto ?>";
+					var idProductoDetalle = $("#id_producto_detalle").val();
+					var cantidad = $("select[name='cantidad']").val();
+					window.location="login.php?cliente=loginIniciar&idProducto="+idProducto+"&actividad="+actividad+"&idProductoDetalle= "+idProductoDetalle+"&cantidad="+cantidad+" ";
 					<?php
 				}
 			 ?>
@@ -722,14 +734,13 @@
 		    });
 		}
 
-		function favoritoProductoDetalle(activo,idProducto,idUsuario,actividad){
+		function favoritoProductoDetalle(activo,idProducto,actividad){
 			 $.ajax({
 		        type: "POST",
 		        url: "include/servletProductoFavoritoInclude.php",
 		        data: {
 		        	activo:activo,
 		        	idProducto:idProducto,
-		        	idUsuario:idUsuario,
 		        	actividad:actividad
 		        },
 		        cache: false,

@@ -1,5 +1,5 @@
 <?php 
-	$_SESSION['idUsuario'] = 1;
+
  if(isset($_GET['url'])){
  	if($_GET['url'] == "inicio"){
 		header("Location: index.php");
@@ -11,7 +11,6 @@
 			header("Location: error404.php");
 		}
 	}
-	
 }
 ?>
 <!-- HEADER -->
@@ -26,7 +25,9 @@
 			</ul>
 			<ul class="header-links pull-right">
 				<li><a href="#"><i class="fa fa-dollar"></i> MXN</a></li>
-				<li><a href="#"><i class="fa fa-user-o"></i> Rigoberto Villa Rodríguez</a></li>
+				<?php if(isset($_SESSION['idUsuario'])){ ?>
+				<li><a href="#"><i class="fa fa-user-o"></i> <?php echo $_SESSION['usuario'] ?></a></li>
+				<?php } ?>
 			</ul>
 		</div>
 	</div>
@@ -139,18 +140,35 @@
 			<ul class="main-nav nav navbar-nav menu">
 				<li id="menuInicio"><a href="index.php">Inicio</a></li>
 				<li id="menuProducto"><a href="producto.php">Productos</a></li>
+				<?php
+				if(isset($_SESSION['idUsuario'])){
+				?>
+				<li id="cerrarSesion"><a href="#">Cerrar sesión</a></li>
+				<?php
+				} else{
+				?>
+				<li id="iniciarSesion"><a href="login.php?cliente=loginIniciar">Iniciar sesión</a></li>
+				<li id="crearCuenta"><a href="login.php?cliente=loginNuevo">Crear cuenta</a></li>
+				<?php
+				}
+				?>
+				<?php if(isset($_SESSION['rol']) && ($_SESSION['rol'] == "admin") ){	
+				?>
+
                 <li id="menuAdministrador" class="nav-item dropdown">
-			    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			     Administrador
-			    </a>
-			    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="text-align: center;">
-			      <a class="dropdown-item" href="administrador.php?admin=empresa">Empresas</a><br>
-			      <a class="dropdown-item" href="administrador.php?admin=proveedor">Proveedores</a><br>
-			      <a class="dropdown-item" href="administrador.php?admin=categoria">Categorias</a><br>
-			      <a class="dropdown-item" href="administrador.php?admin=talla">Tallas</a><br>
-			      <a class="dropdown-item" href="administrador.php?admin=aProducto">Productos</a><br>
-			    </div>
+				    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				     Administrador
+				    </a>
+				    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="text-align: center;">
+				      <a class="dropdown-item" href="administrador.php?admin=empresa">Empresas</a><br>
+				      <a class="dropdown-item" href="administrador.php?admin=proveedor">Proveedores</a><br>
+				      <a class="dropdown-item" href="administrador.php?admin=categoria">Categorias</a><br>
+				      <a class="dropdown-item" href="administrador.php?admin=talla">Tallas</a><br>
+				      <a class="dropdown-item" href="administrador.php?admin=aProducto">Productos</a><br>
+				    </div>
 			  </li>
+				<?php } ?>
+			  
 			</ul>
 			<!-- /NAV -->
 		</div>
@@ -180,6 +198,19 @@
 			if(producto != ""){
 				location="producto.php?producto="+producto;
 			}
+		});
+
+		$("#cerrarSesion").click(function(e){
+			e.preventDefault();
+			$.post('include/cerrarSesionInclude.php',{
+			},function(data){
+				if(data==1){
+					location="index.php";
+				}else{
+					alert("Hay un problema al tratar de cerrar sesion");
+				}
+			});
+			 
 		});
 
 		productoVentanaFavorito();

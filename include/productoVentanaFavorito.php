@@ -1,7 +1,6 @@
 <?php 
 	session_start();
 	include('conexion.php');
-	//unset($_SESSION['idUsuario']);
 	if(isset($_SESSION['idUsuario'])){
 	$sqlFavorito = "SELECT SUM(pd.cantidad) AS 'sumaCantidad', pf.*,p.*,pd.* FROM producto_favorito pf
 					INNER JOIN producto p ON p.id_producto = pf.id_producto

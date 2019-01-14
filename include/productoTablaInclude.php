@@ -1,8 +1,6 @@
 <?php
-session_start();
-
 require_once ("conexion.php");
-
+session_start();
 //Acachar la pagina en la que se pidio
 if(isset($_GET['paginaNumero'])) {
     $paginaNumero = $_GET['paginaNumero'];
@@ -183,7 +181,7 @@ if(mysqli_num_rows($res) > 0 ){
 					<?php 
 						}else{
 							?>
-							<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp favoritoSpan">Añadir</span></button>
+							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>"><i class="fa fa-heart-o"></i><span class="tooltipp favoritoSpan">Añadir</span></button>
 							<?php
 						}
 					 ?>
@@ -272,7 +270,7 @@ if(mysqli_num_rows($res) > 0 ){
 			var activo = 0;
 			var actividad = "editar";
 			var idProducto = $(this).attr("data-idProducto");
-			favoritoProductoInclude(activo,idProducto,"<?php echo $_SESSION['idUsuario'] ?>",actividad);
+			favoritoProductoInclude(activo,idProducto,actividad);
 		}else if($(this).children("i").hasClass("fa fa-heart-o")){
 			$(this).children("i").removeClass("fa fa-heart-o");
 			$(this).children("i").addClass("fa fa-heart");
@@ -280,24 +278,25 @@ if(mysqli_num_rows($res) > 0 ){
 			var activo = 1;
 			var actividad = "nuevo";
 			var idProducto = $(this).attr("data-idProducto");
-			favoritoProductoInclude(activo,idProducto,"<?php echo $_SESSION['idUsuario'] ?>",actividad);
+			favoritoProductoInclude(activo,idProducto,actividad);
 		}
 		<?php }else{
 			?>
-			alert("Debe estar registrado");
+			var actividad = "favorito";
+			var idProducto = $(this).attr("data-idProducto");
+			window.location="login.php?cliente=loginIniciar&idProducto="+idProducto+"&actividad="+actividad+" ";
 			<?php
 		} 
 		?>
 	});
 
-	 function favoritoProductoInclude(activo,idProducto,idUsuario,actividad){
+	 function favoritoProductoInclude(activo,idProducto,actividad){
     	 $.ajax({
             type: "POST",
             url: "include/servletProductoFavoritoInclude.php",
             data: {
             	activo:activo,
             	idProducto:idProducto,
-            	idUsuario:idUsuario,
             	actividad:actividad
             },
             cache: false,

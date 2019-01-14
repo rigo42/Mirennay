@@ -1,4 +1,14 @@
-<?php  session_start(); ?>
+<?php  
+	session_start();
+
+	if(isset($_SESSION['idUsuario'])){	
+		if($_SESSION['rol'] != "admin"){
+			header("Location: index.php");
+		}
+	}else{
+		header("Location: index.php");
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 	
