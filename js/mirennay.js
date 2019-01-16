@@ -188,6 +188,21 @@ $(document).ready(function(){
 			});
 		});
 
+		//Producto Mas vendido Min
+		$('.products-widget-slick').each(function() {
+			var $this = $(this),
+			$nav = $this.attr('data-nav');
+
+			$this.slick({
+				infinite: true,
+				autoplay: true,
+				speed: 1000,
+				dots: false,
+				arrows: true,
+				appendArrows: $nav ? $nav : false,
+			});
+		});
+
 		//Script automatico al iniciar la pagina el cual obtendra el tipo de color y ropa que se muestra primero para 
 		//mostrar cuanta ropa hay de este mismo color y talla
 		var id_producto_detalle = $("select[name='id_producto_detalle']").val();
