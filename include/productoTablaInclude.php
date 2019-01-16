@@ -2,10 +2,12 @@
 require_once ("conexion.php");
 session_start();
 //Acachar la pagina en la que se pidio
+$paginaNumero = 1;
 if(isset($_GET['paginaNumero'])) {
     $paginaNumero = $_GET['paginaNumero'];
 }
 //Acachar cuantos datos quiere ver
+$cantidadPagina = 6;
 if(isset($_GET['cantidadPagina'])) {
     $cantidadPagina = $_GET['cantidadPagina'];
 }
@@ -18,31 +20,25 @@ if(isset($_GET['ordenar']) || $_GET['ordenar'] == "") {
 $categoriaSQL = "";
 //si es diferente al valor "todo" entonces entrara aqui por que significa que selecciono varias categorias o minimo una categoria
 // y las hize con la sintaxis json , que se descodifica con el json_decode
-if ($_GET['categoria'] != "todo") {
-  if($categoria = json_decode($_GET['categoria'])){
+
+if(isset($_GET['categoria'])){
+	if($_GET['categoria'] == " "){
+		$categoriaSQL = " ";
+	}else if($categoria = json_decode($_GET['categoria'])){
 	    foreach($categoria  as $data){
 	    	 $categoriaSQL .= $data;
-	  }
-	  $categoriaSQL .= ")";
-  }else{
-  		$categoriaSQL = $_GET['categoria'];
-  }
-}else{
-	$categoriaSQL = "";
+	 	 }
+	  	$categoriaSQL .= ")";
+  	}
 }
+
 //Acachar el precio que pide el cliente
 if(isset($_GET['precio'])) {
-	if($_GET['precio'] == ""){
-		$precio = "";
-	}else{
-		$precio = $_GET['precio'];
-	}
+	$precio = $_GET['precio'];
 }
 
 //Acachar el producto que pide el cliente
-if($_GET['producto'] == "") {
-	$producto = "";
-}else{
+if(isset($_GET['producto'])) {
 	$producto = $_GET['producto'];
 }
 

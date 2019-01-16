@@ -8,7 +8,7 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$("input[name='producto']").val("<?php echo $_GET['producto'] ?>");
-				 paginador("<?php echo $producto ?>","todo","",6, 1);
+				 paginador("<?php echo $producto ?>","","",6, 1);
 			});
 		</script>
 		<?php
@@ -41,7 +41,7 @@
 							<label for="todo">
 								<span></span>
 								Todo
-								<small>(120)</small>
+								<small></small>
 							</label>
 						</div>
 
@@ -225,9 +225,8 @@
 	 function paginador(producto,precio,categoria,ordenar, cantidadPagina, paginaNumero) {
 	 	
 	 	if(categoria == ""){
-	 		categoria = "todo";
-	 	}
-    	if(Array.isArray(categoria)){
+	 		categoria = " ";
+	 	}else if(Array.isArray(categoria)){
     		categoria = JSON.stringify(categoria);
     	}
         $.ajax({
@@ -254,7 +253,7 @@
 
     $(document).ready(function() {
 
-        paginador("","","todo","",6, 1);
+        paginador("","","","",6, 1);
 
          var categoria = new Array();
 
@@ -289,7 +288,7 @@
         			$("input[name='producto']").val("");
         			categoria = new Array();
         			console.log(categoria);
-        			paginador("","",categoria,"",6,1);
+        			paginador("","","","",6,1);
         		}else{
         			if(categoria.length > 0 ){
         				categoria.push(" OR c.id_categoria = "+$(this).val());
@@ -315,7 +314,7 @@
         			var producto = "<?php echo $producto ?>";
         			$("input[name='producto']").val("");
         			console.log(categoria);
-        			paginador("","",categoria,"",6,1);
+        			paginador("","","","",6,1);
         		}else{
         			if(categoria.length > 0 ){
         				categoria.push(" OR c.id_categoria = "+$(this).val());
