@@ -173,9 +173,9 @@ if(mysqli_num_rows($res) > 0 ){
 					<div class="product-btns">
 					<?php if(isset($_SESSION['idUsuario'])){ ?>
 							<?php if($comprobarFavorito == 1){ ?>
-							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-sesion="si"><i class="fa fa-heart"></i></button>
+							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>" data-sesion="si"><i class="fa fa-heart"></i></button>
 							<?php }else{ ?>
-							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-sesion="si"><i class="fa fa-heart-o"></i></button>
+							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>" data-sesion="si"><i class="fa fa-heart-o"></i></button>
 							<?php } ?>
 					<?php 
 						}else{
@@ -184,7 +184,7 @@ if(mysqli_num_rows($res) > 0 ){
 							<?php
 						}
 					 ?>
-						<button class="quick-view" data-id="<?php echo $data['id_producto'] ?>"><i class="fa fa-eye"></i></button>
+						<button class="quick-view" data-id="<?php echo $data['id_producto'] ?>"><i class="fa fa-eye"></i><span class="tooltipp">Ver</span></button>
 					</div>
 				</div>
 			</div>
@@ -257,18 +257,16 @@ if(mysqli_num_rows($res) > 0 ){
 					$(this).children(".favoritoSpan").html("Añadir a favoritos");
 					var activo = 0;
 					var actividad = "editar";
-					var idUsuario = $(this).attr("data-idUsuario");
 					var idProducto = $(this).attr("data-idProducto");
-					favoritoProducto(activo,idProducto,idUsuario,actividad);
+					favoritoProducto(activo,idProducto,actividad);
 				}else if($(this).children("i").hasClass("fa fa-heart-o")){
 					$(this).children("i").removeClass("fa fa-heart-o");
 					$(this).children("i").addClass("fa fa-heart");
 					$(this).children(".favoritoSpan").html("Quitar de favoritos");
 					var activo = 1;
 					var actividad = "nuevo";
-					var idUsuario = $(this).attr("data-idUsuario");
 					var idProducto = $(this).attr("data-idProducto");
-					favoritoProducto(activo,idProducto,idUsuario,actividad);
+					favoritoProducto(activo,idProducto,actividad);
 				}
 			}else{
 				var actividad = "favorito";

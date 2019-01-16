@@ -6,4 +6,4 @@
 <script src="js/barraPrecio.min.js"></script>
 <script src="js/push.min.js"></script>
 <script src="js/jquery.form.min.js"></script>
-<script src="js/mirennayxxxx.js"></script>
+<script src="js/mirennay.js"></script>

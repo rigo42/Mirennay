@@ -4,7 +4,7 @@
 	if(isset($_SESSION['idUsuario'])){
 		if(isset($_POST['actividad'])){
 			$idProducto = mysqli_real_escape_string($conexion,$_POST['idProducto']);
-			$idUsuario = mysqli_real_escape_string($conexion,$_POST['idUsuario']);
+			$idUsuario = mysqli_real_escape_string($conexion,$_SESSION['idUsuario']);
 			$activo = mysqli_real_escape_string($conexion,$_POST['activo']);
 
 			if($_POST['actividad'] == "nuevo"){

@@ -68,8 +68,8 @@
 	$(document).ready(function(){
 
 		$("#formLogin").submit(function(e){
-			var datos = $(this).serialize();
 			e.preventDefault();
+			var datos = $(this).serialize();
 				$.ajax({
 		            type: "POST",
 		            url: "include/servletUsuarioInclude.php",

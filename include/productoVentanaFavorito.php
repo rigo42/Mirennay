@@ -54,9 +54,8 @@
 				e.preventDefault();
 				var activo = 0;
 				var idProducto = $(this).attr("data-id");
-				var idUsuario = $(this).attr("data-idUsuario");
 				var actividad = "editar";
-				favoritoProducto(activo,idProducto,idUsuario,actividad);
+				favoritoProducto(activo,idProducto,actividad);
 			});
 
 			$("#cuantosProductosFavoritos").html("<?php echo $cuantosProductos ?>");
@@ -67,6 +66,12 @@
 	</script>
 <?php
 	}else{
+		?>
+		<script type="text/javascript">
+			$("#cuantosProductosFavoritos").html("0");
+		</script>
+		<?php
 	echo "<h6>Necesitas estar registrado para poder guardar en favoritos</h6>";
+
 	} 
 ?>

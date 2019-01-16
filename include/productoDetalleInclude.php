@@ -221,6 +221,7 @@
 							</div>
 							<?php 
 								if(isset($_SESSION['idUsuario'])){
+
 									$encontro = false;
 									$numero = 0;
 									if(isset($_SESSION['carrito'])){
@@ -234,13 +235,17 @@
 									
 										if($encontro == true){
 											?>
-												<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>"><i class="fa fa-shopping-cart"></i> <span>Dentro del carrito</span></button>
+												<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" ><i class="fa fa-shopping-cart"></i> <span>Dentro del carrito</span></button>
 											<?php
 										}else{
 											?>
-											<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>"><i class="fa fa-shopping-cart"></i> <span>Añadir al carrito</span></button>
+											<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" ><i class="fa fa-shopping-cart"></i> <span>Añadir al carrito</span></button>
 											<?php
 										}
+									}else{
+										?>
+										<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>"><i class="fa fa-shopping-cart"></i> <span>Añadir a carrito</span></button>
+									<?php
 									}
 								}else{
 									?>
@@ -256,17 +261,17 @@
 						<?php if(isset($_SESSION['idUsuario'])){ ?>
 						
 							<?php if($comprobarFavorito == 0){ ?>
-							<li><a href="#" class="add-to-wishlist" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-idProducto="<?php echo $idProducto ?>" data-sesion="si"><i class="fa fa-heart-o" ></i> <span class="favoritoSpan">Añadir a favoritos</span></a></li>
+							<li><a href="#" class="add-to-wishlist"  data-idProducto="<?php echo $idProducto ?>" data-sesion="si"><i class="fa fa-heart-o" ></i> <span class="favoritoSpan" id="favoritoSpan">Añadir a favoritos</span></a></li>
 							<?php }else{
 							?>
-							<li><a href="#" class="add-to-wishlist" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-idProducto="<?php echo $idProducto ?>" data-sesion="si"><i class="fa fa-heart"></i> <span class="favoritoSpan">Quitar de favoritos</span></a></li>
+							<li><a href="#" class="add-to-wishlist"  data-idProducto="<?php echo $idProducto ?>" data-sesion="si"><i class="fa fa-heart"></i> <span class="favoritoSpan" id="favoritoSpan">Quitar de favoritos</span></a></li>
 							<?php
 							} 
 							?>
 						
 						<?php }else{
 							?>
-							<li><a href="#" class="add-to-wishlist" data-idProducto="<?php echo $idProducto ?>" data-sesion="no" ><i class="fa fa-heart-o"></i> <span class="favoritoSpan">Añadir a favoritos</span></a></li>
+							<li><a href="#" class="add-to-wishlist" data-idProducto="<?php echo $idProducto ?>" data-sesion="no" ><i class="fa fa-heart-o"></i> <span class="favoritoSpan" id="favoritoSpan">Añadir a favoritos</span></a></li>
 							<?php
 						} 
 						?>
@@ -363,7 +368,7 @@
 													</div>
 												</div>
 												<p id="comentarioMal" style="color:red;"></p>
-												<button class="primary-btn" id="publicarComentario" data-sesion="si" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-idProducto="<?php echo $idProducto ?>">Publicar comentario</button>
+												<button class="primary-btn" id="publicarComentario" data-sesion="si"  data-idProducto="<?php echo $idProducto ?>">Publicar comentario</button>
 											</form>
 										</div>
 									</div>

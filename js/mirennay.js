@@ -24,16 +24,16 @@ $(document).ready(function(){
 					var activo = 0;
 					var actividad = "editar";
 					var idProducto = $(this).attr("data-idProducto");
-					var idUsuario = $(this).attr("data-idUsuario");
-					favoritoProducto(activo,idProducto,idUsuario,actividad);
+					
+					favoritoProducto(activo,idProducto,actividad);
 				}else if($(this).children("i").hasClass("fa fa-heart-o")){
 					$(this).children("i").removeClass("fa fa-heart-o");
 					$(this).children("i").addClass("fa fa-heart");
 					var activo = 1;
 					var actividad = "nuevo";
-					var idUsuario = $(this).attr("data-idUsuario");
+					
 					var idProducto = $(this).attr("data-idProducto");
-					favoritoProducto(activo,idProducto,idUsuario,actividad);
+					favoritoProducto(activo,idProducto,actividad);
 				}
 			}else{
 				var actividad = "favorito";
@@ -78,7 +78,6 @@ $(document).ready(function(){
 					}else{
 						$("#comentarioMal").html("");
 						var id_producto = $(this).attr("data-idProducto");
-						var id_usuario = $(this).attr("data-idUsuario");
 						var comentario = $("textarea[name='comentario']").val();
 						var actividad = $("input[name='actividad']").val();
 						if(comentario != "" ){
@@ -326,26 +325,25 @@ $(document).ready(function(){
 		    });
 		}
 
-	 function favoritoProducto(activo,idProducto,idUsuario,actividad){
+	 function favoritoProducto(activo,idProducto,actividad){
     	 $.ajax({
             type: "POST",
             url: "include/servletProductoFavoritoInclude.php",
             data: {
             	activo:activo,
             	idProducto:idProducto,
-            	idUsuario:idUsuario,
             	actividad:actividad
             },
             cache: false,
     		beforeSend: function() {
-               $('.favoritoSpan').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
+               $('#avoritoSpan').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
             },
             success: function(data) {
             	if(data == 1){
             		if(activo == 0){
-						$(".favoritoSpan").html("Añadir a favoritos");
+						$("#favoritoSpan").html("Añadir a favoritos");
             		}else{
-						$(".favoritoSpan").html("Quitar de favoritos");
+						$("#favoritoSpan").html("Quitar de favoritos");
             		}
         			 productoVentanaFavorito();
         		}else{

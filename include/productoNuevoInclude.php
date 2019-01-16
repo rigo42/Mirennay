@@ -87,7 +87,7 @@ if($rowProductoNuevo > 0){
 
 										<div class="product-body seleccion">
 											<p class="product-category"><?php echo $keyProductonuevo['categoria'] ?></p>
-											<h3 class="product-name"><a href="productoDetalle.php"><?php echo $keyProductonuevo['producto'] ?></a></h3>
+											<h3 class="product-name"><a href="productoDetalle.php?id=<?php echo $keyProductonuevo['id_producto'] ?>"><?php echo $keyProductonuevo['producto'] ?></a></h3>
 
 											<h4 class="product-price">
 												<?php 
@@ -136,18 +136,18 @@ if($rowProductoNuevo > 0){
 											<div class="product-btns">
 											<?php if(isset($_SESSION['idUsuario'])){ ?>
 													<?php if($comprobarFavorito == 1){ ?>
-													<button class="add-to-wishlist" data-sesion="si" data-idProducto="<?php echo $keyProductonuevo['id_producto'] ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>"><i class="fa fa-heart"></i><span class="tooltipp favoritoSpan">Quitar</span></button>
+													<button class="add-to-wishlist" data-sesion="si" data-idProducto="<?php echo $keyProductonuevo['id_producto'] ?>"><i class="fa fa-heart"></i></button>
 													<?php }else{ ?>
-													<button class="add-to-wishlist" data-sesion="si" data-idProducto="<?php echo $keyProductonuevo['id_producto'] ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>"><i class="fa fa-heart-o"></i><span class="tooltipp favoritoSpan">Añadir</span></button>
+													<button class="add-to-wishlist" data-sesion="si" data-idProducto="<?php echo $keyProductonuevo['id_producto'] ?>"><i class="fa fa-heart-o"></i></button>
 													<?php } ?>
 											<?php 
 												}else{
 													?>
-													<button class="add-to-wishlist" data-sesion="no" data-idProducto="<?php echo $keyProductonuevo['id_producto'] ?>"><i class="fa fa-heart-o"></i><span class="tooltipp favoritoSpan">Añadir</span></button>
+													<button class="add-to-wishlist" data-sesion="no" data-idProducto="<?php echo $keyProductonuevo['id_producto'] ?>"><i class="fa fa-heart-o"></i></button>
 													<?php
 												}
 											 ?>
-												<button class="quick-view" data-id="<?php echo $keyProductonuevo['id_producto'] ?>"><i class="fa fa-eye"></i><span class="tooltipp">Ver</span></button>
+												<button class="quick-view" data-id="<?php echo $keyProductonuevo['id_producto'] ?>"><i class="fa fa-eye"></i><span class="tooltipp">Ver</span><span class="tooltipp">Ver</span></button>
 											</div>
 										</div>
 									</div>
