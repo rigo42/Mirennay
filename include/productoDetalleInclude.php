@@ -1,6 +1,8 @@
+
 <?php 
 	include('conexion.php');
-	
+	if($_GET){
+	if($_GET['id'] != "undefined"){
 	if($_GET['id'] != null){
 		$idProducto = $_GET['id'];
 		$comprobarFavorito = 0;
@@ -38,6 +40,9 @@
 						INNER JOIN producto_talla t ON t.id_talla = pd.id_talla
 						WHERE p.activo = 1 AND pd.activo = 1 AND c.activo = 1 AND t.activo = 1 AND p.id_producto = ".$idProducto;
 		$resProducto = mysqli_query($conexion,$sqlProducto);
+		$rowProducto = mysqli_num_rows($resProducto);
+		if($rowProducto > 0){
+
 		foreach ($resProducto as $keyProducto) {
 			$imagen_principal = $keyProducto['imagen_principal'];
 			$id_categoria = $keyProducto['id_categoria'];
@@ -215,25 +220,31 @@
 								</div>
 							</div>
 							<?php 
-								
-								$encontro = false;
-								$numero = 0;
-								if(isset($_SESSION['carrito'])){
-									$datos = $_SESSION['carrito'];
-									for ($i=0; $i < count($datos); $i++) { 
-										if($datos[$i]['idProducto'] == $idProducto){
-											$numero = $i;
-											$encontro = true;
+								if(isset($_SESSION['idUsuario'])){
+									$encontro = false;
+									$numero = 0;
+									if(isset($_SESSION['carrito'])){
+										$datos = $_SESSION['carrito'];
+										for ($i=0; $i < count($datos); $i++) { 
+											if($datos[$i]['idProducto'] == $idProducto){
+												$numero = $i;
+												$encontro = true;
+											}
+										}
+									
+										if($encontro == true){
+											?>
+												<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>"><i class="fa fa-shopping-cart"></i> <span>Dentro del carrito</span></button>
+											<?php
+										}else{
+											?>
+											<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>"><i class="fa fa-shopping-cart"></i> <span>Añadir al carrito</span></button>
+											<?php
 										}
 									}
-								}
-								if($encontro == true){
-									?>
-										<br><br><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <span>Dentro del carrito</span></button>
-									<?php
 								}else{
 									?>
-									<br><br><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <span>Añadir al carrito</span></button>
+										<br><br><button class="add-to-cart-btn" data-sesion="no" data-idProducto="<?php echo $idProducto; ?>"><i class="fa fa-shopping-cart"></i> <span>Añadir a carrito</span></button>
 									<?php
 								}
 							 ?>
@@ -245,17 +256,17 @@
 						<?php if(isset($_SESSION['idUsuario'])){ ?>
 						
 							<?php if($comprobarFavorito == 0){ ?>
-							<li><a href="#" class="favorito"><i class="fa fa-heart-o" ></i> <span id="favoritoSpan">Añadir a favoritos</span></a></li>
+							<li><a href="#" class="add-to-wishlist" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-idProducto="<?php echo $idProducto ?>" data-sesion="si"><i class="fa fa-heart-o" ></i> <span class="favoritoSpan">Añadir a favoritos</span></a></li>
 							<?php }else{
 							?>
-							<li><a href="#" class="favorito"><i class="fa fa-heart"></i> <span id="favoritoSpan">Quitar de favoritos</span></a></li>
+							<li><a href="#" class="add-to-wishlist" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-idProducto="<?php echo $idProducto ?>" data-sesion="si"><i class="fa fa-heart"></i> <span class="favoritoSpan">Quitar de favoritos</span></a></li>
 							<?php
 							} 
 							?>
 						
 						<?php }else{
 							?>
-							<li><a href="#" class="favorito"><i class="fa fa-heart-o"></i> <span id="favoritoSpan">Añadir a favoritos</span></a></li>
+							<li><a href="#" class="add-to-wishlist" data-idProducto="<?php echo $idProducto ?>" data-sesion="no" ><i class="fa fa-heart-o"></i> <span class="favoritoSpan">Añadir a favoritos</span></a></li>
 							<?php
 						} 
 						?>
@@ -352,7 +363,7 @@
 													</div>
 												</div>
 												<p id="comentarioMal" style="color:red;"></p>
-												<button class="primary-btn" id="publicarComentario">Publicar comentario</button>
+												<button class="primary-btn" id="publicarComentario" data-sesion="si" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-idProducto="<?php echo $idProducto ?>">Publicar comentario</button>
 											</form>
 										</div>
 									</div>
@@ -496,291 +507,25 @@
 
 		<script type="text/javascript">
 		$(document).ready(function(){
-		// Product Main img Slick
-		$('#product-main-img').slick({
-		infinite: true,
-		speed: 300,
-		dots: false,
-		arrows: true,
-		fade: true,
-		asNavFor: '#product-imgs',
-		});
-
-		$('#product-imgs').slick({
-		slidesToShow: 3,
-		slidesToScroll: 1,
-		arrows: true,
-		centerMode: true,
-		focusOnSelect: true,
-			centerPadding: 0,
-			vertical: true,
-		asNavFor: '#product-main-img',
-			responsive: [{
-		    breakpoint: 991,
-		    settings: {
-						vertical: false,
-						arrows: false,
-						dots: true,
-		        }
-		      },
-		    ]
-		  });
-
-
-		var zoomMainProduct = document.getElementById('product-main-img');
-		if (zoomMainProduct) {
-			$('#product-main-img .product-preview').zoom();
-		}
-
-		//Script automatico al iniciar la pagina el cual obtendra el tipo de color y ropa que se muestra primero para 
-		//mostrar cuanta ropa hay de este mismo color y talla
-		var id_producto_detalle = $("select[name='id_producto_detalle']").val();
-		selectCantidadProducto(id_producto_detalle);
-
-		//Script para escuchar cuando el cliente cambie de seleccion del tipo de COLOR Y TALLA 
-		//Y se le enviara a una funcion para que esta me traiga la cantidad de ropa total que se tiene de esta mismo color y talla
-		$("#id_producto_detalle").change(function(){
-			var id_producto_detalle = $(this).val();
-			$(".add-to-cart-btn span").html("Añadir al carrito");
-			selectCantidadProducto(id_producto_detalle);
-		});
-
-		$("select[name='cantidad']").change(function(){
-			$(".add-to-cart-btn span").html("Añadir al carrito");
-		});
-
-
-		//Script para ver el producto
-		$(".product-img").click(function(e){
-			e.preventDefault();
-			var id = $(this).children("img").attr("data-id");
-			location="productoDetalle.php?id="+id;
-		});
-
-		//Script para ver el producto
-		$(".quick-view").click(function(e){
-			var id = $(this).attr("data-id");
-			location="productoDetalle.php?id="+id;
-		});
-
-		//Script para deslizar hasta la parte de abajo donde se ven los comentarios
-		$(".review-link").click(function(){
-			$(".tab-nav li").removeClass("active");
-			$("#activeTab3").addClass("active");
-			$('html,body').animate({
-		        scrollTop: $("#dezplazar").offset().top
-		    }, 500);
-		});
-
-		//Script para escuchar cuando le den click a Agregar favorito o Quitar favorito y posteriormente se guarda en la bd
-		$(".favorito").click(function(e){
-			e.preventDefault();
-			<?php if(isset($_SESSION['idUsuario'])){ ?>
-			if($("ul li .favorito i").hasClass("fa fa-heart")){
-				$("ul li .favorito i").removeClass("fa fa-heart");
-				$("ul li .favorito i").addClass("fa fa-heart-o");
-				$("#favoritoSpan").html("Añadir a favoritos");
-				var activo = 0;
-				var actividad = "editar";
-				favoritoProductoDetalle(activo,"<?php echo $idProducto ?>",actividad);
-			}else if($("ul li .favorito i").hasClass("fa fa-heart-o")){
-				$("ul li .favorito i").removeClass("fa fa-heart-o");
-				$("ul li .favorito i").addClass("fa fa-heart");
-				$("#favoritoSpan").html("Quitar de favoritos");
-				var activo = 1;
-				var actividad = "nuevo";
-				favoritoProductoDetalle(activo,"<?php echo $idProducto ?>",actividad);
-			}
-			<?php }else{
-				?>
-				var actividad = "favorito";
-				var idProducto = "<?php echo $idProducto ?>";
-				window.location="login.php?cliente=loginIniciar&idProducto="+idProducto+"&actividad="+actividad+" ";
-				<?php
-			} 
-			?>
-		});
-
-		//Script para publicar un comentario y validar que el cliente califique este producto, solo si hay una sesión
-		$("#publicarComentario").click(function(e){
-			e.preventDefault();
-			<?php if(isset($_SESSION['idUsuario'])){  ?>
-				var cantidadEstrella = "";
-				$(".stars input").each(function(d){
-					if(this.checked){
-						 cantidadEstrella = $(this).val();
-					}
-				});
-				if(cantidadEstrella == ""){
-					$("#comentarioMal").html("Selecciona una calificacion de estrella");
-				}else{
-					$("#comentarioMal").html("");
-					var id_producto = "<?php echo $idProducto; ?>";
-					var id_usuario = "<?php echo $_SESSION['idUsuario']; ?>";
-					var comentario = $("textarea[name='comentario']").val();
-					var actividad = $("input[name='actividad']").val();
-					publicarComentario(id_producto,id_usuario,comentario,cantidadEstrella,actividad);				
-				}
-			<?php } ?>
-			
-		});
-
-		$(".add-to-cart-btn").click(function(e){
-			e.preventDefault();
-			<?php if(isset($_SESSION['idUsuario'])){ ?>
-			var idProducto = "<?php echo $idProducto; ?>";
-			var idProductoDetalle = $("#id_producto_detalle").val();
-			var cantidad = $("select[name='cantidad']").val();
-			$(this).children("span").html("Agregado");
-			carritoProductoDetalleInclude(idProducto,idProductoDetalle,cantidad);
-			<?php 
-				}else{
-					?>
-					var actividad = "carrito";
-					var idProducto = "<?php echo $idProducto ?>";
-					var idProductoDetalle = $("#id_producto_detalle").val();
-					var cantidad = $("select[name='cantidad']").val();
-					window.location="login.php?cliente=loginIniciar&idProducto="+idProducto+"&actividad="+actividad+"&idProductoDetalle= "+idProductoDetalle+"&cantidad="+cantidad+" ";
-					<?php
-				}
-			 ?>
-		});
-
+		
 		//Script automatico para ejecutar la funcion del paginador de comentarios
-		paginador("<?php echo $idProducto ?>",3,1);
+		paginadorComentario("<?php echo $idProducto ?>",3,1);
 		//Script automatico para ejecutar la funciona que sirve para mostrar una y otra ves la tabla de encuesta 
 		//cada ves que se requiera llamar esta funcion
 		productoEncuesta("<?php echo $idProducto ?>");
 
-
 		});
-
-		function selectCantidadProducto(id_producto_detalle){
-			$.post('include/selectCantidadProducto.php',{
-				id_producto_detalle:id_producto_detalle
-			},function(data){
-				$("select[name='cantidad']").html(data);
-			});
-		}
-
-		function paginador(id_producto,cantidadPagina, paginaNumero) {
-		    $.ajax({
-		        type: "POST",
-		        url: "include/productoComentarioTablaInclude.php",
-		        data: {
-		        	id_producto:id_producto,
-		        	paginaNumero:paginaNumero,
-		        	cantidadPagina:cantidadPagina
-		        },
-		        cache: false,
-				beforeSend: function() {
-		            $('#loader').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
-		        },
-		        success: function(html) {
-		            $("#productoComentarioTablaInclude").html(html);
-		            $('#loader').html(''); 
-		        }
-		    });
-		}
-
-		function productoEncuesta(id_producto) {
-		    $.ajax({
-		        type: "POST",
-		        url: "include/productoEncuestaInclude.php",
-		        data: {
-		        	id_producto:id_producto
-		        },
-		        cache: false,
-				beforeSend: function() {
-		            $('#loaderEncuesta').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
-		        },
-		        success: function(html) {
-		            $("#productoEncuestaInclude").html(html);
-		            $('#loaderEncuesta').html(''); 
-		        }
-		    });
-		}
-
-		function publicarComentario(id_producto,id_usuario,comentario,cantidadEstrella,actividad){
-			 $.ajax({
-		        type: "POST",
-		        url: "include/servletProductoComentarioInclude.php",
-		        data: {
-		        	id_producto:id_producto,
-		        	id_usuario:id_usuario,
-		        	comentario:comentario,
-		        	cantidadEstrella:cantidadEstrella,
-		        	actividad:actividad
-		        },
-		        cache: false,
-				beforeSend: function() {
-		            $('#publicarComentario').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
-		        },
-		        success: function(data){
-		        	if(data == 1){
-		        		paginador("<?php echo $idProducto ?>",3,1);
-		        		productoEncuesta("<?php echo $idProducto ?>");
-		            	$('#publicarComentario').html('Publicar comentario'); 
-		            	Push.create("Aviso",{
-							body: "Comentario agregado con exito",
-							timeout: 4000,
-							icon: 'img//M.png'
-						});
-		        	}else{
-		        		alert(data);
-		        	}
-		            
-		        }
-		    });
-		}
-
-		function favoritoProductoDetalle(activo,idProducto,actividad){
-			 $.ajax({
-		        type: "POST",
-		        url: "include/servletProductoFavoritoInclude.php",
-		        data: {
-		        	activo:activo,
-		        	idProducto:idProducto,
-		        	actividad:actividad
-		        },
-		        cache: false,
-				beforeSend: function() {
-		           $('#favoritoSpan').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
-		        },
-		        success: function(data) {
-		        	if(data == 1){
-		        		if(activo == 0){
-							$("#favoritoSpan").html("Añadir a favoritos");
-		        		}else{
-							$("#favoritoSpan").html("Quitar de favoritos");
-		        		}
-		    			 productoVentanaFavorito();
-		    		}else{
-		    			alert(data);
-		    		}
-		        }
-		    });
-		}
-		function carritoProductoDetalleInclude(idProducto,idProductoDetalle,cantidad){
-			 $.ajax({
-		        type: "POST",
-		        url: "include/servletProductoSesionInclude.php",
-		        data: {
-		        	idProducto:idProducto,
-		        	idProductoDetalle:idProductoDetalle,
-		        	cantidad:cantidad
-		        },
-		        cache: false,
-				beforeSend: function() {
-		        },
-		        success: function(data) {
-		    		productoVentanaCarrito();
-		        }
-		    });
-		}
-
 		</script>
 		<?php
 	}else{
-		echo "<h3>Porfavor envie el identificador del producto</h3>";
+		echo "<div align='center'><h3>Porfavor envie un identificador valido</h3></div>";
 	}
+	}else{
+		echo "<div align='center'><h3>Porfavor envie el identificador del producto</h3></div>";
+	}
+}else{
+	echo "<div align='center'><h3>Porfavor envie el identificador del producto</h3></div>";
+}
+}else{
+	echo "<div align='center'><h3>Porfavor envie el identificador del producto</h3></div>";
+}

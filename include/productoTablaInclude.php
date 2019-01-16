@@ -107,20 +107,19 @@ if(mysqli_num_rows($res) > 0 ){
 							<span class="sale">-<?php echo $porcentaje ?>%</span>
 							<?php
 						}
-					 	?>
-						
-						<?php 
-							$fechaAlta = date_create($data['fecha_alta']);
-							date_add($fechaAlta, date_interval_create_from_date_string('7 days'));
-							$fechaFinNuevo = date_format($fechaAlta, 'Y-m-d');
-							if($data['fecha_alta'] <= $fechaFinNuevo){
-								?>
-								 <span class="new">NEW</span>
-								<?php
-							}
-
+						//Metodo para comparar fechas solamente, no sirve en consulta sql
+						$fecha = $data['fecha_alta_producto'];
+						$fecha2 = explode(" ",$fecha);
+						$fecha3 = $fecha2[0];
+						$fecha4 = strtotime("$fecha3 +7 days");
+						$fechaHoy = $data['hoy'];
+						$fechaHoy2 = strtotime("$fechaHoy");
+						if($fechaHoy2  <= $fecha4){
+							?>
+							 <span class="new">NEW</span>
+							<?php
+						}
 						 ?>
-						
 					</div>
 				</div>
 				<div class="product-body seleccion">
@@ -174,18 +173,18 @@ if(mysqli_num_rows($res) > 0 ){
 					<div class="product-btns">
 					<?php if(isset($_SESSION['idUsuario'])){ ?>
 							<?php if($comprobarFavorito == 1){ ?>
-							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>"><i class="fa fa-heart"></i><span class="tooltipp favoritoSpan">Quitar</span></button>
+							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-sesion="si"><i class="fa fa-heart"></i></button>
 							<?php }else{ ?>
-							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>"><i class="fa fa-heart-o"></i><span class="tooltipp favoritoSpan">Añadir</span></button>
+							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>" data-idUsuario="<?php echo $_SESSION['idUsuario'] ?>" data-sesion="si"><i class="fa fa-heart-o"></i></button>
 							<?php } ?>
 					<?php 
 						}else{
 							?>
-							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>"><i class="fa fa-heart-o"></i><span class="tooltipp favoritoSpan">Añadir</span></button>
+							<button class="add-to-wishlist" data-idProducto="<?php echo $data['id_producto'] ?>" data-sesion="no"><i class="fa fa-heart-o"></i><span class="tooltipp favoritoSpan">Añadir</span></button>
 							<?php
 						}
 					 ?>
-						<button class="quick-view" data-id="<?php echo $data['id_producto'] ?>"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+						<button class="quick-view" data-id="<?php echo $data['id_producto'] ?>"><i class="fa fa-eye"></i></button>
 					</div>
 				</div>
 			</div>
@@ -247,75 +246,46 @@ if(mysqli_num_rows($res) > 0 ){
 	<!-- paginador -->
 
 <script type="text/javascript">
-	
-	$(".product-img img").click(function(e){
-		e.preventDefault();
-		var id = $(this).attr("data-id");
-		location="productoDetalle.php?id="+id;
-	});
-	
-	$(".quick-view").click(function(e){
-		var id = $(this).attr("data-id");
-		location="productoDetalle.php?id="+id;
-	});
-
 	//Script para escuchar cuando le den click a Agregar favorito o Quitar favorito y posteriormente se guarda en la bd
 	$(".add-to-wishlist").click(function(e){
-		e.preventDefault();
-		<?php if(isset($_SESSION['idUsuario'])){ ?>
-		if($(this).children("i").hasClass("fa fa-heart")){
-			$(this).children("i").removeClass("fa fa-heart");
-			$(this).children("i").addClass("fa fa-heart-o");
-			$(this).children(".favoritoSpan").html("Añadir a favoritos");
-			var activo = 0;
-			var actividad = "editar";
-			var idProducto = $(this).attr("data-idProducto");
-			favoritoProductoInclude(activo,idProducto,actividad);
-		}else if($(this).children("i").hasClass("fa fa-heart-o")){
-			$(this).children("i").removeClass("fa fa-heart-o");
-			$(this).children("i").addClass("fa fa-heart");
-			$(this).children(".favoritoSpan").html("Quitar de favoritos");
-			var activo = 1;
-			var actividad = "nuevo";
-			var idProducto = $(this).attr("data-idProducto");
-			favoritoProductoInclude(activo,idProducto,actividad);
-		}
-		<?php }else{
-			?>
-			var actividad = "favorito";
-			var idProducto = $(this).attr("data-idProducto");
-			window.location="login.php?cliente=loginIniciar&idProducto="+idProducto+"&actividad="+actividad+" ";
-			<?php
-		} 
-		?>
-	});
+			e.preventDefault();
+			var sesion = $(this).attr("data-sesion");
+			if(sesion == "si"){
+				if($(this).children("i").hasClass("fa fa-heart")){
+					$(this).children("i").removeClass("fa fa-heart");
+					$(this).children("i").addClass("fa fa-heart-o");
+					$(this).children(".favoritoSpan").html("Añadir a favoritos");
+					var activo = 0;
+					var actividad = "editar";
+					var idUsuario = $(this).attr("data-idUsuario");
+					var idProducto = $(this).attr("data-idProducto");
+					favoritoProducto(activo,idProducto,idUsuario,actividad);
+				}else if($(this).children("i").hasClass("fa fa-heart-o")){
+					$(this).children("i").removeClass("fa fa-heart-o");
+					$(this).children("i").addClass("fa fa-heart");
+					$(this).children(".favoritoSpan").html("Quitar de favoritos");
+					var activo = 1;
+					var actividad = "nuevo";
+					var idUsuario = $(this).attr("data-idUsuario");
+					var idProducto = $(this).attr("data-idProducto");
+					favoritoProducto(activo,idProducto,idUsuario,actividad);
+				}
+			}else{
+				var actividad = "favorito";
+				var idProducto = $(this).attr("data-idProducto");
+				window.location="login.php?cliente=loginIniciar&idProducto="+idProducto+"&actividad="+actividad+" ";
+			}
+		});
 
-	 function favoritoProductoInclude(activo,idProducto,actividad){
-    	 $.ajax({
-            type: "POST",
-            url: "include/servletProductoFavoritoInclude.php",
-            data: {
-            	activo:activo,
-            	idProducto:idProducto,
-            	actividad:actividad
-            },
-            cache: false,
-    		beforeSend: function() {
-               $('.favoritoSpan').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
-            },
-            success: function(data) {
-            	if(data == 1){
-            		if(activo == 0){
-						$(".favoritoSpan").html("Añadir a favoritos");
-            		}else{
-						$(".favoritoSpan").html("Quitar de favoritos");
-            		}
-        			 productoVentanaFavorito();
-        		}else{
-        			alert(data);
-        		}
-            }
-        });
-    }
+		$(".product-img img").click(function(e){
+			e.preventDefault();
+			var id = $(this).attr("data-id");
+			location="productoDetalle.php?id="+id;
+		});
+		
+		$(".quick-view").click(function(e){
+			var id = $(this).attr("data-id");
+			location="productoDetalle.php?id="+id;
+		});
 
 </script>

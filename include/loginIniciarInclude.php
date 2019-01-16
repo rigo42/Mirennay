@@ -101,7 +101,8 @@
 	            				$.post('include/servletProductoSesionInclude.php',{
 	            					idProductoDetalle:idProductoDetalle,
 	            					cantidad:cantidad,
-	            					idProducto:idProducto
+	            					idProducto:idProducto,
+	            					actividad:"nuevo"
 	            				},function(e){
 	            					productoVentanaCarrito();
 	            					location="productoDetalle.php?id="+idProducto;

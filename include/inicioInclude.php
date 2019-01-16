@@ -7,8 +7,8 @@
 <?php include('productoMasVendidoInclude.php'); ?>
 
 <?php include('productoMasVendidoMinInclude.php'); ?>
-
-<script type="text/javascript">
+  <script type="text/javascript">
+  	/*
 	$(document).ready(function(){
 		// Products Widget Slick
 		$('.products-widget-slick').each(function() {
@@ -56,5 +56,5 @@
 			});
 		});
 	});
-	
+	*/
 </script>

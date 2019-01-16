@@ -48,25 +48,6 @@
 
 <script type="text/javascript">
 
-	 function tablaInteractiva(proveedor, activo) {
-        $.ajax({
-            type: "GET",
-            url: "include/proveedorTablaInclude.php",
-            data: {
-            	proveedor:proveedor,
-            	activo:activo
-            },
-            cache: false,
-    		beforeSend: function() {
-                $('#loader').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
-            },
-            success: function(html) {
-                $("#proveedorTablaInclude").html(html);
-                $('#loader').html(''); 
-            }
-        });
-    }
-
 	$(document).ready(function(){
 
 		tablaInteractiva("","1");	
@@ -90,4 +71,23 @@
 			}
 		}); 
 	});
+
+	function tablaInteractiva(proveedor, activo) {
+        $.ajax({
+            type: "GET",
+            url: "include/proveedorTablaInclude.php",
+            data: {
+            	proveedor:proveedor,
+            	activo:activo
+            },
+            cache: false,
+    		beforeSend: function() {
+                $('#loader').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
+            },
+            success: function(html) {
+                $("#proveedorTablaInclude").html(html);
+                $('#loader').html(''); 
+            }
+        });
+    }
 </script>

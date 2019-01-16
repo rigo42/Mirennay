@@ -38,7 +38,7 @@
 						<h3 class="product-name"><a href="productoDetalle.php?id=<?php echo $datos[$i]['idProducto'] ?>"><?php echo $producto ?></a></h3>
 						<h4 class="product-price"><span class="qty">Cant. <?php echo $datos[$i]['cantidad'] ?> | Talla: <?php echo $talla ?> | Color: <?php echo $color; ?></span> | $<?php echo $subTotalEsteProducto; ?> MXN</h4>
 					</div>
-					<button class="delete" data-id="<?php echo $datos[$i]['idProductoDetalle'] ?>" data-cantidad="<?php echo $datos[$i]['cantidad'] ?>" ><i class="fa fa-close"></i></button>
+					<button class="delete deleteCarrito" data-id="<?php echo $datos[$i]['idProductoDetalle'] ?>" data-idProducto="<?php echo $datos[$i]['idProducto'] ?>" data-cantidad="<?php echo $datos[$i]['cantidad'] ?>" ><i class="fa fa-close"></i></button>
 				</div>
 <?php 
 			}
@@ -57,21 +57,17 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-			$(".product-img").click(function(e){
-				e.preventDefault();
-				var id = $(this).children("img").attr("data-id");
-				location="productoDetalle.php?id="+id;
-			});
-
 			<?php 
 				if(isset($_SESSION['idUsuario'])){
 					if(isset($_SESSION['carrito'])){
 			?>
-				$(".delete").click(function(e){
+				$(".deleteCarrito").click(function(e){
 					e.preventDefault();
 					var idProductoDetalle = $(this).attr("data-id");
 					var cantidad = $(this).attr("data-cantidad");
-					carritoProductoVentanaCarrito(idProductoDetalle,cantidad);
+					var idProducto = $(this).attr("data-idProducto");
+					var actividad = "eliminar";
+					carritoProducto(actividad,idProducto,idProductoDetalle,cantidad);
 				});
 
 				$(".cuantosProductosCarrito").html("<?php echo count($datos); ?>");
@@ -104,23 +100,4 @@
 			 ?>
 	});
 	
-
-	function carritoProductoVentanaCarrito(idProductoDetalle,cantidad){
-    	 $.ajax({
-            type: "POST",
-            url: "include/servletProductoSesionInclude.php",
-            data: {
-            	idProductoDetalle:idProductoDetalle,
-            	cantidad:cantidad,
-            	actividad:"eliminar"
-            },
-            cache: false,
-    		beforeSend: function() {
-               $('.favoritoSpan').html('<img src="gif/espere.gif" alt="reload" width="20" height="20">');
-            },
-            success: function(data) {
-        		productoVentanaCarrito();
-            }
-        });
-    }
 </script>

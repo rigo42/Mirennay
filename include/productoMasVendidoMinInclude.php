@@ -291,3 +291,20 @@
 	<!-- /container -->
 </div>
 <!-- /SECTION -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.products-widget-slick').each(function() {
+			var $this = $(this),
+			$nav = $this.attr('data-nav');
+
+			$this.slick({
+				infinite: true,
+				autoplay: true,
+				speed: 1000,
+				dots: false,
+				arrows: true,
+				appendArrows: $nav ? $nav : false,
+			});
+		});
+	});
+</script>
