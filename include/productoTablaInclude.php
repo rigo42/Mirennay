@@ -42,13 +42,24 @@ if(isset($_GET['producto'])) {
 	$producto = $_GET['producto'];
 }
 
+$idCategoriaPadre = "";
+//Acachar la categoria padre que pide el cliente
+if(isset($_GET['idCategoriaPadre'])) {
+	$idCategoriaPadre = $_GET['idCategoriaPadre'];
+}
+
+
 $sql = "SELECT p.*,c.*,g.* FROM producto p
 		INNER JOIN categoria c ON c.id_categoria = p.id_categoria 
+		INNER JOIN categoria_padre cp ON cp.id_categoria_padre = c.id_categoria_padre
 		INNER JOIN producto_genero g ON g.id_genero = p.id_genero
-		WHERE 1 
+		WHERE 1 AND p.activo = 1
 		".$producto."
+		".$idCategoriaPadre."
 		".$precio." 
-		".$categoriaSQL."  ";
+		".$categoriaSQL." 
+		
+		 ";
 
 if ($res = mysqli_query($conexion, $sql)) {
      $rowCount = mysqli_num_rows($res);
@@ -60,14 +71,18 @@ $pagesCount = ceil($rowCount / $cantidadPagina);
 
 $limite = ($paginaNumero - 1) * $cantidadPagina;
 
+
 $sql = "SELECT p.*,c.*,g.*,NOW() AS 'hoy',p.fecha_alta AS 'fecha_alta_producto' FROM producto p
 		INNER JOIN categoria c ON c.id_categoria = p.id_categoria 
+		INNER JOIN categoria_padre cp ON cp.id_categoria_padre = c.id_categoria_padre
 		INNER JOIN producto_genero g ON g.id_genero = p.id_genero
-		WHERE 1 
+		WHERE 1 AND p.activo = 1
 		".$producto."
 		".$precio."
+		".$idCategoriaPadre."
 		".$ordenar."	
 		".$categoriaSQL."
+		
 		LIMIT ".$limite." , ".$cantidadPagina." ";
 $res = mysqli_query($conexion, $sql);
 if(mysqli_num_rows($res) > 0 ){
@@ -207,7 +222,7 @@ if(mysqli_num_rows($res) > 0 ){
 	<div class="store-filter clearfix">
 		<span class="store-qty">Mirando <?php echo $cantidadPagina; ?> de <?php echo $rowCount; ?> productos</span>
 		<ul class="store-pagination">
-			<li><a href="#" onclick="paginador('<?php echo $producto ?>','<?php echo $precio; ?>','<?php echo $categoriaSQL; ?>','<?php echo $ordenar;  ?>','<?php echo $cantidadPagina;  ?>', '<?php echo $decrementarNum; ?>');"><i class="fa fa-angle-left"></i></a></li>
+			<li><a href="#" onclick="paginador('<?php echo $idCategoriaPadre ?>', '<?php echo $producto ?>','<?php echo $precio; ?>','<?php echo $categoriaSQL; ?>','<?php echo $ordenar;  ?>','<?php echo $cantidadPagina;  ?>', '<?php echo $decrementarNum; ?>');"><i class="fa fa-angle-left"></i></a></li>
 			<?php
 			//Se resta y suma con el numero de pag actual con el cantidad de 
 			    //números  a mostrar
@@ -229,13 +244,13 @@ if(mysqli_num_rows($res) > 0 ){
 			          <?php
 			          }else {
 			           ?>
-			              <li><a href="#"  onclick="paginador('<?php echo $producto ?>','<?php echo $precio; ?>','<?php echo $categoriaSQL; ?>','<?php echo $ordenar;  ?>','<?php echo $cantidadPagina;  ?>', '<?php echo $i; ?>');"><?php echo $i ?></a></li>
+			              <li><a href="#"  onclick="paginador('<?php echo $idCategoriaPadre ?>', '<?php echo $producto ?>','<?php echo $precio; ?>','<?php echo $categoriaSQL; ?>','<?php echo $ordenar;  ?>','<?php echo $cantidadPagina;  ?>', '<?php echo $i; ?>');"><?php echo $i ?></a></li>
 			           <?php
 			          }             
 			        }
 			     }
 			?>
-            <li><a href="#"  onclick="paginador('<?php echo $producto ?>','<?php echo $precio; ?>','<?php echo $categoriaSQL; ?>','<?php echo $ordenar;  ?>','<?php echo $cantidadPagina;  ?>', '<?php echo $incrementarNum; ?>');"><i class="fa fa-angle-right"></i></a></li>			
+            <li><a href="#"  onclick="paginador('<?php echo $idCategoriaPadre ?>', '<?php echo $producto ?>','<?php echo $precio; ?>','<?php echo $categoriaSQL; ?>','<?php echo $ordenar;  ?>','<?php echo $cantidadPagina;  ?>', '<?php echo $incrementarNum; ?>');"><i class="fa fa-angle-right"></i></a></li>			
 		</ul>
 	</div>
 	<!-- /store bottom filter -->

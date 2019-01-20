@@ -65,11 +65,20 @@ CREATE TABLE proveedor(
 	FOREIGN KEY(id_municipio) REFERENCES municipio(id_municipio)
 );
 
-CREATE TABLE categoria(
-	id_categoria INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	categoria VARCHAR(150) NOT NULL,
+CREATE TABLE categoria_padre(
+	id_categoria_padre INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	categoria_padre VARCHAR(150) NOT NULL,
 	fecha_alta DATETIME NOT NULL,
 	activo BIT(1) NOT NULL
+);
+
+CREATE TABLE categoria(
+	id_categoria INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_categoria_padre INT NOT NULL,
+	categoria VARCHAR(150) NOT NULL,
+	fecha_alta DATETIME NOT NULL,
+	activo BIT(1) NOT NULL,
+	FOREIGN KEY(id_categoria_padre) REFERENCES categoria_padre(id_categoria_padre)
 );
 
 CREATE TABLE producto_genero(

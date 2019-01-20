@@ -6,6 +6,7 @@ $sqlProductoMasVendido = "SELECT p.*, SUM(pu.cantidad) AS TotalVentas, c.* ,p.fe
 						    INNER JOIN producto_detalle pd ON pd.id_producto_detalle = pu.id_producto_detalle 
 						    INNER JOIN producto p ON p.id_producto = pd.id_producto
                             INNER JOIN categoria c ON c.id_categoria = p.id_categoria
+                            WHERE 1 AND p.activo = 1
 						    GROUP BY p.id_producto 
 						    ORDER BY SUM(pu.cantidad) DESC 
 						    LIMIT 0 , 30";

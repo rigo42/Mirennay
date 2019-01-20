@@ -48,14 +48,18 @@ $(document).ready(function(){
 			var sesion = $(this).attr("data-sesion");
 			if(sesion == "si"){
 				var idProducto = $(this).attr("data-idProducto");
+				var producto = $(this).attr("data-producto");
+				var precio = $(this).attr("data-precio");
 				var idProductoDetalle = $("#id_producto_detalle").val();
 				var cantidad = $("select[name='cantidad']").val();
 				var actividad = "nuevo";
 				$(this).children("span").html("Agregado");
-				carritoProducto(actividad,idProducto,idProductoDetalle,cantidad);
+				carritoProducto(actividad,idProducto,producto,precio,idProductoDetalle,cantidad);
 			}else{
 				var actividad = "carrito";
 				var idProducto = $(this).attr("data-idProducto");
+				var producto = $(this).attr("data-producto");
+				var precio = $(this).attr("data-precio");
 				var idProductoDetalle = $("#id_producto_detalle").val();
 				var cantidad = $("select[name='cantidad']").val();
 				window.location="login.php?cliente=loginIniciar&idProducto="+idProducto+"&actividad="+actividad+"&idProductoDetalle= "+idProductoDetalle+"&cantidad="+cantidad+" ";
@@ -368,13 +372,15 @@ $(document).ready(function(){
         });
     }
 
-    function carritoProducto(actividad,idProducto,idProductoDetalle,cantidad){
+    function carritoProducto(actividad,idProducto,producto,precio,idProductoDetalle,cantidad){
 			 $.ajax({
 		        type: "POST",
 		        url: "include/servletProductoSesionInclude.php",
 		        data: {
 		        	idProducto:idProducto,
 		        	idProductoDetalle:idProductoDetalle,
+		        	producto:producto,
+		        	precio:precio,
 		        	cantidad:cantidad,
 		        	actividad:actividad
 		        },

@@ -31,13 +31,13 @@
 					$arreglo[$cambiarCantidad]['cantidad'] = $_POST['cantidad'];
 					$_SESSION['carrito']=$arreglo;
 				}else{
-					$datosNuevos=array('idProducto'=>$_POST['idProducto'],'cantidad'=>$_POST['cantidad'],'idProductoDetalle'=>$_POST['idProductoDetalle']);
+					$datosNuevos=array('idProducto'=>$_POST['idProducto'],'cantidad'=>$_POST['cantidad'],'idProductoDetalle'=>$_POST['idProductoDetalle'],'producto'=>$_POST['producto'],'precio'=>$_POST['precio'],);
 					array_push($arreglo, $datosNuevos);
 					$_SESSION['carrito']=$arreglo;
 				}
 			}else{
 				if(isset($_POST['idProductoDetalle'])){
-					$arreglo[]=array('idProducto'=>$_POST['idProducto'],'cantidad'=>$_POST['cantidad'],'idProductoDetalle'=>$_POST['idProductoDetalle']);
+					$arreglo[]=array('idProducto'=>$_POST['idProducto'],'cantidad'=>$_POST['cantidad'],'idProductoDetalle'=>$_POST['idProductoDetalle'],'producto'=>$_POST['producto'],'precio'=>$_POST['precio'],);
 					$_SESSION['carrito']=$arreglo;
 				}
 			}

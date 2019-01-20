@@ -2,12 +2,12 @@
 include('conexion.php');
 //Metodo para sacar fecha y sumar dias etc, sirve para sql
 $fechaHoy = date("Y-m-d H:i:s");
-$fechaMenos7Dias = date( "Y-m-d H:i:s", strtotime( "$fechaHoy -80 days" ) );
+$fechaMenos7Dias = date( "Y-m-d H:i:s", strtotime( "$fechaHoy -7 days" ) );
 
 $sqlProductoNuevo = "SELECT p.*,c.*,NOW() AS 'hoy',p.fecha_alta AS 'fecha_alta_producto' 
 		FROM producto p
 		INNER JOIN categoria c ON c.id_categoria = p.id_categoria 
-		WHERE 1 AND p.fecha_alta >= '$fechaMenos7Dias' ";
+		WHERE 1 AND p.activo = 1 AND p.fecha_alta >= '$fechaMenos7Dias' ";
 $resProductoNuevo = mysqli_query($conexion, $sqlProductoNuevo);
 $rowProductoNuevo = mysqli_num_rows($resProductoNuevo);
 if($rowProductoNuevo > 0){

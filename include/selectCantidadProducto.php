@@ -8,11 +8,28 @@
 		foreach ($resCantidadProducto as $key) {
 			$cantidad = $key['cantidad'];
 		}
-		for ($i=1; $i <= $cantidad ; $i++) { 
+		if($cantidad > 0){
+			for ($i=1; $i <= $cantidad ; $i++) { 
+				?>
+				<option value="<?php echo $i ?>"><?php echo $i ?></option>
+				<?php
+			}
 			?>
-			<option value="<?php echo $i ?>"><?php echo $i ?></option>
+			<script type="text/javascript">
+				$(".add-to-cart-btn").css("display","block");
+				$("#productoInactivo").html("");
+			</script>
+			<?php
+		}else{
+			?>
+			<option value="">Producto agotado</option>
+			<script type="text/javascript">
+				$(".add-to-cart-btn").css("display","none");
+				$("#productoInactivo").html("<button class='btn btn-primary'>Este producto esta agotado</button>");
+			</script>
 			<?php
 		}
+		
 	}else{
 		echo "No hay id_producto_detalle";
 	}

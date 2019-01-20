@@ -38,7 +38,7 @@
 						<h3 class="product-name"><a href="productoDetalle.php?id=<?php echo $datos[$i]['idProducto'] ?>"><?php echo $producto ?></a></h3>
 						<h4 class="product-price"><span class="qty">Cant. <?php echo $datos[$i]['cantidad'] ?> | Talla: <?php echo $talla ?> | Color: <?php echo $color; ?></span> | $<?php echo $subTotalEsteProducto; ?> MXN</h4>
 					</div>
-					<button class="delete deleteCarrito" data-id="<?php echo $datos[$i]['idProductoDetalle'] ?>" data-idProducto="<?php echo $datos[$i]['idProducto'] ?>" data-cantidad="<?php echo $datos[$i]['cantidad'] ?>" ><i class="fa fa-close"></i></button>
+					<button class="delete deleteCarrito" data-id="<?php echo $datos[$i]['idProductoDetalle'] ?>" data-idProducto="<?php echo $datos[$i]['idProducto'] ?>" data-cantidad="<?php echo $datos[$i]['cantidad'] ?>" data-producto="<?php echo $datos[$i]['producto'] ?>" data-costo="<?php echo $datos[$i]['costo'] ?>" ><i class="fa fa-close"></i></button>
 				</div>
 <?php 
 			}
@@ -64,10 +64,12 @@
 				$(".deleteCarrito").click(function(e){
 					e.preventDefault();
 					var idProductoDetalle = $(this).attr("data-id");
+					var producto = $(this).attr("data-producto");
+					var costo = $(this).attr("data-costo");
 					var cantidad = $(this).attr("data-cantidad");
 					var idProducto = $(this).attr("data-idProducto");
 					var actividad = "eliminar";
-					carritoProducto(actividad,idProducto,idProductoDetalle,cantidad);
+					carritoProducto(actividad,idProducto,producto,costo,idProductoDetalle,cantidad);
 				});
 
 				$(".cuantosProductosCarrito").html("<?php echo count($datos); ?>");

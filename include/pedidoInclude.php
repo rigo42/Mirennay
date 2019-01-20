@@ -54,6 +54,8 @@
 					<div class="section-title">
 						<h3 class="title">Dirección</h3>
 					</div>
+					<form id="formNuevo">
+					<input type="checkbox" id="shiping-address" value="nuevaDireccion" checked="" style="display: none;">
 					<div class="form-group">
 					<input class="input" type="text" name="nombre_completo" placeholder="Nombre completo" required="">
 					</div>
@@ -84,28 +86,30 @@
 					</div>
 					<!-- Order notes -->
 					<div class="order-notes">
-						<textarea class="input" placeholder="Order Notes"></textarea>
+						<textarea class="input" placeholder="Order Notes" name="observacion"></textarea>
 					</div>
 					<!-- /Order notes -->
+					</form>
 				</div>
 				<!-- /Billing Details -->
 				<?php 
 				}else{
 				?>
-
+			
+				<form id="formPedido">
 				<div class="billing-details">
 					<div class="section-title">
 						<h3 class="title">Seleccione la dirección</h3>
 					</div>
 					<div class="form-group">
-						<select class="input-select">
-							<option value="">Seleccione una opción</option>
+						<select class="input-select" required="" name="idUsuarioDetalle">
 							<?php foreach ($resUsuario as $keyUsuario) { ?>
 							<option value="<?php echo $keyUsuario['id_usuario_detalle'] ?>"><?php echo $keyUsuario['direccion'] ?> | <?php echo $keyUsuario['municipio'] ?> | <?php echo $keyUsuario['estado'] ?></option>
 							<?php } ?>
 						</select>
 					</div>
 				</div>
+				</form>
 
 				<!-- Shiping Details -->
 				<div class="shiping-details">
@@ -119,48 +123,49 @@
 							Enviar a otra dirección
 						</label>
 						<div class="caption">
-							<div class="form-group">
-								<input class="input" type="text" name="nombre_completo" placeholder="Nombre completo" required="">
-							</div>
-							<div class="form-group">
-								<select class="input-select" required="" name="id_estado">
-									<option>Seleccione el estado</option>
-									<?php 
-										foreach ($resEstado as $keyEstado) {
-									 ?>
-									 <option value="<?php echo $keyEstado['id_estado'] ?>"><?php echo $keyEstado['estado'] ?></option>
-									<?php } ?>
-								</select>
-							</div>
-							<div class="form-group">
-								<select class="input-select" required="" name="id_municipio">
-									<option>Seleccione el municipio</option>
-									<div id="municipios"></div>
-								</select>
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="direccion" placeholder="Calle, Colonia, #Numero" required="">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="codigo_postal" placeholder="Codigo postal" required="">
-							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="celular" placeholder="Celular 10 digitos" required="">
-							</div>
-							<!-- Order notes -->
-							<div class="order-notes">
-								<textarea class="input" placeholder="Order Notes"></textarea>
-							</div>
-							<!-- /Order notes -->
+							<form id="formNuevo">
+								<div class="form-group">
+									<input class="input" type="text" name="nombre_completo" placeholder="Nombre completo" required="">
+								</div>
+								<div class="form-group">
+									<select class="input-select" required="" name="id_estado">
+										<option>Seleccione el estado</option>
+										<?php 
+											foreach ($resEstado as $keyEstado) {
+										 ?>
+										 <option value="<?php echo $keyEstado['id_estado'] ?>"><?php echo $keyEstado['estado'] ?></option>
+										<?php } ?>
+									</select>
+								</div>
+								<div class="form-group">
+									<select class="input-select" required="" name="id_municipio">
+										<option>Seleccione el municipio</option>
+										<div id="municipios"></div>
+									</select>
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="direccion" placeholder="Calle, Colonia, #Numero" required="">
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="codigo_postal" placeholder="Codigo postal" required="">
+								</div>
+								<div class="form-group">
+									<input class="input" type="tel" name="celular" placeholder="Celular 10 digitos" required="">
+								</div>
+								<!-- Order notes -->
+								<div class="order-notes">
+									<textarea class="input" placeholder="Order Notes" name="observacion"></textarea>
+								</div>
+								<!-- /Order notes -->
+							</form>
 						</div>
 					</div>
 				</div>
 				<!-- /Shiping Details -->
+				
 				<?php
 				} 
 				?>
-
-				
 			</div>
 
 			<!-- Order Details -->
@@ -214,47 +219,42 @@
 				</div>
 
 				<div class="payment-method">
+					<!--
 					<div class="input-radio">
-						<input type="radio" name="payment" id="payment-1">
+						<input type="radio" name="payment" id="payment-1" value="tarjeta">
 						<label for="payment-1">
 							<span></span>
-							Transferir cuenta bancaria
+							<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png" alt="Credit Card Badges">
 						</label>
 						<div class="caption">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+							<p>Puedes utilizar tu tarjeta bancaria para realizar la compra.</p>
 						</div>
 					</div>
+					
+
 					<div class="input-radio">
-						<input type="radio" name="payment" id="payment-2">
-						<label for="payment-2">
-							<span></span>
-							Cheque Payment
-						</label>
-						<div class="caption">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-						</div>
-					</div>
-					<div class="input-radio">
-						<input type="radio" name="payment" id="payment-3">
+						<input type="radio" name="payment" id="payment-3" value="paypal">
 						<label for="payment-3">
 							<span></span>
-							Paypal
+							<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal Logo">							
 						</label>
 						<div class="caption">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+							<p>La mejor forma segura de pagar.</p>
 						</div>
 					</div>
+					-->
 				</div>
-
+	
 				<div class="input-checkbox">
-					<input type="checkbox" id="terms">
+					<input type="checkbox" id="terms" value="acepto" name="terms">
 					<label for="terms">
 						<span></span>
 						he leido y acepto los  <a href="#">terminos y condiciones</a>
 					</label>
 				</div>
-				<a href="#" class="primary-btn order-submit">Pasar a pagar</a>
-				
+					
+					<div id='paypal-button-container'></div>
+				 
 			</div>
 			<!-- /Order Details -->
 		</div>
@@ -263,9 +263,11 @@
 	<!-- /container -->
 </div>
 <!-- /SECTION -->
+<div id="prueba"></div>
 
 <script type="text/javascript">
 	$(document).ready(function(){
+
 		$("select[name='id_estado']").change(function(){
 			var id_estado = $(this).val();
 			$("select[name='id_municipio']").html("<option>Espere...</option>");
@@ -275,8 +277,98 @@
 				$("select[name='id_municipio']").html(data);
 			});
 		});
+
+		$("#paypal-button-container").css("display","none");
+		var actividad = "";
+		$("#terms").change(function(e){
+			e.preventDefault();
+			if( $('#terms').prop('checked') ) {
+				$("#msg").html("");
+				$(".validarPago").css("display","block");
+				$("#paypal-button-container").css("display","block");
+
+				if($("#shiping-address").prop("checked")){
+					actividad = "nuevaDireccion";
+				}else if($("#shiping-address").prop("checked",false)){
+					actividad = "normalDireccion";
+				}
+			}else{
+				$("#paypal-button-container").css("display","none");
+			}
+		});
+
+		paypal.Button.render({
+        
+        // Set your environment
+
+        env: 'sandbox', // sandbox | production
+
+        // Specify the style of the button
+
+        style: {
+            label: 'checkout',  // checkout | credit | pay | buynow | generic
+            size:  'responsive', // small | medium | large | responsive
+            shape: 'pill',   // pill | rect
+            color: 'blue'   // gold | blue | silver | black
+        },
+
+        // PayPal Client IDs - replace with your own
+        // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+
+        client: {
+            sandbox:    'AcMFerZoQD2g-P6ovLZLk7botreJCWy-TlixjF3V45Zyu5-csRsbp0Ns_yuYRTlsAOh5NaDGp2ZExbGZ',
+            production: 'AT4o3ZwgN-C9HSvQTylyJKI7tGGuPQFITrj34pLJWQwObT-6c57Y3KZd47QQ1iHZfrYGGK5uYqhfIoNt'
+        },
+
+        // Wait for the PayPal button to be clicked
+
+        payment: function(data, actions) {
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        {
+                            amount: { total: "<?php echo $subTotal ?>", currency: 'MXN' },
+                            description: "Compra de productos a Mirennay $<?php echo  number_format($subTotal,2) ?> MXN",
+                            custom: "<?php echo $_SESSION['idUsuario'] ?>#"
+                        }
+                    ]
+                }
+            });
+        },
+
+        // Wait for the payment to be authorized by the customer
+
+        onAuthorize: function(data, actions) {
+            return actions.payment.execute().then(function() {
+
+              	pago(actividad,data.paymentID);
+            });
+        },
+    
+    }, '#paypal-button-container');
+
 	});
+
+	function pago(actividad,paymentID){
+		var datos = "";
+		if(actividad == "nuevaDireccion"){
+			 datos = $("#formNuevo").serialize();
+		}else if(actividad == "normalDireccion"){
+			datos = $("#formPedido").serialize();
+		}
+		datos+="&paymentId="+paymentID+"&actividad="+actividad;
+		$.post('include/verificarPaypalInclude.php',datos,function(e){
+			if(e == 1){
+				alert("listo fijate en la base de datos");
+				location="index.php";
+			}else{
+				$("#prueba").html(e);
+				alert(e);
+			}
+		});
+	}
 </script>
+
 <?php 
 		}else{
 			echo "<div align='center'><h3>Carrito vacio</h3></div>";

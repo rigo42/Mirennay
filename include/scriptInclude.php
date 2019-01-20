@@ -6,4 +6,5 @@
 <script src="js/barraPrecio.min.js"></script>
 <script src="js/push.min.js"></script>
 <script src="js/jquery.form.min.js"></script>
-<script src="js/mirennay.js"></script>
+<script src="js/mirennayy.js"></script>
+<script src="js/paypal.js"></script>

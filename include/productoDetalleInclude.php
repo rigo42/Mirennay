@@ -38,7 +38,7 @@
 						INNER JOIN producto_detalle pd ON pd.id_producto = p.id_producto
 						INNER JOIN categoria c ON c.id_categoria = p.id_categoria
 						INNER JOIN producto_talla t ON t.id_talla = pd.id_talla
-						WHERE p.activo = 1 AND pd.activo = 1 AND c.activo = 1 AND t.activo = 1 AND p.id_producto = ".$idProducto;
+						WHERE p.activo = 1  AND c.activo = 1 AND t.activo = 1  AND p.id_producto = ".$idProducto;
 		$resProducto = mysqli_query($conexion,$sqlProducto);
 		$rowProducto = mysqli_num_rows($resProducto);
 		if($rowProducto > 0){
@@ -62,7 +62,7 @@
 						INNER JOIN producto_detalle pd ON pd.id_producto = p.id_producto
 						INNER JOIN categoria c ON c.id_categoria = p.id_categoria
 						INNER JOIN producto_talla t ON t.id_talla = pd.id_talla
-						WHERE p.activo = 1 AND pd.activo = 1 AND c.activo = 1 AND t.activo = 1 AND p.id_producto = ".$idProducto;
+						WHERE p.activo = 1  AND c.activo = 1  AND t.activo = 1 AND p.id_producto = ".$idProducto;
 		$resDetalle = mysqli_query($conexion,$sqlDetalle);
 
 		if(isset($_SESSION['idUsuario'])){
@@ -222,6 +222,12 @@
 							<?php 
 								if(isset($_SESSION['idUsuario'])){
 
+									if($activoOferta == 1){
+										$precio = $precioOferta;
+									}else{
+										$precio = $precio;
+									}
+
 									$encontro = false;
 									$numero = 0;
 									if(isset($_SESSION['carrito'])){
@@ -235,16 +241,16 @@
 									
 										if($encontro == true){
 											?>
-												<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" ><i class="fa fa-shopping-cart"></i> <span>Dentro del carrito</span></button>
+												<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" data-producto="<?php echo $producto ?>" data-precio="<?php echo $precio ?>" ><i class="fa fa-shopping-cart"></i> <span>Dentro del carrito</span></button>
 											<?php
 										}else{
 											?>
-											<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" ><i class="fa fa-shopping-cart"></i> <span>Añadir al carrito</span></button>
+											<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" data-producto="<?php echo $producto ?>" data-precio="<?php echo $precio ?>" ><i class="fa fa-shopping-cart"></i> <span>Añadir al carrito</span></button>
 											<?php
 										}
 									}else{
 										?>
-										<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>"><i class="fa fa-shopping-cart"></i> <span>Añadir a carrito</span></button>
+										<br><br><button class="add-to-cart-btn" data-sesion="si" data-idProducto="<?php echo $idProducto; ?>" data-producto="<?php echo $producto ?>" data-precio="<?php echo $precio ?>"><i class="fa fa-shopping-cart"></i> <span>Añadir a carrito</span></button>
 									<?php
 									}
 								}else{
@@ -276,6 +282,7 @@
 						} 
 						?>
 						</ul>
+						<div id="productoInactivo"></div>
 
 						<ul class="product-links">
 							<li>Categoria:</li>
@@ -523,7 +530,7 @@
 		</script>
 		<?php
 	}else{
-		echo "<div align='center'><h3>Porfavor envie un identificador valido</h3></div>";
+		echo "<div align='center'><h3>Producto agotado</h3></div>";
 	}
 	}else{
 		echo "<div align='center'><h3>Porfavor envie el identificador del producto</h3></div>";
