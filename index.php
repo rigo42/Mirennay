@@ -1,26 +1,15 @@
-<?php 
-	session_start();
- ?>
-<!DOCTYPE html>
-<html lang="en">
-	<title>Inicio</title>
-		<?php include('include/headInclude.php'); ?>
-	<body>
-		
-		<?php include('include/scriptInclude.php'); ?>
+<?php
+//Password de encriptamiento
+define('KEY',"terribibibi42");
+define('COD',"AES-128-ECB");
 
-		<?php include('include/menuInclude.php'); ?>
-		
-		<?php include('include/inicioInclude.php'); ?>
-	
-		<?php include('include/piePaginaInclude.php'); ?>
-	
-		<script type="text/javascript">
-			$(document).ready(function(){
-					$(".menu li").removeClass('active');
-					$("#menuInicio").addClass('active');
-			});
-		</script>
+//Enrutadores
+define('DS',DIRECTORY_SEPARATOR);
+define('ROOT',realpath(dirname(__FILE__)).DS);
+define('URL',"http://localhost/mirennayv3/");
 
-	</body>
-</html>
+//Ejecutar funcion automatizada
+require_once('ajuste/autoload.php');
+Autoload::run();
+Enrutador::run(new Request());
+?>
