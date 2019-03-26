@@ -4,7 +4,7 @@
 		<title id="titulo"></title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		 
 		<!-- Bootstrap -->
@@ -21,7 +21,7 @@
 		<link rel="stylesheet" href="<?php echo URL ?>libreria/css/font-awesome.min.css">
 
 		<!-- Custom stlylesheet -->
-		<link type="text/css" rel="stylesheet" href="<?php echo URL ?>libreria/css/clientes.css"/>
+		<link type="text/css" rel="stylesheet" href="<?php echo URL ?>libreria/css/clientess.css"/>
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,9 +32,9 @@
     </head>
     <body>
 
-    	<span id="loadPage" class="loadPage" align="center">
-			<span class="loadPageGif"></span>
-		</span>
+    	<div id='loader'>
+	      <div class="spinner"></div>
+	    </div>
 
     	<!-- jQuery Plugins -->
 		<script src="<?php echo URL ?>libreria/js/jquery.min.js"></script>
@@ -43,4 +43,4 @@
 		<script src="<?php echo URL ?>libreria/js/nouislider.min.js"></script>
 		<script src="<?php echo URL ?>libreria/js/jquery.zoom.min.js"></script>
 		<script src="<?php echo URL ?>libreria/js/paypal.js"></script>
-		<script src="<?php echo URL ?>libreria/js/scriptpp.js"></script>
+		<script src="<?php echo URL ?>libreria/js/cliente.js"></script>

@@ -88,44 +88,53 @@ ul, ol {
 
 /*----------------------------*\
   Loading
-\*----------------------------*/
-.loadPage{
-  display: block;
-  width: 100%;
-  height: 100%;
+\*----------------------------*/   
+
+#loader {
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
+  visibility: visible;
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
+  height: 100vh;
+  width: 100%;
   background: #fff;
+  z-index: 90000;
 }
-.loadPageGif{
-  border: 8px solid #1413e2;
-  border-radius: 50%;
-  border-top: 8px solid #3498db;
-  width: 60px;
-  height: 60px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-  display: block;
+
+#loader.fadeOut {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
   position: absolute;
-  top:0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
+  top: calc(50% - 20px);
+  left: calc(50% - 20px);
+  background-color: #333;
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
 }
 
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
 }
 
 /*----------------------------*\

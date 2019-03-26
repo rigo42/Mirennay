@@ -3,24 +3,6 @@ require_once 'Conexion.php';
 
 class TiendaModelo extends Conexion {
 
-	//Atributos propios del producto
-	private $idProducto;
-	private $idSubCategoria;
-	private $genero;
-	private $producto;
-	private $descripcion;
-	private $observacion;
-	private $precio;
-	private $imagenPrincipal;
-	private $activoOferta;
-	private $titulo;
-	private $subTitulo;
-	private $fechaFinOferta;
-	private $imagenOferta;
-	private $fechaAlta;
-	private $activo;
-	private $conexion;
-
 	public function __construct() {
 		$this->conexion = new Conexion();
 	} 

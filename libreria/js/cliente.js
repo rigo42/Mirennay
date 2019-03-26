@@ -3,7 +3,7 @@ var URL = "http://localhost/mirennayv3/";
 $(document).ready(function(){
 
 	//Load page
-    $(".loadPage").fadeOut("fast");
+    $("#loader").fadeOut("fast"); 
 
 	productoVentanaFavorito();
 
