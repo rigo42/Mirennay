@@ -1,6 +1,6 @@
 <?php
 
-require_once 'modelo/CategoriaModelo.php';
+require_once 'modelo/categoriaModelo.php';
 
 class CategoriaControlador {
 

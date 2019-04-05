@@ -56,11 +56,14 @@ if($rowProducto > 0){
 			<!-- Product main img -->
 				<div class="col-md-5 col-md-push-2">
 					<div id="product-main-img">
+					<div class="product-preview">
+						<img src="<?php echo URL ?>libreria/imgProducto/<?php echo $imagenPrincipal ?>" alt="">
+					</div>
 					<?php
 					//Resultados de la base de datos de los detalles de este producto
 					$resProductoDetalle = $this->productoDetalle($idProducto);
 					foreach ($resProductoDetalle as $keyProductoDetalle) {
-						for ($i=1; $i <= 7; $i++) { 
+						for ($i=1; $i <= 6; $i++) { 
 						if($keyProductoDetalle['imagen'.$i] != null){
 					?>
 						<div class="product-preview">
@@ -74,11 +77,14 @@ if($rowProducto > 0){
 				<!-- Product thumb imgs -->
 				<div class="col-md-2  col-md-pull-5">
 					<div id="product-imgs">
+					<div class="product-preview">
+						<img src="<?php echo URL ?>libreria/imgProducto/<?php echo $imagenPrincipal ?>" alt="">
+					</div>
 					<?php
 						//Resultados de la base de datos de los detalles de este producto
 						$resProductoDetalle = $this->productoDetalle($idProducto);
 						foreach ($resProductoDetalle as $keyProductoDetalle) {
-							for ($i=1; $i <= 7; $i++) { 
+							for ($i=1; $i <= 6; $i++) { 
 							if($keyProductoDetalle['imagen'.$i] != null){
 					?>
 						<div class="product-preview">
@@ -294,6 +300,7 @@ if($rowProducto > 0){
 	<!-- /container -->
 </div>
 <!-- /SECTION -->
+<input type="hidden" value="<?php echo $producto ?>" name="producto">
 
 <?php
 }else{
@@ -305,6 +312,7 @@ if($rowProducto > 0){
 
  <script type="text/javascript">
  	$(document).ready(function(){
+ 		tittlePage("#menuTienda",$("input[name='producto']").val());
  		var idProducto = $("#ventanaEncuestaEstrella").attr("data-idProducto");
  		ventanaEncuestaEstrella(idProducto);
 		ventanaEncuestaComentario(idProducto,3,1);

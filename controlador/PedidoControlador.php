@@ -1,7 +1,7 @@
 <?php
 
-require_once 'modelo/PedidoModelo.php';
-require_once 'controlador/PerfilControlador.php';
+require_once 'modelo/pedidoModelo.php';
+require_once 'controlador/perfilControlador.php';
 
 class PedidoControlador {
 

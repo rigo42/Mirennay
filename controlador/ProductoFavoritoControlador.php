@@ -1,6 +1,6 @@
 <?php
 
-require_once 'modelo/ProductoFavoritoModelo.php';
+require_once 'modelo/productoFavoritoModelo.php';
 
 
 class ProductoFavoritoControlador {

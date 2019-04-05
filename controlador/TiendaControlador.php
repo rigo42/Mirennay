@@ -1,10 +1,10 @@
 <?php
 
 //imports
-require_once 'modelo/TiendaModelo.php';
-require_once 'controlador/ProductoFavoritoControlador.php';
-require_once 'controlador/ProductoEstrellaControlador.php';
-require_once 'controlador/ProductoMasVendidoControlador.php';
+require_once 'modelo/tiendaModelo.php';
+require_once 'controlador/productoFavoritoControlador.php';
+require_once 'controlador/productoEstrellaControlador.php';
+require_once 'controlador/productoMasVendidoControlador.php';
 
 class TiendaControlador{
 
@@ -42,21 +42,21 @@ class TiendaControlador{
 	//PORQUE: Porque permite mantener el tamaño de cada página dentro de lo manejable
 	public function tiendaPaginadorEnlistar(){ 
 		session_start();
-		if($_GET){
+		if($_POST){
 			$cantidadPagina = 9;
-			if(isset($_GET['cantidadPagina'])){
-				$cantidadPagina = $_GET['cantidadPagina'];
+			if(isset($_POST['cantidadPagina'])){
+				$cantidadPagina = $_POST['cantidadPagina'];
 			}
 			$paginaNumero = 1;
-			if(isset($_GET['paginaNumero'])){
-				$paginaNumero = $_GET['paginaNumero'];
+			if(isset($_POST['paginaNumero'])){
+				$paginaNumero = $_POST['paginaNumero'];
 			}
 			$idSubCategoriaSQL = "";
-			if(isset($_GET['idSubCategoria'])){
-				$idSubCategoriaArray = $_GET['idSubCategoria'];
-				$idSubCategoria = json_decode($_GET['idSubCategoria']);
+			if(isset($_POST['idSubCategoria']) && $_POST['idSubCategoria'] != ""){
+				$idSubCategoriaArray = $_POST['idSubCategoria'];
+				$idSubCategoria = json_decode($_POST['idSubCategoria']);
 				$longitudIdSubCategoria = count($idSubCategoria);
-				if($longitudIdSubCategoria != 0){
+				if($longitudIdSubCategoria > 0){
 					for ($i=0; $i < $longitudIdSubCategoria ; $i++) { 
 						if($i == 0){
 							$idSubCategoriaSQL .= " AND ( sc.id_sub_categoria = ".openssl_decrypt($idSubCategoria[$i],COD,KEY)." ";
@@ -68,35 +68,35 @@ class TiendaControlador{
 				}
 			}
 			$idGeneroSQL = "";
-			if(isset($_GET['idGenero'])){
-				$idGenero = $_GET['idGenero'];
-				if($_GET['idGenero'] == ""){
+			if(isset($_POST['idGenero']) && $_POST['idGenero'] != ""){
+				$idGenero = $_POST['idGenero'];
+				if($_POST['idGenero'] == ""){
 					$idGeneroSQL = "";
 				}else{
-					$idGeneroSQL = " AND g.id_genero = ".openssl_decrypt($_GET['idGenero'],COD,KEY);
+					$idGeneroSQL = " AND g.id_genero = ".openssl_decrypt($_POST['idGenero'],COD,KEY);
 				}
 			}
 			$precioSQL = "";
-			if(isset($_GET['precioMin']) && isset($_GET['precioMax'])){
-				$precioMin = $_GET['precioMin'];
-				$precioMax = $_GET['precioMax'];
-				if($_GET['precioMin'] == "" && $_GET['precioMax'] == ""){
+			if(isset($_POST['precioMin']) && isset($_POST['precioMax'])){
+				$precioMin = $_POST['precioMin'];
+				$precioMax = $_POST['precioMax'];
+				if($_POST['precioMin'] == "" && $_POST['precioMax'] == ""){
 					$precioSQL = "";
 				}else{
 					$precioSQL = " AND  ( (p.precio >= '$precioMin' AND p.precio <= '$precioMax' AND p.activo_oferta = 0) OR (p.precio_oferta >= '$precioMin' AND p.precio_oferta <= '$precioMax' AND p.activo_oferta = 1) ) ";
 				}
 			}
 			$idCategoriaSQL = "";
-			if(isset($_GET['idCategoria'])){
-				$idCategoria = $_GET['idCategoria'];
+			if(isset($_POST['idCategoria']) && $_POST['idCategoria'] != ""){
+				$idCategoria = $_POST['idCategoria'];
 				if($idCategoria != ""){
-					$idCategoriaSQL = " AND c.id_categoria = ".openssl_decrypt($_GET['idCategoria'],COD,KEY);
+					$idCategoriaSQL = " AND c.id_categoria = ".openssl_decrypt($_POST['idCategoria'],COD,KEY);
 				}
 			}
 			$searchSQL = "";
-			if(isset($_GET['search'])){
-				$search = $_GET['search'];
-				$searchSQL = " AND  (p.producto like '%" . $_GET['search'] . "%' OR  sc.sub_categoria like '%" . $_GET['search'] . "%' OR p.precio like '%" . $_GET['search'] . "%' OR  c.categoria like '%" . $_GET['search'] . "%') ";
+			if(isset($_POST['search']) && $_POST['search'] != ""){
+				$search = $_POST['search'];
+				$searchSQL = " AND  (p.producto like '%" . $_POST['search'] . "%' OR  sc.sub_categoria like '%" . $_POST['search'] . "%' OR p.precio like '%" . $_POST['search'] . "%' OR  c.categoria like '%" . $_POST['search'] . "%') ";
 			}
 
 			//Obtener el total de registros
@@ -147,6 +147,7 @@ class TiendaControlador{
 			}else{ 
 				echo "Lociento no hay productos";
 			}
+
 		}	
 	} 
 

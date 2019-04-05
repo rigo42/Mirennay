@@ -1,8 +1,8 @@
 <?php
 
-require_once 'modelo/LoginModelo.php';
-require_once 'controlador/ProductoFavoritoControlador.php';
-require_once 'controlador/ProductoCarritoControlador.php';
+require_once 'modelo/loginModelo.php';
+require_once 'controlador/productoFavoritoControlador.php';
+require_once 'controlador/productoCarritoControlador.php';
 
 class LoginControlador {
 

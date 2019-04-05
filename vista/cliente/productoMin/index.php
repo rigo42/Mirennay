@@ -6,7 +6,7 @@
 	</div>
 	<div class="product-body">
 		<p class="product-category"><?php echo $key['sub_categoria'] ?></p>
-		<h3 class="product-name"><a href="<?php URL ?>ProductoDetalle?idProducto=<?php  echo urlencode(openssl_encrypt($key['id_producto'], COD, KEY)) ?>"><?php echo $key['producto'] ?></a></h3>
+		<h3 class="product-name"><a href="<?php URL ?>productoDetalle?idProducto=<?php  echo urlencode(openssl_encrypt($key['id_producto'], COD, KEY)) ?>"><?php echo $key['producto'] ?></a></h3>
 		<h4 class="product-price">
 			<?php 
 				if($key['activo_oferta']==1){

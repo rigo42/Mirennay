@@ -122,13 +122,13 @@ foreach ($res as $key) {
 		$(".product-img").click(function(e){
 			e.preventDefault();
 			var idProducto = $(this).attr("data-idProducto");
-			location="<?php echo URL ?>ProductoDetalle?idProducto="+idProducto;
+			location="<?php echo URL ?>productoDetalle?idProducto="+idProducto;
 		});
 
 		$(".view").click(function(e){
 			e.preventDefault();
 			var idProducto = $(this).attr("data-idProducto");
-			location="<?php echo URL ?>ProductoDetalle?idProducto="+idProducto;
+			location="<?php echo URL ?>productoDetalle?idProducto="+idProducto;
 		});
 
 		<?php 

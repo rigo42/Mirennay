@@ -1,6 +1,6 @@
 <?php
 
-require_once 'modelo/ProductoEstrellaModelo.php';
+require_once 'modelo/productoEstrellaModelo.php';
 
 
 class ProductoEstrellaControlador {

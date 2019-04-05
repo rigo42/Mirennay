@@ -1,8 +1,8 @@
 <?php
 
-require_once 'controlador/ProductoNuevoControlador.php';
-require_once 'controlador/ProductoMasVendidoControlador.php';
-require_once 'controlador/CategoriaControlador.php';
+require_once 'controlador/productoNuevoControlador.php';
+require_once 'controlador/productoMasVendidoControlador.php';
+require_once 'controlador/categoriaControlador.php';
 
 class InicioControlador {
 

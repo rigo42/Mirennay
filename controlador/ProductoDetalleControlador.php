@@ -1,9 +1,9 @@
 <?php 
 	//Imports
-	require_once 'modelo/ProductoDetalleModelo.php';
-	require_once 'controlador/ProductoFavoritoControlador.php';
-	require_once 'controlador/ProductoEstrellaControlador.php';
-	require_once 'controlador/ProductoCarritoControlador.php';
+	require_once 'modelo/productoDetalleModelo.php';
+	require_once 'controlador/productoFavoritoControlador.php';
+	require_once 'controlador/productoEstrellaControlador.php';
+	require_once 'controlador/productoCarritoControlador.php';
 
 	class ProductoDetalleControlador{
 		

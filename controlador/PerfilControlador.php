@@ -1,6 +1,6 @@
 <?php
 
-require_once 'modelo/PerfilModelo.php';
+require_once 'modelo/perfilModelo.php';
 
 class PerfilControlador {
 

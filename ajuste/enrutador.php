@@ -2,17 +2,17 @@
 	class Enrutador{
 		
 		public function run(Request $request){
-
+			
 			//Variables si todo esta bien
 		    $controlador = $request->getControlador()."Controlador";
 		    $metodo = $request->getMetodo();
 		    $argumento = $request->getArgumento();
-			$ruta = ROOT."controlador".DS.$controlador.".php";
+			$ruta = "controlador".DS.$controlador.".php";
 
 			//Variables si llegase haber un error por parte del usuario
-			$controladorError404 = "Error404Controlador";
+			$controladorError404 = "error404Controlador";
 		    $metodoError404 = "index";
-		    $rutaError404 = ROOT."controlador".DS."Error404Controlador.php";
+		    $rutaError404 = "controlador".DS."error404Controlador.php";
 			
 
 			if(file_exists($ruta)){

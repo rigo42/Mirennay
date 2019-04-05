@@ -1,5 +1,5 @@
 <?php
-require_once 'Conexion.php';
+require_once 'conexion.php';
 
 class TiendaModelo extends Conexion {
 
@@ -9,14 +9,14 @@ class TiendaModelo extends Conexion {
 
 	//SIRVE: Para cuantos productos se mostraran, respetando los filtros que el usuario seleccione
 	//PORQUE: Es necesario saber cuantos productos seran, para enviar la respuesta de cuantos a la funcion tiendaPaginadorEnlistar()
-	public function tiendaPaginadorEnlistarRowCount($searchSQL,$idCategoria,$idGeneroSQL,$precioSQL,$idSubCategoriaSQL){
+	public function tiendaPaginadorEnlistarRowCount($searchSQL,$idCategoriaSQL,$idGeneroSQL,$precioSQL,$idSubCategoriaSQL){
 		$sql = "SELECT p.*,sc.*,g.* 
 				FROM producto p
 				INNER JOIN sub_categoria sc ON sc.id_sub_categoria = p.id_sub_categoria 
 				INNER JOIN categoria c ON c.id_categoria = sc.id_categoria
 				INNER JOIN producto_genero g ON g.id_genero = p.id_genero
 				WHERE 1 AND p.activo = 1
-				".$idCategoria."
+				".$idCategoriaSQL."
 				".$idGeneroSQL."
 				".$precioSQL."
 				".$idSubCategoriaSQL."
@@ -28,14 +28,14 @@ class TiendaModelo extends Conexion {
 
 	//SIRVE: Para mostrar los productos paginados, y tambien respetando los filtros que el usuario seleccione
 	//PORQUE: Cuando el programa no cabe en la memoria ram, los programas que ocupan la ram.
-	public function tiendaPaginadorEnlistar($searchSQL,$idCategoria,$idGeneroSQL,$precioSQL,$idSubCategoriaSQL,$limiteSQL,$cantidadPagina){
+	public function tiendaPaginadorEnlistar($searchSQL,$idCategoriaSQL,$idGeneroSQL,$precioSQL,$idSubCategoriaSQL,$limiteSQL,$cantidadPagina){
 		$sql = "SELECT p.*,sc.*,g.*,NOW() AS 'hoy',p.fecha_alta AS 'fechaAltaProducto' 
 				FROM producto p
 				INNER JOIN sub_categoria sc ON sc.id_sub_categoria = p.id_sub_categoria 
 				INNER JOIN categoria c ON c.id_categoria = sc.id_categoria
 				INNER JOIN producto_genero g ON g.id_genero = p.id_genero
 				WHERE 1 AND p.activo = 1
-				".$idCategoria."
+				".$idCategoriaSQL."
 				".$idGeneroSQL."
 				".$precioSQL."
 				".$idSubCategoriaSQL."

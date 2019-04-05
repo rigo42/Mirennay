@@ -1,6 +1,6 @@
 <?php 
 	//Imports
-	require_once 'modelo/ProductoCarritoModelo.php';
+	require_once 'modelo/productoCarritoModelo.php';
 
 	class ProductoCarritoControlador{
 		

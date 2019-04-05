@@ -85,7 +85,7 @@
 								$resGenero = $this->mostrarGenero();
 								foreach ($resGenero as $keyGenero) {
 								?>
-								<option value="<?php echo openssl_encrypt($keyGenero['id_genero'],COD,KEY) ?>"><?php echo $keyGenero['genero'] ?></option>
+								<option value="<?php echo openssl_encrypt($keyGenero['id_genero'], COD, KEY) ?>"><?php echo $keyGenero['genero'] ?></option>
 								<?php
 								}
 								 ?>
@@ -132,34 +132,23 @@
 		//Eventos listeners
 		$("input[name='idSubCategoria']").change(function(e){
 			e.preventDefault();
-			if (this.checked) {
-        		if($(this).val() == "todo"){
-        			$("input[name='idSubCategoria']").prop('checked', false);
-        			$(this).prop('checked', true);
-        			idSubCategoria = [];
-        			$("#price-min").html(1);
-					$("input[name='precioMin']").val(1);
-					$("#price-max").html(15001);
-					$("input[name='precioMax']").val(15001);
-            		paginadorProducto("","","","","",idSubCategoria,9,1);
-        		}else{
+			if($(this).val() == "todo"){
+    			$("input[name='idSubCategoria']").prop('checked', false);
+    			$(this).prop('checked', true);
+    			idSubCategoria = [];
+    			$("#price-min").html(1);
+				$("input[name='precioMin']").val(1);
+				$("#price-max").html(15001);
+				$("input[name='precioMax']").val(15001);
+        		paginadorProducto("","","","","",idSubCategoria,9,1);
+        	}else{
+        		if (this.checked) {
         			idSubCategoria.push($(this).val());
         			$("#todo").prop('checked', false);
         			var idGenero = $("select[name='idGenero']").val();
         			var precioMin = $("input[name='precioMin']").val();
 					var precioMax = $("input[name='precioMax']").val();
             		paginadorProducto("","",precioMin,precioMax,idGenero,idSubCategoria,9,1);
-        		}
-        	}else{
-        		if($(this).val() == "todo"){
-        			idSubCategoria = [];
-        			$("#price-min").html(1);
-					$("input[name='precioMin']").val(1);
-					$("#price-max").html(15001);
-					$("input[name='precioMax']").val(15001);
-        			$("input[name='idSubCategoria']").prop('checked', false);
-        			$(this).prop('checked', true);
-            		paginadorProducto("","","","","",idSubCategoria,9,1);
         		}else{
         			$("#todo").prop('checked', false);
         			var index = idSubCategoria.indexOf($(this).val());
@@ -170,6 +159,8 @@
             		paginadorProducto("","",precioMin,precioMax,idGenero,idSubCategoria,9,1);
         		}
         	}
+
+			
 		});
 
 		// Price Slider
@@ -215,8 +206,8 @@
 
 	function paginadorProducto(search,idCategoria,precioMin,precioMax,idGenero,idSubCategoria,cantidadPagina,paginaNumero){
 		$.ajax({
-	        type: "GET",
-	        url: "<?php echo URL?>Tienda/tiendaPaginadorEnlistar",
+	        type: "POST",
+	        url: "<?php echo URL?>tienda/tiendaPaginadorEnlistar",
 	        data: {
 	        	search:search,
 	        	idCategoria:idCategoria,
@@ -229,6 +220,7 @@
 	        },
 	        cache: false,
 			beforeSend: function() {
+				$('#tienda').html('<img src="<?php echo URL ?>libreria/img/espere.gif" alt="reload" width="20" height="20">');
 	        },
 	        success: function(data) {
 	    		$("#tienda").html(data);
