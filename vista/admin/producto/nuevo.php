@@ -254,7 +254,7 @@ $(document).ready(function(){
     $("select[name='cantidadColor']").change(function(e){
         e.preventDefault();
         var cantidadColor = $(this).val();
-        cantidadColor1(cantidadColor);
+        cantidadColor1(1,cantidadColor);
     });
     
     var quill = new Quill('#editor', {

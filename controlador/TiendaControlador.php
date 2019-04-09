@@ -52,7 +52,7 @@ class TiendaControlador{
 				$paginaNumero = $_POST['paginaNumero'];
 			}
 			$idSubCategoriaSQL = "";
-			if(isset($_POST['idSubCategoria']) && $_POST['idSubCategoria'] != ""){
+			if(!empty($_POST['idSubCategoria'])){
 				$idSubCategoriaArray = $_POST['idSubCategoria'];
 				$idSubCategoria = json_decode($_POST['idSubCategoria']);
 				$longitudIdSubCategoria = count($idSubCategoria);
@@ -68,15 +68,14 @@ class TiendaControlador{
 				}
 			}
 			$idGeneroSQL = "";
-			if(isset($_POST['idGenero']) && $_POST['idGenero'] != ""){
+			$idGenero = "";
+			if(!empty($_POST['idGenero'])){
 				$idGenero = $_POST['idGenero'];
-				if($_POST['idGenero'] == ""){
-					$idGeneroSQL = "";
-				}else{
-					$idGeneroSQL = " AND g.id_genero = ".openssl_decrypt($_POST['idGenero'],COD,KEY);
-				}
+				$idGeneroSQL = " AND g.id_genero = ".openssl_decrypt($_POST['idGenero'],COD,KEY);
 			}
 			$precioSQL = "";
+			$precioMin = "";
+			$precioMax = "";
 			if(isset($_POST['precioMin']) && isset($_POST['precioMax'])){
 				$precioMin = $_POST['precioMin'];
 				$precioMax = $_POST['precioMax'];
@@ -87,6 +86,7 @@ class TiendaControlador{
 				}
 			}
 			$idCategoriaSQL = "";
+			$idCategoria = "";
 			if(isset($_POST['idCategoria']) && $_POST['idCategoria'] != ""){
 				$idCategoria = $_POST['idCategoria'];
 				if($idCategoria != ""){
@@ -94,6 +94,7 @@ class TiendaControlador{
 				}
 			}
 			$searchSQL = "";
+			$search = "";
 			if(isset($_POST['search']) && $_POST['search'] != ""){
 				$search = $_POST['search'];
 				$searchSQL = " AND  (p.producto like '%" . $_POST['search'] . "%' OR  sc.sub_categoria like '%" . $_POST['search'] . "%' OR p.precio like '%" . $_POST['search'] . "%' OR  c.categoria like '%" . $_POST['search'] . "%') ";

@@ -1,5 +1,5 @@
 <?php 
-    for ($i=1; $i <= $cantidadColor; $i++) { 
+    for ($i=$inicioCantidad; $i <= $cantidadColor; $i++) { 
  ?>
 <div class="card">
     <div class="card-body wizard-content">
@@ -29,56 +29,32 @@
             </div>
         </div>
         <div class="row mb-3">
+            <?php 
+            for ($j=1; $j <= 3; $j++) {
+            ?>
             <div class="col-lg-4">
-                <label class="col-md-4">Imagen 1 *</label>
+                <label class="col-md-4">Imagen <?php echo $j ?> *</label>
                 <div class="col-md-12">
                     <div class="custom-file">
-                        <input required="" type="file" name="imagen1<?php echo $i ?>" class="form-control">
+                        <input type="file" name="imagen<?php echo $j.$i ?>" class="form-control">
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <label class="col-md-4">Imagen 2</label>
-                <div class="col-md-12">
-                    <div class="custom-file">
-                        <input required="" type="file" name="imagen2<?php echo $i ?>" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <label class="col-md-4">Imagen 3</label>
-                <div class="col-md-12">
-                    <div class="custom-file">
-                        <input required="" type="file" name="imagen3<?php echo $i ?>" class="form-control">
-                    </div>
-                </div>
-            </div>
+         <?php } ?>
         </div>
         <div class="row mb-3">
+            <?php 
+            for ($j=4; $j <= 6; $j++) {
+            ?>
             <div class="col-lg-4">
-                <label class="col-md-4">Imagen 4</label>
+                <label class="col-md-4">Imagen <?php echo $j ?> *</label>
                 <div class="col-md-12">
                     <div class="custom-file">
-                        <input type="file" name="imagen4<?php echo $i ?>" class="form-control">
+                        <input type="file" name="imagen<?php echo $j.$i ?>" class="form-control">
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <label class="col-md-4">Imagen 5</label>
-                <div class="col-md-12">
-                    <div class="custom-file">
-                        <input type="file" name="imagen5<?php echo $i ?>" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <label class="col-md-4">Imagen 6</label>
-                <div class="col-md-12">
-                    <div class="custom-file">
-                        <input type="file" name="imagen6<?php echo $i ?>" class="form-control">
-                    </div>
-                </div>
-            </div>
+         <?php } ?>
         </div>
     </div>
 </div>

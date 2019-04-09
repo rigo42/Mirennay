@@ -15,7 +15,7 @@
     <link href="<?php echo URL ?>libreria/css/admin/jquery.steps.css" rel="stylesheet">
     <link href="<?php echo URL ?>libreria/css/admin/steps.css" rel="stylesheet">
     <link href="<?php echo URL ?>libreria/css/admin/magnific-popup.css" rel="stylesheet">
-    <link href="<?php echo URL ?>libreria/css/admin/style.min.css" rel="stylesheet">
+    <link href="<?php echo URL ?>libreria/css/admin/styless.min.css" rel="stylesheet">
     <!-- Editor -->
     <link rel="stylesheet" type="text/css" href="<?php echo URL ?>libreria/css/admin/quill.snow.css">
     
@@ -50,7 +50,7 @@
     <!-- Editor -->
     <script src="<?php echo URL ?>libreria/js/admin/quill.min.js"></script>
     <!-- Admin -->
-    <script src="<?php echo URL ?>libreria/js/admin/admina.js"></script>
+    <script src="<?php echo URL ?>libreria/js/admin/adminn.js"></script>
     
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->

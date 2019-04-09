@@ -59,11 +59,23 @@ function tablaDinamica(search,url,activo){
     });
 }
 
-function cantidadColor1(cantidadColor){
+function filePreview(input,id) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $(id).html("");
+            $(id).after('<img class="col-md-2" src="'+e.target.result+'" />');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function cantidadColor1(inicioCantidad,cantidadColor){
     $.ajax({
         type: "POST",
         url: URL+"almacen/cantidadDetalle",
         data: {
+            inicioCantidad:inicioCantidad,
             cantidadColor:cantidadColor
         },
         cache: false,
@@ -89,3 +101,73 @@ function productoNuevo(datos){
         }
     });
 }
+
+function productoEditar(datos){
+    $.ajax({
+        type:'POST',
+        url: URL+'almacen/productoEditar',
+        data:datos,
+        contentType: false,
+        processData : false,
+        beforeSend: function() {
+        },
+        success: function(data) {
+           alert(data);
+        }
+    });
+}
+
+function  eliminarProducto(idProducto){
+    $.ajax({
+        type: "POST",
+        url: URL+"almacen/eliminarProducto",
+        data: {
+            idProducto:idProducto
+        },
+        cache: false,
+        beforeSend: function() {
+            //$('#tablaDinamica').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            location=URL+'almacen';
+        }
+    });
+}
+
+function eliminarProductoDetalle(idProductoDetalle){
+    $.ajax({
+        type: "POST",
+        url: URL+"almacen/eliminarProductoDetalle",
+        data: {
+            idProductoDetalle:idProductoDetalle
+        },
+        cache: false,
+        beforeSend: function() {
+            //$('#tablaDinamica').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+             //$('#tablaDinamica').html(data);
+        }
+    });
+}
+
+function eliminarImagen(idProductoDetalle,atributo){
+    $.ajax({
+        type: "POST",
+        url: URL+"almacen/eliminarImagen",
+        data: {
+            idProductoDetalle:idProductoDetalle,
+            atributo:atributo
+        },
+        cache: false,
+        beforeSend: function() {
+            //$('#tablaDinamica').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+             //$('#tablaDinamica').html(data);
+        }
+    });
+}
+
+
+

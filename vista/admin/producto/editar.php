@@ -2,9 +2,10 @@
 	//Obtenemos el id del producto para proceder a obtener sus datos
 	$idProducto = openssl_decrypt($_GET['idProducto'], COD, KEY);
 	//Seteamos el identificador al modelo
-	$this->almacenModelo->set("idProducto",$idProducto);
+	$this->almacenModelo->set("idProducto"," AND p.id_producto = ".$idProducto);
 	//Obtenemos los datos dados del identificador
-	$resGeneral = $this->contruir();
+	$resGeneral = $this->construir();
+	foreach($resGeneral as $variableGeneral => $datoGeneral){}
 ?>
 <div class="page-wrapper">
 
@@ -29,16 +30,28 @@
 
         <div class="card">
             <div class="card-body wizard-content">
-                <h4 class="card-title">Producto nuevo</h4>
+                 <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="card-title">Producto editar</h4>
+                    </div>
+                    <div class="col-md-6" 
+                        style="justify-content: flex-end;
+                               display: flex;">
+                        <i title="Eliminar este producto" class="fas fa-trash-alt eliminarProducto" 
+                           data-idProducto="<?php echo openssl_encrypt($idProducto, COD, KEY)  ?>"
+                        ></i>
+                    </div>
+                </div>
                 <h6 class="card-subtitle"></h6>
-                <form id="formProductoNuevo" action="#" class="m-t-40">
+                <form id="formProductoEditar" action="#" class="m-t-40">
+                    
                     <div>
                         <h3>General</h3>
                         <section>
                             <div class="row mb-3">
                                 <div class="col-lg-9">
                                     <label>Nombre *</label>
-                                    <input name="producto" required="" type="text" class="form-control" placeholder="Camisa">
+                                    <input name="producto" value="<?php echo $datoGeneral['producto'] ?>" value="$" required="" type="text" class="form-control" placeholder="Camisa">
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Precio *</label>
@@ -46,7 +59,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon2">$</span>
                                         </div>
-                                        <input type="number" required="" name="precio" class="form-control" placeholder="5.000">
+                                        <input type="number" value="<?php echo $datoGeneral['precio'] ?>" required="" name="precio" class="form-control" placeholder="5.000">
                                         <div class="input-group-append">
                                             <span class="input-group-text">MXN</span>
                                         </div>
@@ -56,9 +69,9 @@
 
                              <div class="row mb-3">
                                 <div class="col-lg-4">
-                                    <label for="userName">Proveedor *</label>
+                                    <label>Proveedor *</label>
                                     <select required="" class="select form-control" name="idProveedor" style="width: 100%; height:36px;">
-                                        <option value="">Seleccione una opción</option>
+                                        <option value="<?php echo openssl_encrypt($datoGeneral['id_proveedor'], COD, KEY) ?>"><?php echo $datoGeneral['proveedor'] ?></option>
                                         <?php 
                                         $res = $this->selectProveedor();
                                         foreach ($res as $key) {
@@ -69,9 +82,9 @@
                                 </div>
 
                                 <div class="col-lg-4">
-                                    <label for="userName">Sub categoria *</label>
+                                    <label>Sub categoria *</label>
                                     <select required="" class="select form-control" name="idSubCategoria" style="width: 100%; height:36px;">
-                                       <option value="">Seleccione una opción</option>
+                                       <option value="<?php echo openssl_encrypt($datoGeneral['id_sub_categoria'], COD, KEY) ?>"><?php echo $datoGeneral['sub_categoria'] ?></option>
                                         <?php 
                                         $res = $this->selectSubCategoria();
                                         foreach ($res as $key) {
@@ -82,9 +95,9 @@
                                 </div>
 
                                 <div class="col-lg-4">
-                                    <label for="userName">Genero *</label>
+                                    <label>Genero *</label>
                                     <select required="" class="select form-control" name="idGenero" style="width: 100%; height:36px;">
-                                        <option value="">Seleccione una opción</option>
+                                        <option value="<?php echo openssl_encrypt($datoGeneral['id_genero'], COD, KEY) ?>"><?php echo $datoGeneral['genero'] ?></option>
                                         <?php 
                                         $res = $this->selectGenero();
                                         foreach ($res as $key) {
@@ -98,17 +111,44 @@
                             <div class="row mb-3">
                                 <div class="col-lg-6">
                                     <label>Descripción *</label>
-                                    <textarea required="" name="descripcion" placeholder="En tres tipos de colores etc." type="text" class="form-control"></textarea>
-                                </div>   
-                                <div class="col-lg-6">
-                                    <label>Imagen principal *</label>
-                                    <div class="col-md-9">
-                                        <div class="custom-file">
-                                            <input required="" type="file" name="imagenPrincipal" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>        
+                                    <textarea required="" name="descripcion" placeholder="En tres tipos de colores etc." type="text" class="form-control"><?php echo $datoGeneral['descripcion'] ?></textarea>
+                                </div>
+
                             </div>
+
+                            <div class="row mb-3">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                  <th scope="col">#</th>
+                                                  <th scope="col">Imagen</th>
+                                                  <th scope="col">Cambiar imagen</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                  <th scope="row">1</th>
+                                                  <td>
+                                                     <div id="changeImagenPrincipal">
+                                                        <img class="col-md-2" src="<?php echo URL ?>libreria/imgProducto/<?php echo $datoGeneral['imagen_principal'] ?>">
+                                                     </div>
+                                                  </td>
+                                                  <td title="Cambiar esta imagen" >
+                                                    <label for="imagenPrincipal">
+                                                        <i class="fas fa-edit"></i>
+                                                        <input class="d-none" id="imagenPrincipal" type="file" name="imagenPrincipal">
+                                                        <input required="" id="imagenPrincipalBackup" value="<?php echo $datoGeneral['imagen_principal'] ?>" type="hidden" name="imagenPrincipalBackup">
+                                                    </label>
+                                                  </td>
+                                                </tr>  
+                                            </tbody>
+                                     </table>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <!-- editor -->
                             <div class="row mb-3">
@@ -118,18 +158,26 @@
                                             <h4 class="card-title">Observación</h4>
                                             <!-- Create the editor container -->
                                             <div id="editor" style="height: 300px;">
-                                                
+                                                <?php echo $datoGeneral['observacionProducto'] ?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+							<?php 
+							if($datoGeneral['activo_oferta'] == 1){
+								$class = "oferta d-block";
+								$checked = "checked";
+							}else{
+								$class = "oferta d-none";
+								$checked = "";
+							}
+							?>
                             <div class="row mb-3">
                                 <div class="col-lg-2">
                                     <label>¿Oferta?</label>
                                       <div class="custom-control custom-radio">
-                                        <input type="checkbox" class="custom-control-input" name="oferta" id="oferta">
+                                        <input type="checkbox" <?php echo $checked ?> class="custom-control-input" name="oferta" id="oferta">
                                         <label class="custom-control-label" for="oferta">Oferta
                                          </label>
                                       </div>
@@ -137,7 +185,7 @@
                             </div>
 
                             <!-- Oferta -->
-                            <div class="oferta d-none">
+                            <div class="<?php echo $class ?>">
 
                                 <div class="row mb-3">
                                     <div class="col-lg-3">
@@ -146,7 +194,7 @@
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon2">$</span>
                                             </div>
-                                            <input type="text" name="precioOferta" class="form-control" placeholder="5.000">
+                                            <input type="text" value="<?php echo $datoGeneral['precio_oferta'] ?>" name="precioOferta" class="form-control" placeholder="5.000">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon2">MXN</span>
                                             </div>
@@ -154,26 +202,39 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <label>Titulo *</label>
-                                        <input name="titulo" type="text" class="form-control">
+                                        <input name="titulo" value="<?php echo $datoGeneral['titulo'] ?>" type="text" class="form-control">
                                      </div>
                                      <div class="col-lg-3">
                                         <label>Sub titulo *</label>
-                                        <input name="subTitulo" type="text" class="form-control">
+                                        <input name="subTitulo" value="<?php echo $datoGeneral['sub_titulo'] ?>" type="text" class="form-control">
                                      </div>   
                                     <div class="col-lg-3">
                                         <label>Fecha limite *</label>
-                                        <input name="fechaFinOferta" type="date" class="form-control">
+                                        <input name="fechaFinOferta" value="<?php echo date('Y-m-d', strtotime($datoGeneral['fecha_fin_oferta'])) ?>" type="date" class="form-control">
                                     </div> 
                                 </div>
+
+                                <?php 
+                                if(!empty($datoGeneral['imagen_oferta'])){
+                                    $classImagenOferta = "d-block";
+                                    $classFileOferta = "d-none";
+                                }else{
+                                   $classImagenOferta = "d-none";
+                                   $classFileOferta = "d-block";
+                                }
+                                ?>
                                 
                                 <div class="row mb-3">
                                     <div class="col-lg-9">
-                                        <label class="col-md-3">Imagen oferta</label>
-                                        <div class="col-md-9">
-                                            <div class="custom-file">
-                                                <input type="file" name="imagenOferta" class="form-control">
+                                        <label class="col-md-9" for="imagenOferta">Imagen oferta
+                                            <div class="col-md-9">
+                                                <div class="custom-file">
+                                                    <input type="file" id="imagenOferta" name="imagenOferta" class="form-control <?php echo $classFileOferta ?>">
+                                                    <img title="Editar" class="col-md-4 <?php echo $classImagenOferta ?>" src="<?php echo URL ?>libreria/imgProductoOferta/<?php echo $datoGeneral['imagen_oferta'] ?>" alt="user" />
+                                                    <input type="hidden" name="imagenOfertaBackup"  value="<?php echo $datoGeneral['imagen_oferta'] ?>" class="form-control">
+                                                </div>
                                             </div>
-                                        </div>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -183,13 +244,121 @@
                         </section>
                         <h3>Detalle</h3>
                         <section>
+
+                        	<?php
+                        	$this->almacenModelo->set("idProducto"," AND pd.id_producto = ".$idProducto);
+                        	$resDetalle = $this->mostrarDetalle(); 
+                            $rowDetalle = $resDetalle->rowCount();
+                            $inicioCantidad = 0;
+                            $posicionImagenDetalle = array();
+                        	foreach ($resDetalle as $keyDetalle) {
+                            $inicioCantidad++;
+                            $posicionImagenDetalle = [];
+                        	?>
+
+                            <div class="card">
+                                <div class="card-body wizard-content">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4 class="card-title">Color <?php echo $inicioCantidad ?></h4>
+                                        </div>
+                                        <div class="col-md-6" 
+                                            style="justify-content: flex-end;
+                                                   display: flex;">
+                                            <i title="Eliminar este detalle" class="fas fa-trash-alt eliminarProductoDetalle" 
+                                               data-idProductoDetalle="<?php echo openssl_encrypt($keyDetalle['id_producto_detalle'], COD, KEY)  ?>"
+                                            ></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <h6 class="card-subtitle"></h6>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-5">
+                                            <label>Talla <?php echo $inicioCantidad ?> *</label>
+                                            <select required="" class="select form-control" name="idTalla<?php echo $inicioCantidad ?>" style="width: 100%; height:36px;">
+                                                <option value="<?php echo openssl_encrypt($keyDetalle['id_talla'], COD, KEY) ?>"><?php echo $keyDetalle['talla'] ?></option>
+                                                <?php 
+                                                $res = $this->selectTalla();
+                                                foreach ($res as $key) {
+                                                 ?>
+                                                 <option value="<?php echo openssl_encrypt($key['id_talla'], COD, KEY) ?>"><?php echo $key['talla'] ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Color <?php echo $inicioCantidad ?>*</label>
+                                            <input required="" value="<?php echo $keyDetalle['color'] ?>" placeholder="Verde con un poco de azul" name="color<?php echo $inicioCantidad ?>" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>Cantidad <?php echo $inicioCantidad ?>*</label>
+                                            <input required=""  value="<?php echo $keyDetalle['cantidad'] ?>" placeholder="Cuantos productos son de este color" name="cantidad<?php echo $inicioCantidad ?>" type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                      <th scope="col">#</th>
+                                                      <th scope="col">Imagen</th>
+                                                      <th scope="col">Eliminar imagen</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                    for ($i=1; $i<=6; $i++) { 
+                                                        if(!empty($keyDetalle['imagen'.$i])){
+                                                    ?>
+                                                    <tr>
+                                                      <th scope="row"><?php echo $i ?></th>
+                                                      <td><img class="col-md-2" src="<?php echo URL ?>libreria/imgProducto/<?php echo $keyDetalle['imagen'.$i] ?>"></td>
+                                                      <td title="Eliminar esta imagen" >
+                                                        <i class="fas fa-trash eliminarImagen" 
+                                                            data-idProductoDetalle="<?php echo openssl_encrypt($keyDetalle['id_producto_detalle'], COD, KEY) ?>"
+                                                            data-atributo="imagen<?php echo $i ?>"
+                                                        ></i>
+                                                      </td>
+                                                    </tr>  
+                                                <?php
+                                                    }else{
+                                                        array_push($posicionImagenDetalle, $i);
+                                                    }
+                                                }
+                                                ?>
+                                                </tbody>
+                                         </table>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <?php 
+                                            for ($i=0; $i < count($posicionImagenDetalle); $i++) { 
+                                            ?>
+                                             <div class="col-lg-4">
+                                                <label class="col-md-4">Imagen <?php echo $posicionImagenDetalle[$i] ?> *</label>
+                                                <div class="col-md-12">
+                                                    <div class="custom-file">
+                                                        <input  type="file" name="imagen<?php echo $posicionImagenDetalle[$i].$inicioCantidad ?>" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" value="<?php echo openssl_encrypt($keyDetalle['id_producto_detalle'], COD, KEY) ?>" name="idProductoDetalle<?php echo $inicioCantidad ?>">
+                            <?php
+                        	}
+                        	?>
+
                             <div class="row mb-3">
                                 <div class="col-lg-12">
-                                    <label title="Especifica cuantos tipos de producto hay de este mismo, ejemplo: 3 camisas iguales pero cada una de diferente color, entonces la cantidad de detalle seria 3">¿Cuantos colores diferentes? *</label>
-                                   <select required="" class="select form-control" name="cantidadColor"style="width: 100%; height:36px;">
-                                       <option value="">Seleccione una opción</option>
+                                    <label title="Especifica cuantos tipos de producto hay de este mismo, ejemplo: 3 camisas iguales pero cada una de diferente color, entonces la cantidad de detalle seria 3">¿Agregar mas detalles? *</label>
+                                   <select class="select form-control" name="cantidadColor" style="width: 100%; height:36px;">
+                                       <option value="0">Ninguno</option>
                                         <?php 
-                                        for ($i=1; $i<=6; $i++) {
+                                        $limiteMasDetalle = (6 - $rowDetalle);
+                                        for ($i=1; $i<=$limiteMasDetalle; $i++) {
                                          ?>
                                          <option value="<?php echo $i ?>"><?php echo $i ?></option>
                                         <?php } ?>
@@ -203,6 +372,8 @@
 
                         </section>
                     </div>
+                    <input type="hidden" name="idProducto" id="idProducto" value="<?php echo openssl_encrypt($idProducto, COD, KEY) ?>">
+                    <input type="hidden" name="rowDetalle" value="<?php echo $rowDetalle ?>">
                 </form>
             </div>
         </div>
@@ -216,9 +387,9 @@
 
 $(document).ready(function(){
     
-    tittlePage("#menuProducto","Almacen | Nuevo");
+    tittlePage("#menuProducto","Almacen | Editar");
 
-    var form = $("#formProductoNuevo");
+    var form = $("#formProductoEditar");
 
      form.children("div").steps({
         headerTag: "h3",
@@ -233,10 +404,14 @@ $(document).ready(function(){
             return form.valid();
         },
         onFinished: function(event, currentIndex) {
-            var datos = new FormData(document.getElementById('formProductoNuevo'));
+            var datos = new FormData(document.getElementById('formProductoEditar'));
             var observacion = quill.root.innerHTML;
+            var idProducto = $("#idProducto").val();
+            var rowDetalle = $("input[name='rowDetalle']").val();
             datos.append('observacion', observacion);
-            productoNuevo(datos);
+            datos.append('idProducto', idProducto);
+            datos.append('rowDetalle' , rowDetalle);
+            productoEditar(datos);
         }
     });
 
@@ -261,14 +436,53 @@ $(document).ready(function(){
 
     $("select[name='cantidadColor']").change(function(e){
         e.preventDefault();
-        var cantidadColor = $(this).val();
-        cantidadColor1(cantidadColor);
+        var cantidadColor = parseInt($(this).val());
+        var inicioCantidad = parseInt("<?php echo $inicioCantidad; ?>");
+        cantidadColor = (cantidadColor + inicioCantidad);
+        inicioCantidad++;
+        cantidadColor1(inicioCantidad,cantidadColor);
     });
-    
+
+    $("#imagenPrincipal").change(function () {
+        var id = "#changeImagenPrincipal";
+        filePreview(this,id);
+    });
+
+    $(".eliminarProducto").click(function(e){
+        e.preventDefault();
+        var idProducto = $(this).attr("data-idProducto");
+        eliminarProducto(idProducto);
+    });
+
+    $(".eliminarProductoDetalle").click(function(e){
+        e.preventDefault();
+        if(confirm("¿Estás seguro que quieres eliminar este detalle?")){
+            $(this).parent().parent().parent().addClass("d-none");
+            var idProductoDetalle = $(this).attr("data-idProductoDetalle");
+            eliminarProductoDetalle(idProductoDetalle);
+        }else{
+            alert("bueno :v");
+        }
+    });
+
+    $(".eliminarImagen").click(function(e){
+        e.preventDefault();
+        if(confirm("¿Estás seguro que quieres eliminar esta imagen?")){
+             $(this).parent().parent().addClass("d-none");
+            var idProductoDetalle = $(this).attr("data-idProductoDetalle");
+            var atributo = $(this).attr("data-atributo");
+            eliminarImagen(idProductoDetalle,atributo);
+        }else{
+            alert("bueno :v");
+        }
+    });
+
     var quill = new Quill('#editor', {
         theme: 'snow'
     });
 });
+
+
 
  
 </script>
