@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="<?php echo URL ?>libreria/css/cliente/font-awesome.min.css">
 
 		<!-- Custom stlylesheet -->
-		<link type="text/css" rel="stylesheet" href="<?php echo URL ?>libreria/css/cliente/clientess.css"/>
+		<link type="text/css" rel="stylesheet" href="<?php echo URL ?>libreria/css/cliente/clientes.css"/>
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

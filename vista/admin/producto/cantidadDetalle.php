@@ -7,7 +7,7 @@
         <h6 class="card-subtitle"></h6>
 
         <div class="row mb-3">
-            <div class="col-lg-5">
+            <div class="col-lg-3">
                 <label for="userName">Talla <?php echo $i ?> *</label>
                 <select required="" class="select form-control" name="idTalla<?php echo $i ?>" style="width: 100%; height:36px;">
                     <option value="">Seleccione una opción</option>
@@ -19,15 +19,28 @@
                     <?php } ?>
                 </select>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <label>Color <?php echo $i ?>*</label>
                 <input required="" placeholder="Verde con un poco de azul" name="color<?php echo $i ?>" type="text" class="form-control">
             </div>
+            
+            <div class="col-lg-3">
+                <label>Codigo <?php echo $i ?>*</label>
+                <input required="" placeholder="Codigo de barra" name="codigo<?php echo $i ?>" type="text" class="form-control">
+            </div>
+        </div>
+
+        <div class="row mb-3">
             <div class="col-lg-3">
                 <label>Cantidad <?php echo $i ?>*</label>
                 <input required="" placeholder="Cuantos productos son de este color" name="cantidad<?php echo $i ?>" type="number" class="form-control">
             </div>
+            <div class="col-lg-3">
+                <label>Cantidad alerta<?php echo $i ?>*</label>
+                <input required="" placeholder="Cantidad minima de producto" name="cantidadAlerta<?php echo $i ?>" type="number" class="form-control">
+            </div>
         </div>
+
         <div class="row mb-3">
             <?php 
             for ($j=1; $j <= 3; $j++) {

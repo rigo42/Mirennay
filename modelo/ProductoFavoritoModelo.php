@@ -1,12 +1,12 @@
 <?php
 require_once 'conexion.php';
 
-class ProductoFavoritoModelo extends Conexion {
+class productoFavoritoModelo{
 
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	public function productoVentanaFavorito($idUsuario){

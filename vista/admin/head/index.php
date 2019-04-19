@@ -16,6 +16,7 @@
     <link href="<?php echo URL ?>libreria/css/admin/steps.css" rel="stylesheet">
     <link href="<?php echo URL ?>libreria/css/admin/magnific-popup.css" rel="stylesheet">
     <link href="<?php echo URL ?>libreria/css/admin/styless.min.css" rel="stylesheet">
+    <link href="<?php echo URL ?>libreria/css/admin/bootstrap.min.css" rel="stylesheet">
     <!-- Editor -->
     <link rel="stylesheet" type="text/css" href="<?php echo URL ?>libreria/css/admin/quill.snow.css">
     
@@ -34,7 +35,7 @@
     <script src="<?php echo URL ?>libreria/js/admin/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="<?php echo URL ?>libreria/js/admin/popper.min.js"></script>
-    <script src="<?php echo URL ?>libreria/js/admin/bootstrap.min.js"></script>
+    <script src="<?php echo URL ?>libreria/js/admin/bootstrapp.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="<?php echo URL ?>libreria/js/admin/perfect-scrollbar.jquery.min.js"></script>
     <script src="<?php echo URL ?>libreria/js/admin/sparkline.js"></script>
@@ -50,7 +51,7 @@
     <!-- Editor -->
     <script src="<?php echo URL ?>libreria/js/admin/quill.min.js"></script>
     <!-- Admin -->
-    <script src="<?php echo URL ?>libreria/js/admin/adminn.js"></script>
+    <script src="<?php echo URL ?>libreria/js/admin/adminss.js"></script>
     
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->

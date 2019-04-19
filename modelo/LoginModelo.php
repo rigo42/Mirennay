@@ -5,12 +5,12 @@
 
 require_once 'conexion.php';
 
-class LoginModelo{
+class loginModelo{
 	
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	public function iniciarSesion($usuario,$password){

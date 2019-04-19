@@ -1,6 +1,6 @@
 <?php
 
-class Request{
+class request{
     
     private $controlador;
     private $metodo;

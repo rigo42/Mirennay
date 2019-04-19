@@ -5,7 +5,7 @@
 
 require_once 'conexion.php';
 
-class GeneroModelo{
+class generoModelo{
 	
 	private $idGenero;
 	private $genero;
@@ -14,7 +14,7 @@ class GeneroModelo{
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	public function construir($sql){

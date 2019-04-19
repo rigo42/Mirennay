@@ -18,6 +18,6 @@ require_once('ajuste/autoload.php');
 require_once('ajuste/enrutador.php');
 require_once('ajuste/request.php');
 
-Autoload::run();
-Enrutador::run(new Request());
+autoload::run();
+enrutador::run(new request());
 ?>

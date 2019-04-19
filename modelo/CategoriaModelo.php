@@ -5,12 +5,12 @@
 
 require_once 'conexion.php';
 
-class CategoriaModelo{
+class categoriaModelo{
 
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	public function coleccion(){

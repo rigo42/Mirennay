@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="el-card-content">
-                <h4 class="m-b-0"><?php echo $key['producto'] ?></h4> 
+                <h6 class="m-b-0"><?php echo $key['producto'] ?></h6> 
                 <span class="text-muted">
                 <?php 
                     if($key['activo_oferta'] == 1){

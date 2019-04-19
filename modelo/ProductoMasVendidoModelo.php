@@ -1,24 +1,25 @@
 <?php
 require_once 'conexion.php';
 
-class ProductoMasVendidoModelo extends Conexion {
+class productoMasVendidoModelo{
 
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
-	} 
+		$this->conexion = new conexion();
+	}  
 
 	public function productoMasVendido(){
 
 		$sql = "SELECT p.*, SUM(pu.cantidad) AS 'TotalVentas', sc.* ,p.fecha_alta AS 'fechaAltaProducto',
 				NOW() AS 'hoy'
 				FROM pedido_usuario pu
+				INNER JOIN venta_online vo ON vo.id_pedido_usuario = pu.id_pedido_usuario
 				INNER JOIN producto_detalle pd ON pd.id_producto_detalle = pu.id_producto_detalle 
 				INNER JOIN producto p ON p.id_producto = pd.id_producto
                 INNER JOIN sub_categoria sc ON sc.id_sub_categoria = p.id_sub_categoria
 				INNER JOIN categoria c ON c.id_categoria = sc.id_categoria
-                WHERE p.activo = 1 AND sc.activo = 1 AND c.activo = 1
+                WHERE p.activo = 1 AND sc.activo = 1 AND c.activo = 1 AND vo.activo = 1
 				GROUP BY p.id_producto 
 				ORDER BY SUM(pu.cantidad) DESC 
 				LIMIT 0 , 30";

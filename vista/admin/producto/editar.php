@@ -49,11 +49,11 @@
                         <h3>General</h3>
                         <section>
                             <div class="row mb-3">
-                                <div class="col-lg-9">
+                                <div class="col-lg-4">
                                     <label>Nombre *</label>
-                                    <input name="producto" value="<?php echo $datoGeneral['producto'] ?>" value="$" required="" type="text" class="form-control" placeholder="Camisa">
+                                    <input name="producto" value="<?php echo $datoGeneral['producto'] ?>" value="$datoGeneral['producto']" required="" type="text" class="form-control" placeholder="Camisa">
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <label>Precio *</label>
                                     <div class="input-group">
                                         <div class="input-group-append">
@@ -64,7 +64,7 @@
                                             <span class="input-group-text">MXN</span>
                                         </div>
                                     </div>
-                                </div>                                  
+                                </div>                                
                             </div>
 
                              <div class="row mb-3">
@@ -113,7 +113,24 @@
                                     <label>Descripción *</label>
                                     <textarea required="" name="descripcion" placeholder="En tres tipos de colores etc." type="text" class="form-control"><?php echo $datoGeneral['descripcion'] ?></textarea>
                                 </div>
-
+                                <div class="col-lg-6">
+                                    <label>Estado *</label>
+                                    <select required="" class="select form-control" name="activo" style="width: 100%; height:36px;">
+                                        <?php 
+                                        if($datoGeneral['productoActivo'] == 1){
+                                        ?>
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                        <?php
+                                        }else{
+                                        ?>
+                                        <option value="0">Inactivo</option>
+                                        <option value="1">Activo</option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="row mb-3">
@@ -274,7 +291,7 @@
                                     <h6 class="card-subtitle"></h6>
 
                                     <div class="row mb-3">
-                                        <div class="col-lg-5">
+                                        <div class="col-lg-3">
                                             <label>Talla <?php echo $inicioCantidad ?> *</label>
                                             <select required="" class="select form-control" name="idTalla<?php echo $inicioCantidad ?>" style="width: 100%; height:36px;">
                                                 <option value="<?php echo openssl_encrypt($keyDetalle['id_talla'], COD, KEY) ?>"><?php echo $keyDetalle['talla'] ?></option>
@@ -286,15 +303,28 @@
                                                 <?php } ?>
                                             </select>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <label>Color <?php echo $inicioCantidad ?>*</label>
                                             <input required="" value="<?php echo $keyDetalle['color'] ?>" placeholder="Verde con un poco de azul" name="color<?php echo $inicioCantidad ?>" type="text" class="form-control">
                                         </div>
+                                        
+                                        <div class="col-lg-3">
+                                            <label>Codigo <?php echo $inicioCantidad ?>*</label>
+                                            <input required="" value="<?php echo $keyDetalle['codigo'] ?>" placeholder="Codigo de barra" name="codigo<?php echo $inicioCantidad ?>" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
                                         <div class="col-lg-3">
                                             <label>Cantidad <?php echo $inicioCantidad ?>*</label>
                                             <input required=""  value="<?php echo $keyDetalle['cantidad'] ?>" placeholder="Cuantos productos son de este color" name="cantidad<?php echo $inicioCantidad ?>" type="number" class="form-control">
                                         </div>
+                                        <div class="col-lg-3">
+                                            <label>Cantidad alerta<?php echo $inicioCantidad ?>*</label>
+                                            <input required=""  value="<?php echo $keyDetalle['cantidad_alerta'] ?>" placeholder="Cantidad minima de producto" name="cantidadAlerta<?php echo $inicioCantidad ?>" type="number" class="form-control">
+                                        </div>
                                     </div>
+
                                     <div class="row mb-3">
                                         <div class="table-responsive">
                                             <table class="table">
@@ -450,8 +480,11 @@ $(document).ready(function(){
 
     $(".eliminarProducto").click(function(e){
         e.preventDefault();
-        var idProducto = $(this).attr("data-idProducto");
-        eliminarProducto(idProducto);
+        if(confirm("¿Estás seguro que quieres eliminar este producto?")){
+            var idProducto = $(this).attr("data-idProducto");
+            var activo = 0;
+            productoActivo(idProducto,activo);
+        }
     });
 
     $(".eliminarProductoDetalle").click(function(e){
@@ -460,8 +493,6 @@ $(document).ready(function(){
             $(this).parent().parent().parent().addClass("d-none");
             var idProductoDetalle = $(this).attr("data-idProductoDetalle");
             eliminarProductoDetalle(idProductoDetalle);
-        }else{
-            alert("bueno :v");
         }
     });
 
@@ -472,8 +503,6 @@ $(document).ready(function(){
             var idProductoDetalle = $(this).attr("data-idProductoDetalle");
             var atributo = $(this).attr("data-atributo");
             eliminarImagen(idProductoDetalle,atributo);
-        }else{
-            alert("bueno :v");
         }
     });
 

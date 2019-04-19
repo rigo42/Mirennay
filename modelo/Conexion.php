@@ -1,5 +1,5 @@
 <?php 
-class Conexion{
+class conexion{
 	
 	//Inifini free
 	/*

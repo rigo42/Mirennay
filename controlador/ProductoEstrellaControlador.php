@@ -3,14 +3,14 @@
 require_once 'modelo/productoEstrellaModelo.php';
 
 
-class ProductoEstrellaControlador {
+class productoEstrellaControlador {
 
     private $productoEstrellaModelo; //variable para generar el objeto de la instancia al modelo de este controlador
 
     //SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
     //PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
     public function __construct() {
-        $this->productoEstrellaModelo = new ProductoEstrellaModelo();
+        $this->productoEstrellaModelo = new productoEstrellaModelo();
     } 
 
 

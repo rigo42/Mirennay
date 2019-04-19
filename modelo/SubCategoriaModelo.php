@@ -5,7 +5,7 @@
 
 	require_once 'conexion.php';
 
-	class SubCategoriaModelo{
+	class subCategoriaModelo{
 		
 		private $idSubCategoria;
 		private $idCategoria;
@@ -15,7 +15,7 @@
 		private $conexion;
 
 		public function __construct() {
-			$this->conexion = new Conexion();
+			$this->conexion = new conexion();
 		} 
 
 		public function construir($sql){

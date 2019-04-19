@@ -5,7 +5,7 @@
 
 require_once 'conexion.php';
 
-class AlmacenModelo{
+class almacenModelo{
 	
 	//Atributos propios del producto
 	private $idProducto;
@@ -29,17 +29,17 @@ class AlmacenModelo{
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	public function construir(){
-		$sql = "SELECT p.*,sc.*,g.*,pr.*,p.observacion AS 'observacionProducto',pr.observacion AS 'observacionProveedor'
+		$sql = "SELECT p.*,sc.*,g.*,pr.*,p.observacion AS 'observacionProducto',pr.observacion AS 'observacionProveedor',p.activo AS 'productoActivo'
 				FROM producto p
 				INNER JOIN sub_categoria sc ON sc.id_sub_categoria = p.id_sub_categoria 
 				INNER JOIN categoria c ON c.id_categoria = sc.id_categoria
 				INNER JOIN producto_genero g ON g.id_genero = p.id_genero
 				INNER JOIN proveedor pr ON pr.id_proveedor = p.id_proveedor
-				WHERE 1 AND p.activo = 1
+				WHERE 1
 				".$this->idProducto."
 				";
 		return $this->conexion->mostrarSQL($sql);
@@ -64,7 +64,7 @@ class AlmacenModelo{
 		$sql = "SELECT pd.*,t.*
 				FROM producto_detalle pd
 				INNER JOIN producto_talla t ON t.id_talla = pd.id_talla
-				WHERE 1 AND pd.activo = 1
+				WHERE 1
 				".$this->idProducto."
 				";
 		return $this->conexion->mostrarSQL($sql);
@@ -82,13 +82,13 @@ class AlmacenModelo{
 		return $idProducto;
 	}
 
-	public function productoNuevoDetalle($idProducto,$idTalla,$color,$imagen1,$imagen2,$imagen3,$imagen4,$imagen5,$imagen6,$cantidad){
-		$sql = " INSERT INTO producto_detalle (id_producto,id_talla,color,imagen1,imagen2,imagen3,imagen4,imagen5,imagen6,cantidad,activo) VALUES ($idProducto,$idTalla,'$color','$imagen1','$imagen2','$imagen3','$imagen4','$imagen5','$imagen6',$cantidad,1)";
+	public function productoNuevoDetalle($idProducto,$idTalla,$color,$codigo,$imagen1,$imagen2,$imagen3,$imagen4,$imagen5,$imagen6,$cantidad,$cantidadAlerta){
+		$sql = " INSERT INTO producto_detalle (id_producto,id_talla,codigo,color,imagen1,imagen2,imagen3,imagen4,imagen5,imagen6,cantidad,cantidad_alerta,activo) VALUES ($idProducto,$idTalla,'$codigo','$color','$imagen1','$imagen2','$imagen3','$imagen4','$imagen5','$imagen6',$cantidad,$cantidadAlerta,1)";
 		$this->conexion->ejecutarSQL($sql);
 	}
 
-	public function productoEditar($idProducto,$producto,$precio,$idProveedor,$idSubCategoria,$idGenero,$descripcion,$imagenPrincipal,$observacion,$activoOferta,$precioOferta,$titulo,$subTitulo,$fechaFinOferta,$imagenOferta){
-		$sql = "UPDATE producto SET id_proveedor = $idProveedor,id_sub_categoria = $idSubCategoria,id_genero = $idGenero,producto = '$producto',descripcion = '$descripcion',observacion = '$observacion',precio = '$precio',imagen_principal = '$imagenPrincipal',activo_oferta = $activoOferta,precio_oferta = '$precioOferta',titulo = '$titulo',sub_titulo = '$subTitulo',fecha_fin_oferta = '$fechaFinOferta',imagen_oferta = '$imagenOferta' WHERE id_producto = $idProducto ";
+	public function productoEditar($idProducto,$producto,$precio,$idProveedor,$idSubCategoria,$idGenero,$descripcion,$imagenPrincipal,$observacion,$activoOferta,$precioOferta,$titulo,$subTitulo,$fechaFinOferta,$imagenOferta,$activo){
+		$sql = "UPDATE producto SET id_proveedor = $idProveedor,id_sub_categoria = $idSubCategoria,id_genero = $idGenero,producto = '$producto',descripcion = '$descripcion',observacion = '$observacion',precio = '$precio',imagen_principal = '$imagenPrincipal',activo_oferta = $activoOferta,precio_oferta = '$precioOferta',titulo = '$titulo',sub_titulo = '$subTitulo',fecha_fin_oferta = '$fechaFinOferta',imagen_oferta = '$imagenOferta', activo = $activo WHERE id_producto = $idProducto ";
 		$this->conexion->ejecutarSQL($sql);
 	}
 
@@ -97,8 +97,8 @@ class AlmacenModelo{
 		$this->conexion->ejecutarSQL($sql);
 	}
 
-	public function eliminarProducto($idProducto){
-		$sql = "UPDATE producto SET activo = 0  WHERE id_producto = $idProducto";
+	public function productoActivo(){
+		$sql = "UPDATE producto SET activo = $this->activo  WHERE id_producto = $this->idProducto";
 		return $this->conexion->ejecutarSQL($sql);
 	}
 

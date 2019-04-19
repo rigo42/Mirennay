@@ -26,7 +26,7 @@ $(document).ready(function(){
     $("input[name='search']").keyup(function(e){
         e.preventDefault();
         if(e.keyCode == 13){
-            var search = $("input[name='search']").val();
+            var search = $(this).val();
             var url = $("#tablaDinamica").attr("data-url");
             tablaDinamica(search,url,"1");
         }
@@ -97,7 +97,7 @@ function productoNuevo(datos){
         beforeSend: function() {
         },
         success: function(data) {
-           alert(data);
+           location=URL+"almacen";
         }
     });
 }
@@ -112,17 +112,18 @@ function productoEditar(datos){
         beforeSend: function() {
         },
         success: function(data) {
-           alert(data);
+            location=URL+"almacen";
         }
     });
 }
 
-function  eliminarProducto(idProducto){
+function  productoActivo(idProducto,activo){
     $.ajax({
         type: "POST",
-        url: URL+"almacen/eliminarProducto",
+        url: URL+"almacen/productoActivo",
         data: {
-            idProducto:idProducto
+            idProducto:idProducto,
+            activo:activo
         },
         cache: false,
         beforeSend: function() {
@@ -169,5 +170,128 @@ function eliminarImagen(idProductoDetalle,atributo){
     });
 }
 
+function modalDireccion(folio){
+    $.ajax({
+        type: "POST",
+        url: URL+"pedido/modalDireccion",
+        data: {
+            folio:folio
+        },
+        cache: false,
+        beforeSend: function() {
+           // $('#tablaDinamica').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+             $('#modalDireccion').html(data);
+        }
+    });
+}
 
+function obtenerPedido(folio){
+    $.ajax({
+        type: "POST",
+        url: URL+"pedido/obtenerPedido",
+        data: {
+            folio:folio
+        },
+        cache: false,
+        beforeSend: function(){
+            $('#enviarProducto').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            $('#enviarProducto').html("Listo!");
+            location=URL+"pedido/admin";
+        }
+    });
+}
 
+function ventanaCart(){
+    $.ajax({
+        type: "POST",
+        url: URL+"puntoVenta/ventanaCart",
+        data: {
+        },
+        cache: false,
+        beforeSend: function(){
+            $('#ventanaCart').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            $('#ventanaCart').html(data);
+        }
+    });
+}
+
+function addCart(search,cantidadPedido){
+    $.ajax({
+        type: "POST",
+        url: URL+"puntoVenta/addCart",
+        data: {
+            codigo:search,
+            cantidadPedido:cantidadPedido
+        },
+        cache: false,
+        beforeSend: function(){
+            $('#ventanaCart').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                alert(data);
+                ventanaCart();
+            }
+            ventanaCart();
+        }
+    });
+}
+
+function deleteCart(codigo){
+    $.ajax({
+        type: "POST",
+        url: URL+"puntoVenta/deleteCart",
+        data: {
+            codigo:codigo
+        },
+        cache: false,
+        beforeSend: function(){
+            $('#ventanaCart').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                alert(data);
+                ventanaCart();
+            }
+            ventanaCart();
+        }
+    });
+}
+
+function dropCart(codigo){
+    $.ajax({
+        type: "POST",
+        url: URL+"puntoVenta/dropCart",
+        data: {
+        },
+        cache: false,
+        beforeSend: function(){
+            $('#ventanaCart').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            ventanaCart();
+        }
+    });
+}
+
+function confirmarPago(){
+    $.ajax({
+        type: "POST",
+        url: URL+"puntoVenta/confirmarPago",
+        data: {
+        },
+        cache: false,
+        beforeSend: function(){
+            $('#cambioPago').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            window.location.reload(true); 
+        }
+    });
+}

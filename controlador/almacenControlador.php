@@ -2,19 +2,19 @@
 	//imports
 	require_once 'modelo/almacenModelo.php';
 
-	class AlmacenControlador{
+	class almacenControlador{
 
 		private $almacenModelo; 
 		
 		function __construct(){
-			$this->almacenModelo = new AlmacenModelo();
+			$this->almacenModelo = new almacenModelo();
 		}
 
-		//SIRVE: 
-		//PORQUE: 
+		//SIRVE: Para mostrar la vista principal
+		//PORQUE: Es necesaria una vista
 		public function index(){
 			session_start();
-			if(isset($_SESSION['idUsuario']) && $_SESSION['rol'] == "admin"){
+			if(isset($_SESSION['idEmpleado']) && $_SESSION['rol'] == "admin"){
 				include('vista/admin/head/index.php');
 				include('vista/admin/header/index.php');
 				include('vista/admin/menu/index.php');
@@ -23,15 +23,15 @@
 
 				include('vista/admin/footer/index.php');
 			}else{
-				header("Location: ".URL."incio");
+				header("Location: ".URL."inicio");
 			}
 		}
 
-		//SIRVE: 
-		//PORQUE: 
+		//SIRVE: Para mostrar la vista de "nuevo"
+		//PORQUE: Es nesesario
 		public function nuevo(){
 			session_start();
-			if(isset($_SESSION['idUsuario']) && $_SESSION['rol'] == "admin"){
+			if(isset($_SESSION['idEmpleado']) && $_SESSION['rol'] == "admin"){
 				include('vista/admin/head/index.php');
 				include('vista/admin/header/index.php');
 				include('vista/admin/menu/index.php');
@@ -40,15 +40,15 @@
 
 				include('vista/admin/footer/index.php');
 			}else{
-				header("Location: ".URL."incio");
+				header("Location: ".URL."inicio");
 			}
 		}
 
-		//SIRVE: 
-		//PORQUE: 
+		//SIRVE: Para mostrar la vista de "editar"
+		//PORQUE: Es nesesario 
 		public function editar(){
 			session_start();
-			if(isset($_SESSION['idUsuario']) && $_SESSION['rol'] == "admin"){
+			if(isset($_SESSION['idEmpleado']) && $_SESSION['rol'] == "admin"){
 
 				include('vista/admin/head/index.php');
 				include('vista/admin/header/index.php');
@@ -62,31 +62,35 @@
 
 				include('vista/admin/footer/index.php');
 			}else{
-				header("Location: ".URL."incio");
+				header("Location: ".URL."inicio");
 			}
 		}
 
+		//SIRVE: Obtener todos los datos generales de un identificador
+		//PORQUE: Es necesario construir lo que sea que se pida atra ves de este metodo
 		public function construir(){
 			return $this->almacenModelo->construir();
 		}
 
+		//SIRVE: Mostrar todos los detalles del producto que se le mande la id
+		//PORQUE: Es necesario mostrar los detalles de ese producto
 		public function mostrarDetalle(){
 			return $this->almacenModelo->mostrarDetalle();
 		}
 
-		//SIRVE:
-		//PORQUE:
+		//SIRVE: Mostrar todos los productos con limite de 1000, dinamicamente
+		//PORQUE: Es necesario mostrarlos para de ahí escoger el producto a editar o verlo
 		public function producto(){
 			if($_POST){
 				$searchSQL = "";
 				if($_POST['search'] != ""){
-					$search = htmlspecialchars(addslashes($_POST['search']));
+					$search = htmlspecialchars(strip_tags($_POST['search']));
 					$searchSQL = " AND  (p.producto like '%" .$search. "%') ";
 					$this->almacenModelo->set("search",$searchSQL);
 				}
 				$activoSQL = "";
 				if($_POST['activo'] != ""){
-					$activo = htmlspecialchars(addslashes($_POST['activo']));
+					$activo = htmlspecialchars(strip_tags($_POST['activo']));
 					$activoSQL = " AND  p.activo = $activo ";
 					$this->almacenModelo->set("activo",$activoSQL);
 				}
@@ -95,19 +99,21 @@
 			}
 		}
 
+		//RAZON: Para insertar un producto nuevo
+		//PORQUE: Es necesario insertar productos nuevos
 		public function productoNuevo(){
 			if($_POST){
 
                 $ruta = "libreria/imgProducto/";
                 $rutaOferta = "libreria/imgProductoOferta/";
 
-				$cantidadColor = htmlspecialchars(addslashes($_POST['cantidadColor']));
-				$producto = htmlspecialchars(addslashes($_POST['producto']));
-				$precio = htmlspecialchars(addslashes($_POST['precio']));
-				$idProveedor = openssl_decrypt(htmlspecialchars(addslashes($_POST['idProveedor'])), COD, KEY);
-				$idSubCategoria = openssl_decrypt(htmlspecialchars(addslashes($_POST['idSubCategoria'])), COD, KEY);
-				$idGenero = openssl_decrypt(htmlspecialchars(addslashes($_POST['idGenero'])), COD, KEY);
-				$descripcion = htmlspecialchars(addslashes($_POST['descripcion']));
+				$cantidadColor = htmlspecialchars(strip_tags($_POST['cantidadColor']));
+				$producto = htmlspecialchars(strip_tags($_POST['producto']));
+				$precio = htmlspecialchars(strip_tags($_POST['precio']));
+				$idProveedor = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idProveedor'])), COD, KEY);
+				$idSubCategoria = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idSubCategoria'])), COD, KEY);
+				$idGenero = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idGenero'])), COD, KEY);
+				$descripcion = htmlspecialchars(strip_tags($_POST['descripcion']));
 
 				$imagenPrincipal = date('i-s').$_FILES['imagenPrincipal']['name'];
 				$imagenPrincipalTmpName = $_FILES['imagenPrincipal']['tmp_name'];
@@ -123,10 +129,10 @@
 				//Si existe una oferta obtenemos los datos correspondientes a la oferta
 				if(isset($_POST['oferta']) && $_POST['oferta'] == "on"){
 					$activoOferta = 1;
-					$precioOferta = $descripcion = htmlspecialchars(addslashes($_POST['precioOferta']));
-					$titulo = htmlspecialchars(addslashes($_POST['titulo']));
-					$subTitulo = htmlspecialchars(addslashes($_POST['subTitulo']));
-					$fechaFinOferta = htmlspecialchars(addslashes($_POST['fechaFinOferta']));
+					$precioOferta = $descripcion = htmlspecialchars(strip_tags($_POST['precioOferta']));
+					$titulo = htmlspecialchars(strip_tags($_POST['titulo']));
+					$subTitulo = htmlspecialchars(strip_tags($_POST['subTitulo']));
+					$fechaFinOferta = htmlspecialchars(strip_tags($_POST['fechaFinOferta']));
 					$imagenOferta = date("i-s").$_FILES['imagenOferta']['name'];
 					$imagenOfertaTmpName = $_FILES['imagenOferta']['tmp_name'];
 					move_uploaded_file($imagenOfertaTmpName, $rutaOferta.$imagenOferta);
@@ -136,9 +142,11 @@
 
 				for ($i=1; $i <= $cantidadColor; $i++) { 
 					
-					$idTalla = openssl_decrypt(htmlspecialchars(addslashes($_POST['idTalla'.$i])), COD, KEY);
-					$color = htmlspecialchars(addslashes($_POST['color'.$i]));
-					$cantidad = htmlspecialchars(addslashes($_POST['cantidad'.$i]));
+					$idTalla = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idTalla'.$i])), COD, KEY);
+					$color = htmlspecialchars(strip_tags($_POST['color'.$i]));
+					$cantidad = htmlspecialchars(strip_tags($_POST['cantidad'.$i]));
+					$cantidadAlerta = htmlspecialchars(strip_tags($_POST['cantidadAlerta'.$i]));
+					$codigo = htmlspecialchars(strip_tags($_POST['codigo'.$i]));
 					$imagen1 = "";
 					$imagen2 = "";
 					$imagen3 = "";
@@ -171,18 +179,25 @@
 						$imagen6TmpName = $_FILES['imagen6'.$i]['tmp_name'];
 						move_uploaded_file($imagen6TmpName, $ruta.$imagen6);
 					}
-					$this->almacenModelo->productoNuevoDetalle($idProducto,$idTalla,$color,$imagen1,$imagen2,$imagen3,$imagen4,$imagen5,$imagen6,$cantidad);
+					$this->almacenModelo->productoNuevoDetalle($idProducto,$idTalla,$color,$codigo,$imagen1,$imagen2,$imagen3,$imagen4,$imagen5,$imagen6,$cantidad,$cantidadAlerta);
 				}
 			}
 		}
 
-		public function eliminarProducto($idProducto){
+		//RAZON: Para cambiar el estado fisico de un producto
+		//PORQUE: Para no eliminarlo por completo y solamente evitar que se muestre
+		public function productoActivo(){
 			if($_POST){
 				$idProducto = openssl_decrypt($_POST['idProducto'], COD, KEY);
-				$this->almacenModelo->eliminarProducto($idProducto);
+				$activo = htmlspecialchars(strip_tags($_POST['activo']));
+				$this->almacenModelo->set("idProducto",$idProducto);
+				$this->almacenModelo->set("activo",$activo);
+				$this->almacenModelo->productoActivo();
 			}
 		}
 
+		//RAZON: Eliminar el nombre de una imagen de la bd
+		//PORQUE: Para visualmente ver que se borre
 		public function eliminarImagen(){
 			if($_POST){
 				$idProductoDetalle = openssl_decrypt($_POST['idProductoDetalle'], COD, KEY);
@@ -206,13 +221,14 @@
                 $rutaOferta = "libreria/imgProductoOferta/";
 
                 $idProducto = openssl_decrypt($_POST['idProducto'], COD, KEY);
-				$cantidadColor = htmlspecialchars(addslashes($_POST['cantidadColor']));
-				$producto = htmlspecialchars(addslashes($_POST['producto']));
-				$precio = htmlspecialchars(addslashes($_POST['precio']));
-				$idProveedor = openssl_decrypt(htmlspecialchars(addslashes($_POST['idProveedor'])), COD, KEY);
-				$idSubCategoria = openssl_decrypt(htmlspecialchars(addslashes($_POST['idSubCategoria'])), COD, KEY);
-				$idGenero = openssl_decrypt(htmlspecialchars(addslashes($_POST['idGenero'])), COD, KEY);
-				$descripcion = htmlspecialchars(addslashes($_POST['descripcion']));
+				$cantidadColor = htmlspecialchars(strip_tags($_POST['cantidadColor']));
+				$producto = htmlspecialchars(strip_tags($_POST['producto']));
+				$precio = htmlspecialchars(strip_tags($_POST['precio']));
+				$idProveedor = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idProveedor'])), COD, KEY);
+				$idSubCategoria = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idSubCategoria'])), COD, KEY);
+				$idGenero = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idGenero'])), COD, KEY);
+				$descripcion = htmlspecialchars(strip_tags($_POST['descripcion']));
+				$activo = htmlspecialchars(strip_tags($_POST['activo']));
 
 				if(!empty($_FILES['imagenPrincipal']['name'])){
 					$imagenPrincipal = date('i-s').$_FILES['imagenPrincipal']['name'];
@@ -233,10 +249,10 @@
 				//Si existe una oferta obtenemos los datos correspondientes a la oferta
 				if(isset($_POST['oferta']) && $_POST['oferta'] == "on"){
 					$activoOferta = 1;
-					$precioOferta = $descripcion = htmlspecialchars(addslashes($_POST['precioOferta']));
-					$titulo = htmlspecialchars(addslashes($_POST['titulo']));
-					$subTitulo = htmlspecialchars(addslashes($_POST['subTitulo']));
-					$fechaFinOferta = htmlspecialchars(addslashes($_POST['fechaFinOferta']));
+					$precioOferta = $descripcion = htmlspecialchars(strip_tags($_POST['precioOferta']));
+					$titulo = htmlspecialchars(strip_tags($_POST['titulo']));
+					$subTitulo = htmlspecialchars(strip_tags($_POST['subTitulo']));
+					$fechaFinOferta = htmlspecialchars(strip_tags($_POST['fechaFinOferta']));
 					if(!empty($_FILES['imagenOferta']['name'])){
 						$imagenOferta = date("i-s").$_FILES['imagenOferta']['name'];
 						$imagenOfertaTmpName = $_FILES['imagenOferta']['tmp_name'];
@@ -246,7 +262,7 @@
 					}
 				}
 
-				$this->almacenModelo->productoEditar($idProducto,$producto,$precio,$idProveedor,$idSubCategoria,$idGenero,$descripcion,$imagenPrincipal,$observacion,$activoOferta,$precioOferta,$titulo,$subTitulo,$fechaFinOferta,$imagenOferta);
+				$this->almacenModelo->productoEditar($idProducto,$producto,$precio,$idProveedor,$idSubCategoria,$idGenero,$descripcion,$imagenPrincipal,$observacion,$activoOferta,$precioOferta,$titulo,$subTitulo,$fechaFinOferta,$imagenOferta,$activo);
 
 				//Actualizar el producto detalle con buena practica
 				$detalleSQL = "";
@@ -257,9 +273,11 @@
 
 					for ($j=1; $j <= 6 ; $j++) { 
 						$idProductoDetalle = openssl_decrypt($_POST['idProductoDetalle'.$i], COD, KEY);
-						$idTalla = openssl_decrypt(htmlspecialchars(addslashes($_POST['idTalla'.$i])), COD, KEY);
-						$color = htmlspecialchars(addslashes($_POST['color'.$i]));
-						$cantidad = htmlspecialchars(addslashes($_POST['cantidad'.$i]));
+						$idTalla = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idTalla'.$i])), COD, KEY);
+						$color = htmlspecialchars(strip_tags($_POST['color'.$i]));
+						$codigo = htmlspecialchars(strip_tags($_POST['codigo'.$i]));
+						$cantidad = htmlspecialchars(strip_tags($_POST['cantidad'.$i]));
+						$cantidadAlerta = htmlspecialchars(strip_tags($_POST['cantidadAlerta'.$i]));
 
 						if(!empty($_FILES['imagen'.$j.$i]['name'])){
 							//Imagen
@@ -270,7 +288,7 @@
 						}						
 					}
 
-					$detalleSQL .= " id_talla = $idTalla, color = '$color', cantidad =  $cantidad".$imagenSQL;
+					$detalleSQL .= " id_talla = $idTalla, codigo = '$codigo', color = '$color', cantidad =  $cantidad, cantidad_alerta = $cantidadAlerta ".$imagenSQL;
 
 					$this->almacenModelo->set("idProductoDetalle",$idProductoDetalle);
 					$this->almacenModelo->detalleEditar($detalleSQL);
@@ -286,9 +304,11 @@
 				
 				for ($i = $rowDetalle; $i <= $rowDetalleFin; $i++) { 
 					
-					$idTalla = openssl_decrypt(htmlspecialchars(addslashes($_POST['idTalla'.$i])), COD, KEY);
-					$color = htmlspecialchars(addslashes($_POST['color'.$i]));
-					$cantidad = htmlspecialchars(addslashes($_POST['cantidad'.$i]));
+					$idTalla = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idTalla'.$i])), COD, KEY);
+					$color = htmlspecialchars(strip_tags($_POST['color'.$i]));
+					$codigo = htmlspecialchars(strip_tags($_POST['codigo'.$i]));
+					$cantidad = htmlspecialchars(strip_tags($_POST['cantidad'.$i]));
+					$cantidadAlerta = htmlspecialchars(strip_tags($_POST['cantidadAlerta'.$i]));
 					$imagen1 = "";
 					$imagen2 = "";
 					$imagen3 = "";
@@ -320,7 +340,7 @@
 						$imagen6TmpName = $_FILES['imagen6'.$i]['tmp_name'];
 						move_uploaded_file($imagen6TmpName, $ruta.$imagen6);
 					}
-					$this->almacenModelo->productoNuevoDetalle($idProducto,$idTalla,$color,$imagen1,$imagen2,$imagen3,$imagen4,$imagen5,$imagen6,$cantidad);
+					$this->almacenModelo->productoNuevoDetalle($idProducto,$idTalla,$color,$codigo,$imagen1,$imagen2,$imagen3,$imagen4,$imagen5,$imagen6,$cantidad,$cantidadAlerta);
 				} 
 				
 			}
@@ -342,6 +362,8 @@
 			return $this->almacenModelo->selectTalla();
 		}
 
+		//RAZON: Mostrar el formulario de cuantos productos nuevos se intertaran
+		//PORQUE: Es necesario para insertar y editar
 		public function cantidadDetalle(){
 			if($_POST){
 				$cantidadColor = $_POST['cantidadColor'];

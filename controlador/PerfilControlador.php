@@ -2,14 +2,14 @@
 
 require_once 'modelo/perfilModelo.php';
 
-class PerfilControlador {
+class perfilControlador {
 
     private $perfilModelo;
 
     //SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
     //PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
     public function __construct() {
-        $this->perfilModelo = new PerfilModelo();
+        $this->perfilModelo = new perfilModelo();
     } 
 
 	public function index() {

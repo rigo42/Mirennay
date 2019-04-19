@@ -1,6 +1,6 @@
 <?php
 
-class Error404Controlador {
+class error404Controlador {
 
 	public function index() {
 		include('vista/cliente/head/index.php');

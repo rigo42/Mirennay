@@ -1,12 +1,12 @@
 <?php
 require_once 'conexion.php';
 
-class ProductoCarritoModelo extends Conexion {
+class productoCarritoModelo{
 
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	public function funcion(){

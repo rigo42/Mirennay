@@ -1,12 +1,12 @@
 <?php
 require_once 'conexion.php';
 
-class ProductoEstrellaModelo extends Conexion {
+class productoEstrellaModelo{
 
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	public function productoEstrella($idProducto){

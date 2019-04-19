@@ -92,12 +92,12 @@
 							</select>
 						</label>
 					</div>
-					<!--
+					
 					<ul class="store-grid">
-						<li class="active"><i class="fa fa-th"></i></li>
-						<li><a href="#"><i class="fa fa-th-list"></i></a></li>
+						<li class="active dropFlex"><i class="fa fa-th"></i></li>
+						<li class="addFlex"><a href="#"><i class="fa fa-th-list"></i></a></li>
 					</ul>
-					-->
+					
 				</div>
 				<!-- /store top filter -->
 
@@ -200,6 +200,18 @@
 			var precioMin = $("input[name='precioMin']").val();
 			var precioMax = $("input[name='precioMax']").val();
 			paginadorProducto("","",precioMin,precioMax,idGenero,idSubCategoria,9,1);
+		});
+
+		$(".store-grid li").click(function(e){
+			e.preventDefault();
+			var clase = $(this).attr("class");
+			$(".store-grid li").removeClass("active");
+			$(this).addClass("active");
+			if(clase == "addFlex"){
+				$(".product").addClass("flex");
+			}else{
+				$(".product").removeClass("flex");
+			}
 		});
 
 	});

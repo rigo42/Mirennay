@@ -3,7 +3,7 @@
 require_once 'modelo/pedidoModelo.php';
 require_once 'controlador/perfilControlador.php';
 
-class PedidoControlador {
+class pedidoControlador {
 
     private $pedidoModelo;
     private $perfilControlador;
@@ -11,8 +11,8 @@ class PedidoControlador {
     //SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
     //PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
     public function __construct() {
-        $this->pedidoModelo = new PedidoModelo();
-        $this->perfilControlador = new PerfilControlador();
+        $this->pedidoModelo = new pedidoModelo();
+        $this->perfilControlador = new perfilControlador();
     } 
 
 	public function index() {
@@ -132,6 +132,65 @@ class PedidoControlador {
 
     public function insertarPedido($idUsuarioDetalle){
         return $this->pedidoModelo->insertarPedido($idUsuarioDetalle);
+    }
+
+    /////////////////////////////////////
+    //            ADMIN                \\
+   //////////////////////////////////////
+
+    public function admin(){
+        session_start();
+        if(isset($_SESSION['idUsuario']) && $_SESSION['rol'] == "admin"){
+            include('vista/admin/head/index.php');
+            include('vista/admin/header/index.php');
+            include('vista/admin/menu/index.php');
+
+            include('vista/admin/pedido/index.php');
+
+            include('vista/admin/footer/index.php');
+        }else{
+            header("Location: ".URL."inicio");
+        }
+    }
+
+    public function mostrarPedidoGeneral(){
+        if($_POST){
+            $searchSQL = "";
+            if(!empty($_POST['search'])){
+                $search = htmlspecialchars(addslashes($_POST['search']));
+                $searchSQL = " AND  (pu.folio like '%" .$search. "%') ";
+                $this->pedidoModelo->set("folio",$searchSQL);
+            }
+            $res = $this->pedidoModelo->mostrarPedidoGeneral();
+            $row = $res->rowCount();
+            if($row > 0){
+                include('vista/admin/pedido/pedido.php');
+            }else{
+                echo "No se han encontrado pedidos nuevos";
+            }
+        }
+    }
+
+    public function mostrarPedidoDetalle($folio){
+         return $this->pedidoModelo->mostrarPedidoDetalle($folio);
+    }
+
+    public function modalDireccion(){
+        if($_POST){
+            $folio = $_POST['folio'];
+            $res = $this->pedidoModelo->modalDireccion($folio);
+            include('vista/admin/pedido/modalDireccion.php');
+        }
+    }
+
+    public function obtenerPedido(){
+        if($_POST){
+            $folio = $_POST['folio'];
+            $res = $this->pedidoModelo->obtenerPedido($folio);
+            foreach ($res as $key) {
+               $this->pedidoModelo->insertarVentaOnline($key['id_pedido_usuario']);
+            }
+        }
     }
 
 }

@@ -28,11 +28,11 @@
                         <h3>General</h3>
                         <section>
                             <div class="row mb-3">
-                                <div class="col-lg-9">
+                                <div class="col-lg-4">
                                     <label>Nombre *</label>
                                     <input name="producto" required="" type="text" class="form-control" placeholder="Camisa">
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <label>Precio *</label>
                                     <div class="input-group">
                                         <div class="input-group-append">
@@ -43,7 +43,7 @@
                                             <span class="input-group-text">MXN</span>
                                         </div>
                                     </div>
-                                </div>                                  
+                                </div>    
                             </div>
 
                              <div class="row mb-3">

@@ -1,5 +1,5 @@
 <?php 
-	class Enrutador{
+	class enrutador{
 		
 		public function run(Request $request){
 			

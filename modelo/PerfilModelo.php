@@ -1,12 +1,12 @@
 <?php
 require_once 'conexion.php';
 
-class PerfilModelo extends Conexion {
+class perfilModelo{
 
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	public function direccion($idUsuario){

@@ -1,5 +1,5 @@
 <?php 
-	class Autoload{
+	class autoload{
 		
 		public static function run(){
 			spl_autoload_register(function($class){

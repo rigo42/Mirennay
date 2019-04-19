@@ -4,7 +4,7 @@ require_once 'modelo/loginModelo.php';
 require_once 'controlador/productoFavoritoControlador.php';
 require_once 'controlador/productoCarritoControlador.php';
 
-class LoginControlador {
+class loginControlador {
 
     private $loginModelo;
     private $productoFavoritoControlador;
@@ -13,9 +13,9 @@ class LoginControlador {
     //SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
     //PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
     public function __construct() {
-        $this->loginModelo = new LoginModelo();
-        $this->productoFavoritoControlador = new ProductoFavoritoControlador();
-        $this->productoCarritoControlador = new ProductoCarritoControlador();
+        $this->loginModelo = new loginModelo();
+        $this->productoFavoritoControlador = new productoFavoritoControlador();
+        $this->productoCarritoControlador = new productoCarritoControlador();
     } 
 
 	public function index(){

@@ -1,12 +1,12 @@
 <?php
 require_once 'conexion.php';
 
-class ProductoNuevoModelo extends Conexion {
+class productoNuevoModelo{
 
 	private $conexion;
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	public function productoNuevo(){
@@ -15,7 +15,7 @@ class ProductoNuevoModelo extends Conexion {
 				FROM producto p
 				INNER JOIN sub_categoria sc ON sc.id_sub_categoria = p.id_sub_categoria 
 				INNER JOIN categoria c ON c.id_categoria = sc.id_categoria 
-				WHERE sc.activo = 1 AND p.activo = 1 AND p.fecha_alta >= adddate(NOW(),interval -90 day)";
+				WHERE sc.activo = 1 AND p.activo = 1 AND p.fecha_alta >= adddate(NOW(),interval -7 day)";
 		return $res = $this->conexion->mostrarSQL($sql);
 	}
 

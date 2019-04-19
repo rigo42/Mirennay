@@ -5,7 +5,7 @@
 	require_once 'controlador/productoEstrellaControlador.php';
 	require_once 'controlador/productoCarritoControlador.php';
 
-	class ProductoDetalleControlador{
+	class productoDetalleControlador{
 		
 		private $productoDetalleModelo;
 		private $productoFavoritoControlador; 
@@ -15,10 +15,10 @@
 		//SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
 		//PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
 		public function __construct(){
-			$this->productoDetalleModelo =  new ProductoDetalleModelo;
-			$this->productoFavoritoControlador = new ProductoFavoritoControlador();
-			$this->productoEstrellaControlador = new ProductoEstrellaControlador();
-			$this->productoCarritoControlador = new ProductoCarritoControlador();
+			$this->productoDetalleModelo =  new productoDetalleModelo;
+			$this->productoFavoritoControlador = new productoFavoritoControlador();
+			$this->productoEstrellaControlador = new productoEstrellaControlador();
+			$this->productoCarritoControlador = new productoCarritoControlador();
 		} 
 
 		public function index(){

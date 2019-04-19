@@ -1,10 +1,10 @@
 <?php
 require_once 'conexion.php';
 
-class TiendaModelo extends Conexion {
+class tiendaModelo{
 
 	public function __construct() {
-		$this->conexion = new Conexion();
+		$this->conexion = new conexion();
 	} 
 
 	//SIRVE: Para cuantos productos se mostraran, respetando los filtros que el usuario seleccione
@@ -40,6 +40,7 @@ class TiendaModelo extends Conexion {
 				".$precioSQL."
 				".$idSubCategoriaSQL."
 				".$searchSQL."
+				ORDER BY p.id_producto DESC
 				LIMIT ".$limiteSQL." , ".$cantidadPagina." ";
 		$res = $this->conexion->mostrarSQL($sql);
 		$row = $res->rowCount();

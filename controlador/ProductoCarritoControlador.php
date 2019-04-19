@@ -2,7 +2,7 @@
 	//Imports
 	require_once 'modelo/productoCarritoModelo.php';
 
-	class ProductoCarritoControlador{
+	class productoCarritoControlador{
 		
 		private $productoCarritoModelo;
 

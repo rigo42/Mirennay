@@ -19,10 +19,10 @@ class TiendaControlador{
 	//SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
 	//PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
 	public function __construct(){
-		$this->tiendaModelo = new TiendaModelo();
-		$this->productoFavoritoControlador = new ProductoFavoritoControlador();
-        $this->productoEstrellaControlador = new ProductoEstrellaControlador();
-        $this->productoMasVendidoControlador = new ProductoMasVendidoControlador();
+		$this->tiendaModelo = new tiendaModelo();
+		$this->productoFavoritoControlador = new productoFavoritoControlador();
+        $this->productoEstrellaControlador = new productoEstrellaControlador();
+        $this->productoMasVendidoControlador = new productoMasVendidoControlador();
 
 	} 
 
