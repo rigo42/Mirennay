@@ -31,7 +31,7 @@
     </div>
 
     <div class="container-fluid">
-    	<div class="row el-element-overlay" id="tablaDinamica" data-url="pedido/mostrarPedidoGeneral">
+    	<div id="tablaDinamica" data-url="pedido/mostrarPedidoGeneral">
         </div>
     </div>
 

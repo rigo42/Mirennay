@@ -8,12 +8,13 @@ require_once 'conexion.php';
 class empresaModelo{
 	
 	//Atributos propios del producto
-	private $id_empresa;
+	private $idEmpresa;
 	private $empresa;
 	private $direccion;
 	private $celular;
+	private $correo;
 	private $observacion;
-	private $fecha_alta;
+	private $fechaAlta;
 	private $activo;
 	private $search;
 	private $conexion;
@@ -23,10 +24,10 @@ class empresaModelo{
 	} 
 
 	public function construir(){
-		$sql = "SELECT
-				FROM 
+		$sql = "SELECT e.*
+				FROM empresa e
 				WHERE 1
-				".$this->idProducto."
+				".$this->idEmpresa."
 				";
 		return $this->conexion->mostrarSQL($sql);
 	}
@@ -41,6 +42,16 @@ class empresaModelo{
 				LIMIT 1000
 				";
 		return $this->conexion->mostrarSQL($sql);
+	}
+
+	public function nuevo(){
+		$sql = "INSERT INTO empresa (empresa,direccion,celular,correo,observacion,fecha_alta,activo) VALUES('$this->empresa','$this->direccion','$this->celular','$this->correo','$this->observacion',NOW(),1)";
+		$this->conexion->ejecutarSQL($sql);
+	}
+
+	public function editar(){
+		$sql = "UPDATE empresa SET empresa = '$this->empresa',direccion = '$this->direccion',celular = '$this->celular',correo = '$this->correo',observacion = '$this->observacion',activo = $this->activo WHERE id_empresa = $this->idEmpresa";
+		$this->conexion->ejecutarSQL($sql);
 	}
 
     public function set($atributo,$contenido){

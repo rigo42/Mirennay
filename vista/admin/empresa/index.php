@@ -40,7 +40,7 @@
     </div>
 
     <div class="container-fluid">
-        <div class="row el-element-overlay" id="tablaDinamica" data-url="empresa/mostrar">
+        <div id="tablaDinamica" data-url="empresa/mostrar">
         </div>
     </div>
 

@@ -51,7 +51,7 @@ function tablaDinamica(search,url,activo){
         },
         cache: false,
         beforeSend: function() {
-            $('#tablaDinamica').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+            $('#tablaDinamica').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
              $('#tablaDinamica').html(data);
@@ -127,7 +127,7 @@ function  productoActivo(idProducto,activo){
         },
         cache: false,
         beforeSend: function() {
-            //$('#tablaDinamica').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+            //$('#tablaDinamica').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
             location=URL+'almacen';
@@ -144,7 +144,7 @@ function eliminarProductoDetalle(idProductoDetalle){
         },
         cache: false,
         beforeSend: function() {
-            //$('#tablaDinamica').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+            //$('#tablaDinamica').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
              //$('#tablaDinamica').html(data);
@@ -162,7 +162,7 @@ function eliminarImagen(idProductoDetalle,atributo){
         },
         cache: false,
         beforeSend: function() {
-            //$('#tablaDinamica').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+            //$('#tablaDinamica').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
              //$('#tablaDinamica').html(data);
@@ -179,7 +179,7 @@ function modalDireccion(folio){
         },
         cache: false,
         beforeSend: function() {
-           // $('#tablaDinamica').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+           // $('#tablaDinamica').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
              $('#modalDireccion').html(data);
@@ -288,10 +288,56 @@ function confirmarPago(){
         },
         cache: false,
         beforeSend: function(){
-            $('#cambioPago').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+            $('#cambioPago').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
             window.location.reload(true); 
+        }
+    });
+}
+
+function formEmpresaEditar(datos){
+     $.ajax({
+        type: "POST",
+        url: URL+"empresa/formEmpresaEditar",
+        data: datos,
+        cache: false,
+        beforeSend: function() {
+            $('#modificar').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                if(data == 1){
+                    $('#modificar').html('Utilize un correo valido');
+                }else{
+                    alert(data);
+                }
+            }else{
+                $('#modificar').html('Listo');
+            }
+        }
+    });
+}
+
+function formEmpresaNuevo(datos){
+     $.ajax({
+        type: "POST",
+        url: URL+"empresa/formEmpresaNuevo",
+        data: datos,
+        cache: false,
+        beforeSend: function() {
+            $('#agregar').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                if(data == 1){
+                    $('#agregar').html('Utilize un correo valido');
+                }else{
+                    alert(data);
+                }
+            }else{
+                $('#agregar').html('Listo');
+            }
         }
     });
 }

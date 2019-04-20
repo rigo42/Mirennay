@@ -51,7 +51,7 @@
     <!-- Editor -->
     <script src="<?php echo URL ?>libreria/js/admin/quill.min.js"></script>
     <!-- Admin -->
-    <script src="<?php echo URL ?>libreria/js/admin/adminss.js"></script>
+    <script src="<?php echo URL ?>libreria/js/admin/admins.js"></script>
     
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->

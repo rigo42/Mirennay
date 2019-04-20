@@ -51,7 +51,7 @@
   <div class="row container">
     <div class="col-md-8">
       <button type="button" class="btn btn-secondary cancelar">Cancelar</button>
-     <button type="button" class="btn btn-success pagar">Pagar</button>
+     <button type="button" class="btn btn-primary pagar">Pagar</button>
     </div>
     <div class="col-md-4">
        <p><b>Total</b> $<?php echo $totalNetoIva ?></p>

@@ -9,7 +9,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?php echo URL ?>">Inicio</a></li>
                             <li class="breadcrumb-item" aria-current="page"><a href="<?php echo URL ?>empresa">Empresas</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+                            <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
                         </ol>
                     </nav>
                 </div>
@@ -21,62 +21,46 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                    <form class="form-horizontal" id="formEmpresaEditar">
+                    <form class="form-horizontal" id="formEmpresaNuevo">
 
                         <div class="card-body">
-                            <h6 class="card-title">Actualize los datos</h6>
+                            <h6 class="card-title">Agrege los datos</h6>
                             <div class="form-group row">
                                 <label class="col-sm-3 text-right control-label col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input type="text" required name="empresa" value="<?php echo $value['empresa'] ?>" class="form-control" placeholder="nombre de la empresa">
+                                    <input type="text" required name="empresa" class="form-control" placeholder="nombre de la empresa">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 text-right control-label col-form-label">Dirección</label>
                                 <div class="col-sm-9">
-                                    <input type="text" value="<?php echo $value['direccion'] ?>" required name="direccion" class="form-control" placeholder="dirección de la empresa">
+                                    <input type="text" required name="direccion" class="form-control" placeholder="dirección de la empresa">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 text-right control-label col-form-label">Celular</label>
                                 <div class="col-sm-9">
-                                    <input type="tel" value="<?php echo $value['celular'] ?>" required name="celular" class="form-control" placeholder="Celular de la empresa">
+                                    <input type="tel" required name="celular" class="form-control" placeholder="Celular de la empresa">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 text-right control-label col-form-label">Correo</label>
                                 <div class="col-sm-9">
-                                    <input type="text" value="<?php echo $value['correo'] ?>"  name="correo" class="form-control" placeholder="Correo de la empresa">
+                                    <input type="text" name="correo" class="form-control" placeholder="Correo de la empresa">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 text-right control-label col-form-label">Observación</label>
                                 <div class="col-sm-9">
-                                    <textarea required name="observacion" class="form-control"><?php echo $value['observacion'] ?></textarea> 
+                                    <textarea required name="observacion" class="form-control"></textarea> 
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-3 text-right control-label col-form-label">Estado</label>
-                                <div class="col-sm-9">
-                                    <select required="" class="select form-control" required name="activo" style="width: 100%; height:36px;">
-                                        <?php if($value['activo'] == 1){ ?>
-                                        <option value="1">Activo</option>
-                                        <option value="0">Baja</option>
-                                        <?php }else{ ?>
-                                        <option value="0">Baja</option>
-                                        <option value="1">Activo</option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- inputs ocultos -->
-                            <input type="hidden" required="" value="<?php echo openssl_encrypt($idEmpresa, COD, KEY) ?>" name="idEmpresa" class="form-control">
                             
                         </div>
                         <div class="border-top">
                             <div class="card-body">
-                                <input type="submit" class="btn btn-primary" value="Modificar">
-                                <div id="modificar"></div>
+                                <input type="submit" class="btn btn-primary" value="Agregar">
+                                <div id="agregar"></div>
                             </div>
                         </div>
                     </form>
@@ -90,12 +74,12 @@
 <script type="text/javascript">
    $(document).ready(function(){
 
-        tittlePage("#menuEmpresa","Empresas | Editar");
+        tittlePage("#menuEmpresa","Empresas | Nuevo");
 
-        $("#formEmpresaEditar").submit(function(e){
+        $("#formEmpresaNuevo").submit(function(e){
             e.preventDefault();
              var datos = $(this).serialize();
-             formEmpresaEditar(datos);
+             formEmpresaNuevo(datos);
         });
         
    });
