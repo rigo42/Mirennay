@@ -5,14 +5,19 @@
 
 require_once 'conexion.php';
 
-class loginModelo{
+class adminLoginModelo{
 	
-	private $idUsuario;
-	private $usuario;
+	private $idEmpleado;
+	private $rol;
+	private $empleado;
+	private $nombre;
+	private $apellidoPaterno;
+	private $apellidoMaterno;
+	private $nss;
+	private $salario;
 	private $password;
 	private $correo;
-	private $imagen;
-	private $password_modificacion_activo;
+	private $passwordModificacionActivo;
 	private $codigoVerificacion;
 	private $passwordModificacion;
 	private $fechaLimiteVerificacion;
@@ -27,38 +32,32 @@ class loginModelo{
 	} 
 
 	public function construir(){
-		$sql = "SELECT u.*,NOW() AS hoy
-				FROM usuario u
-				WHERE 1
-				$this->idUsuario
-				$this->codigoVerificacion
+		$sql = "SELECT e.*,r.*,NOW() AS 'hoy'
+				FROM empleado e
+				INNER JOIN rol r ON r.id_rol = e.id_rol
+				WHERE 1 
+				$this->empleado
+				$this->idEmpleado
 				$this->correo
-				$this->usuario
+				$this->codigoVerificacion
 				$this->activo
 				";
-		return $res = $this->conexion->mostrarSQL($sql);
+		return $this->conexion->mostrarSQL($sql);
 	}
-
-	public function usuarioNuevo(){
-		$sql = "INSERT INTO usuario(usuario,password,correo,fecha_alta,activo)
-				VALUES('$this->usuario','$this->password','$this->correo',NOW(),1)";
-		$this->conexion->ejecutarSQL($sql);
-	}
-
+	
 	public function activarCodigoVerificacion(){
-		$sql = "UPDATE usuario 
+		$sql = "UPDATE empleado 
 				SET password_modificacion_activo = 1, codigo_verificacion = '$this->codigoVerificacion', fecha_limite_verificacion = '$this->fechaLimiteVerificacion'
 				WHERE correo = '$this->correo' AND activo = 1 ";
 		return $this->conexion->ejecutarSQL($sql);
 	}
 
 	public function cambiarPassword(){
-		$sql = "UPDATE usuario 
+		echo $sql = "UPDATE empleado 
 				SET password_modificacion = '$this->passwordModificacion'
 				WHERE correo = '$this->correo' AND activo = 1 ";
 		return $this->conexion->ejecutarSQL($sql);
 	}
-
 
     public function set($atributo,$contenido){
 		$this->$atributo = $contenido;

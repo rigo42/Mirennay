@@ -15,8 +15,9 @@
     <link href="<?php echo URL ?>libreria/css/admin/jquery.steps.css" rel="stylesheet">
     <link href="<?php echo URL ?>libreria/css/admin/steps.css" rel="stylesheet">
     <link href="<?php echo URL ?>libreria/css/admin/magnific-popup.css" rel="stylesheet">
+    <link href="<?php echo URL ?>libreria/css/admin/toastr.min.css" rel="stylesheet">
     <link href="<?php echo URL ?>libreria/css/admin/styless.min.css" rel="stylesheet">
-    <link href="<?php echo URL ?>libreria/css/admin/bootstrap.min.css" rel="stylesheet">
+
     <!-- Editor -->
     <link rel="stylesheet" type="text/css" href="<?php echo URL ?>libreria/css/admin/quill.snow.css">
     
@@ -50,6 +51,8 @@
     <script src="<?php echo URL ?>libreria/js/admin/jquery.validate.min.js"></script>
     <!-- Editor -->
     <script src="<?php echo URL ?>libreria/js/admin/quill.min.js"></script>
+     <!-- Notificaciones -->
+    <script src="<?php echo URL ?>libreria/js/admin/toastr.min.js"></script>
     <!-- Admin -->
     <script src="<?php echo URL ?>libreria/js/admin/admins.js"></script>
     
@@ -66,4 +69,5 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <div id="main-wrapper">
-        
+
+       

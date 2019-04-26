@@ -19,7 +19,7 @@
               $n = 0;
             	foreach ($res as $key) {
             	?>
-              <tr onclick="location='<?php echo URL ?>empresa/editar?idEmpresa=<?php echo urlencode(openssl_encrypt($key['id_empresa'], COD, KEY)) ?> ' ">
+              <tr onclick="location='<?php echo URL ?>adminEmpresa/editar?idEmpresa=<?php echo urlencode(openssl_encrypt($key['id_empresa'], COD, KEY)) ?> ' ">
                 <th scope="row"><?php echo ++$n ?></th>
                 <td><?php echo $key['empresa'] ?></td>
                 <td><?php echo $key['direccion'] ?></td>

@@ -1,48 +1,42 @@
-<?php 
-  $n=0;
-	foreach ($res as $key) { 
-	?>
-        	
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title m-b-0 folio" data-folio="<?php echo $key['folio'] ?>" style="cursor: pointer;"><?php echo $key['nombre_completo']." (".$key['folio'].")" ?></h5>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title m-b-0">Pedidos recientes</h4>
+        </div>
+        <div class="comment-widgets scrollable">
+            
+            <?php 
+            foreach ($res as $key) { 
+
+              if(!empty($key['imagen'])){
+                $imagen = $key['imagen'];
+              }else{
+                 $imagen = "default.jpg";
+              }
+
+            ?>
+            <!-- Comment Row -->
+            <div class="d-flex flex-row comment-row m-t-0">
+                <div class="p-2"><img src="<?php echo URL ?>libreria/imgCliente/<?php echo $imagen ?>" alt="user" width="50" class="rounded-circle"></div>
+                <div class="comment-text w-100">
+                    <h6 class="font-medium "> <?php echo $key['nombre_completo']." (".$key['folio'].")" ?></h6>
+                    <span class="m-b-15 d-block"></span>
+                    <div class="comment-footer">
+                        <span class="text-muted float-right"><?php echo $key['fecha_alta'] ?></span> 
+                        <button type="button" class="btn btn-primary btn-sm folio" data-folio="<?php echo $key['folio'] ?>">Ver</button>
+                        <button type="button" class="btn btn-success btn-sm enviarProducto" data-folio="<?php echo $key['folio'] ?>">Enviar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- // Comment Row -->
+            <?php } ?>
+            
+        </div>
     </div>
-    <div class="container">
-      <div class="table-responsive">
-      <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Imagen</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Talla</th>
-                <th scope="col">Color</th>
-              </tr>
-            </thead>
-            <tbody>
-            	<?php 
-            	$res2 = $this->mostrarPedidoDetalle($key['folio']);
-            	foreach ($res2 as $key2) {
-            	?>
-              <tr>
-                <th scope="row"><?php echo ++$n ?></th>
-                <td><img class="col-md-2" src="<?php echo URL ?>libreria/imgProducto/<?php echo $key2['imagen_principal'] ?>"></td>
-                <td><?php echo $key2['producto'] ?></td>
-                <td><?php echo $key2['cantidad'] ?></td>
-                <td><?php echo $key2['talla'] ?></td>
-                <td><?php echo $key2['color'] ?></td>
-              </tr>
-          	<?php } $n=0; ?>
-            </tbody>
-      </table>
-      </div>
-   </div>
+  </div>
 </div>
 
-	<?php
-   } 
-	?>
 <script type="text/javascript">
   $(document).ready(function(){
 
@@ -52,6 +46,13 @@
         modalDireccion(folio);
       });
 
+      $(".enviarProducto").click(function(e){
+        e.preventDefault();
+        if(confirm("¿Ya entregaste el paquete a correos?")){
+          var folio = $(this).attr("data-folio");
+          obtenerPedido(folio);
+        }
+      });
 
   });
 </script>

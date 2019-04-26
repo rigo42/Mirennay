@@ -5,7 +5,7 @@
 		<!-- row -->
 		<div class="row">
 			<?php 
-			$res = $this->categoriaControlador->coleccion();
+			$res = $this->adminCategoriaControlador->coleccion();
 			foreach ($res as $key) {
 			 ?>
 			 <!-- shop -->

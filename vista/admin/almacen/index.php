@@ -3,12 +3,12 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Empresas</h4>
+                <h4 class="page-title">Productos</h4>
                 <div class="ml-auto text-right">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?php echo URL ?>">Inicio</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Empresas</li>
+                            <li class="breadcrumb-item active" aria-current="page">Productos</li>
                         </ol>
                     </nav>
                 </div>
@@ -30,7 +30,7 @@
                                 <span class="input-group-text" title="Ver inactivos" style="cursor: pointer;"><i class="fas fa-window-close"></i></span>
                             </div>
                             <div class="input-group-append">
-                                <a href="<?php echo URL ?>adminEmpresa/nuevo" class="input-group-text" title="Nuevo" style="cursor: pointer;"><i class="fas fa-plus"></i></a>
+                                <a href="<?php echo URL ?>adminAlmacen/nuevo" class="input-group-text" title="Nuevo" style="cursor: pointer;"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -40,13 +40,13 @@
     </div>
 
     <div class="container-fluid">
-        <div id="tablaDinamica" data-url="adminEmpresa/mostrar">
+        <div class="row el-element-overlay" id="tablaDinamica" data-url="adminAlmacen/producto">
         </div>
     </div>
 
 </div>
 
 <script type="text/javascript">
-    tittlePage("#menuEmpresa","Empresas");
-    tablaDinamica("","adminEmpresa/mostrar",1);
+    tittlePage("#menuProducto","Almacen");
+    tablaDinamica("","adminAlmacen/producto",1);
 </script>

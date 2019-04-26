@@ -7,7 +7,7 @@
                 <div class="ml-auto text-right">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?php echo URL ?>">Inicio</a></li>
+                            <li class="breadcrumb-item"><a href="<?php echo URL ?>adminPuntoVenta">Inicio</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
                         </ol>
                     </nav>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="container-fluid">
-    	<div id="tablaDinamica" data-url="pedido/mostrarPedidoGeneral">
+    	<div id="tablaDinamica" data-url="adminPedido/mostrarPedidoGeneral">
         </div>
     </div>
 
@@ -43,7 +43,7 @@
 	$(document).ready(function(){
 
 	    tittlePage("#menuPedido","Pedido");
-	    tablaDinamica("","pedido/mostrarPedidoGeneral",1);
+	    tablaDinamica("","adminPedido/mostrarPedidoGeneral",1);
 
 	    $(".folio").click(function(e){
 	    	e.preventDefault();

@@ -173,6 +173,20 @@ $(document).ready(function(){
 		$("#titulo").html(titulo);
 	}
 
+	//SIRVE: Para resaltar una notificacion
+	//PORQUE: El usuario debe darse cuenta que esta pasando
+	function notificacion(tipo,mensaje){
+	    if(tipo == "success"){
+	        toastr.success(mensaje);
+	    }if(tipo == "info"){
+	        toastr.info(mensaje);
+	    }if(tipo == "warning"){
+	        toastr.warning(mensaje);
+	    }if(tipo == "error"){
+	        toastr.error(mensaje);
+	    }
+	}
+
 
 	//SIRVE: Para añadir o quitar de favorito
 	//PORQUE: Para administrar los favoritos del usuario
@@ -308,7 +322,7 @@ $(document).ready(function(){
 	        },
 	        cache: false,
 			beforeSend: function() {
-	            $('#ventanaEncuestaComentario').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+	            $('#ventanaEncuestaComentario').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
 	        },
 	        success: function(data) {
 	            $("#ventanaEncuestaComentario").html(data);
@@ -327,7 +341,7 @@ $(document).ready(function(){
 	        },
 	        cache: false,
 			beforeSend: function() {
-	            $('#ventanaEncuestaEstrella').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+	            $('#ventanaEncuestaEstrella').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
 	        },
 	        success: function(html) {
 	            $("#ventanaEncuestaEstrella").html(html);
@@ -346,7 +360,7 @@ $(document).ready(function(){
 	        },
 	        cache: false,
 			beforeSend: function() {
-	            $('#ventanaEncuestaFormulario').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+	            $('#ventanaEncuestaFormulario').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
 	        },
 	        success: function(data) {
 	            $("#ventanaEncuestaFormulario").html(data);
@@ -367,7 +381,7 @@ $(document).ready(function(){
 	        },
 	        cache: false,
 			beforeSend: function() {
-	            $('#publicarComentario').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+	            $('#publicarComentario').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
 	        },
 	        success: function(data){
         		ventanaEncuestaEstrella(idProducto);
@@ -397,7 +411,7 @@ $(document).ready(function(){
 	        data: direccion,
 	        cache: false,
 			beforeSend: function() {
-	            //$('#ventanaEncuestaEstrella').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
+	            //$('#ventanaEncuestaEstrella').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
 	        },
 	        success: function(data) {
 	          	if(data == "1"){
@@ -491,9 +505,142 @@ $(document).ready(function(){
 	    		if(data != ""){
 	    			alert(data);
 	    		}else{
-	    			location="inicio";
+	    			location=URL+"inicio";
 	    		}
 	        }
+		});
+	}
+
+	function iniciarSesion(datos){
+		$.ajax({
+            type: "POST",
+            url: URL+"login/iniciarSesion",
+            data: datos,
+            cache: false,
+    		beforeSend: function() {
+                $('#mensajeLogin').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+            },
+            success: function(data) {
+            	var idProducto = $("input[name='idProductoUrlEncode']").val();
+            	if(data == 1){
+            		location=URL+"productoDetalle?idProducto="+idProducto;
+            	}else if(data == 2){
+            		location=URL+"productoDetalle?idProducto="+idProducto;
+            	}else if(data == 3){
+            		 location=URL+"inicio";
+            	}else if(data == 4){
+            		$('#mensajeLogin').html('');
+            		notificacion("error","Usuario o contraseña es incorrecto");
+            	}else{
+            		$('#mensajeLogin').html('');
+            		notificacion("error",data);
+            	}
+            }
+   	    });
+	}
+
+	function usuarioNuevo(datos){
+		$.ajax({
+            type: "POST",
+            url: URL+"login/usuarioNuevo",
+            data: datos,
+            cache: false,
+    		beforeSend: function() {
+                $('#gif').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+            },
+            success: function(data) {
+            	if(data == 1){
+            		$("#password").css("border-color", "#fff");
+        			$("#passwordC").css("border-color", "#fff");
+        			$("#usuario").css("border-color", "#fff");
+        			$("#correo").css("border-color", "#fff");
+        			iniciarSesion(datos);
+        		}else if(data == 3){
+        			notificacion("warning","El correo electronico no es valido");
+        			$('#gif').html('Registrarse');
+        			$("#correo").css("border-color", "red");
+        			$("#password").css("border-color", "#fff");
+        			$("#passwordC").css("border-color", "#fff");
+        			$("#usuario").css("border-color", "#fff");
+        		}else if(data == 4){
+        			notificacion("warning","El usuario ya esta en uso");
+        			$('#gif').html('Registrarse');
+        			$("#correo").css("border-color", "#fff");
+        			$("#password").css("border-color", "#fff");
+        			$("#passwordC").css("border-color", "#fff");
+        			$("#usuario").css("border-color", "red");
+        		}else if(data == 5){
+        			notificacion("warning","El correo ya esta en uso");
+        			$('#gif').html('Registrarse'); 
+        			$("#usuario").css("border-color", "#fff");
+        			$("#password").css("border-color", "#fff");
+        			$("#passwordC").css("border-color", "#fff");
+        			$("#correo").css("border-color", "red");
+        		}else{		                
+        			$('#gif').html('Registrarse'); 
+               		notificacion("error",data);
+            	}
+            }
+   	    });
+	}
+
+	function activarCodigoVerificacion(datos){
+	    $.ajax({
+	        type: "POST",
+	        url: URL+"login/activarCodigoVerificacion",
+	        data: datos,
+	        cache: false,
+	        beforeSend: function() {
+	            $('#gif').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+	        },
+	        success: function(data){
+	            if(data == 1){
+	                $('#gif').html('Listo');
+	                notificacion("success","Revisa tu correo electronico.");
+	            }else if(data == 2){
+	                $('#gif').html('Intente otra vez');
+	                notificacion("warning","Correo invalido.");
+	            }else if(data == 3){
+	                $('#gif').html('Intente otra vez');
+	                notificacion("warning","Correo no encontrado en el sistema.");
+	            }else{
+	                $('#gif').html(data);
+	                notificacion("error",data);
+	            }
+	        }
+	    });
+	}
+
+	function cambiarPassword(password,correo){
+	    $.ajax({
+	        type: "POST",
+	        url: URL+"login/cambiarPassword",
+	        data: {
+	            password:password,
+	            correo:correo
+	        },
+	        cache: false,
+	        beforeSend: function() {
+	            $('#gif').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+	        },
+	        success: function(data){
+	            if(data == 1){
+	                $('#gif').html('Listo');
+	                notificacion("success","¡Listo! vuelve a iniciar sesión.");
+	                location=URL+"login";
+	            }else{
+	                $('#gif').html('');
+	                notificacion("error",data);
+	            }
+	        }
+	    });
+	}
+
+
+
+	function cerrarSesion(){
+		$.post(URL+'login/cerrarSesion',{},function(data){
+			location=URL+"inicio";
 		});
 	}
 

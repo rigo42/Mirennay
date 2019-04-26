@@ -2,26 +2,26 @@
 
 require_once 'controlador/productoNuevoControlador.php';
 require_once 'controlador/productoMasVendidoControlador.php';
-require_once 'controlador/categoriaControlador.php';
+require_once 'controlador/adminCategoriaControlador.php';
 
 class inicioControlador {
 
     private $productoNuevoControlador;
     private $productoMasVendidoControlador;
-    private $categoriaControlador;
+    private $adminCategoriaControlador;
 
     //SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
     //PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
     public function __construct() {
         $this->productoNuevoControlador = new productoNuevoControlador();
         $this->productoMasVendidoControlador = new productoMasVendidoControlador();
-        $this->categoriaControlador = new categoriaControlador();
+        $this->adminCategoriaControlador = new adminCategoriaControlador();
     } 
 
 	public function index() {
         session_start();
-        $_SESSION['idEmpleado'] = 1; //quitar esto despues
-        $_SESSION['rolEmpleado'] = "admin"; //quitar esto despues
+       // $_SESSION['idEmpleado'] = 3; //quitar esto despues
+       // $_SESSION['rolEmpleado'] = "empleado"; //quitar esto despues
         
 		include('vista/cliente/head/index.php');
         include('vista/cliente/header/index.php');

@@ -34,11 +34,24 @@ $(document).ready(function(){
 
 
 });
+
 //SIRVE: Para setearle un titulo a la pagina
 //PORQUE: Por que el usaurio identificara en que pagina esta si lee el tittle
 function tittlePage(id,titulo){
     $(id).addClass("selected");
     $("#titulo").html(titulo);
+}
+
+function notificacion(tipo,mensaje){
+    if(tipo == "success"){
+        toastr.success(mensaje);
+    }if(tipo == "info"){
+        toastr.info(mensaje);
+    }if(tipo == "warning"){
+        toastr.warning(mensaje);
+    }if(tipo == "error"){
+        toastr.error(mensaje);
+    }
 }
     
 function tablaDinamica(search,url,activo){
@@ -73,7 +86,7 @@ function filePreview(input,id) {
 function cantidadColor1(inicioCantidad,cantidadColor){
     $.ajax({
         type: "POST",
-        url: URL+"almacen/cantidadDetalle",
+        url: URL+"adminAlmacen/cantidadDetalle",
         data: {
             inicioCantidad:inicioCantidad,
             cantidadColor:cantidadColor
@@ -90,14 +103,14 @@ function cantidadColor1(inicioCantidad,cantidadColor){
 function productoNuevo(datos){
     $.ajax({
         type:'POST',
-        url: URL+'almacen/productoNuevo',
+        url: URL+'adminAlmacen/productoNuevo',
         data:datos,
         contentType: false,
         processData : false,
         beforeSend: function() {
         },
         success: function(data) {
-           location=URL+"almacen";
+           location=URL+"adminAlmacen";
         }
     });
 }
@@ -105,14 +118,15 @@ function productoNuevo(datos){
 function productoEditar(datos){
     $.ajax({
         type:'POST',
-        url: URL+'almacen/productoEditar',
+        url: URL+'adminAlmacen/productoEditar',
         data:datos,
         contentType: false,
         processData : false,
         beforeSend: function() {
         },
         success: function(data) {
-            location=URL+"almacen";
+            alert(data);
+            location=URL+"adminAlmacen";
         }
     });
 }
@@ -120,7 +134,7 @@ function productoEditar(datos){
 function  productoActivo(idProducto,activo){
     $.ajax({
         type: "POST",
-        url: URL+"almacen/productoActivo",
+        url: URL+"adminAlmacen/productoActivo",
         data: {
             idProducto:idProducto,
             activo:activo
@@ -138,7 +152,7 @@ function  productoActivo(idProducto,activo){
 function eliminarProductoDetalle(idProductoDetalle){
     $.ajax({
         type: "POST",
-        url: URL+"almacen/eliminarProductoDetalle",
+        url: URL+"adminAlmacen/eliminarProductoDetalle",
         data: {
             idProductoDetalle:idProductoDetalle
         },
@@ -155,7 +169,7 @@ function eliminarProductoDetalle(idProductoDetalle){
 function eliminarImagen(idProductoDetalle,atributo){
     $.ajax({
         type: "POST",
-        url: URL+"almacen/eliminarImagen",
+        url: URL+"adminAlmacen/eliminarImagen",
         data: {
             idProductoDetalle:idProductoDetalle,
             atributo:atributo
@@ -173,7 +187,7 @@ function eliminarImagen(idProductoDetalle,atributo){
 function modalDireccion(folio){
     $.ajax({
         type: "POST",
-        url: URL+"pedido/modalDireccion",
+        url: URL+"adminPedido/modalDireccion",
         data: {
             folio:folio
         },
@@ -190,7 +204,7 @@ function modalDireccion(folio){
 function obtenerPedido(folio){
     $.ajax({
         type: "POST",
-        url: URL+"pedido/obtenerPedido",
+        url: URL+"adminPedido/obtenerPedido",
         data: {
             folio:folio
         },
@@ -200,7 +214,7 @@ function obtenerPedido(folio){
         },
         success: function(data){
             $('#enviarProducto').html("Listo!");
-            location=URL+"pedido/admin";
+            location=URL+"adminPedido";
         }
     });
 }
@@ -208,7 +222,7 @@ function obtenerPedido(folio){
 function ventanaCart(){
     $.ajax({
         type: "POST",
-        url: URL+"puntoVenta/ventanaCart",
+        url: URL+"adminPuntoVenta/ventanaCart",
         data: {
         },
         cache: false,
@@ -224,7 +238,7 @@ function ventanaCart(){
 function addCart(search,cantidadPedido){
     $.ajax({
         type: "POST",
-        url: URL+"puntoVenta/addCart",
+        url: URL+"adminPuntoVenta/addCart",
         data: {
             codigo:search,
             cantidadPedido:cantidadPedido
@@ -246,7 +260,7 @@ function addCart(search,cantidadPedido){
 function deleteCart(codigo){
     $.ajax({
         type: "POST",
-        url: URL+"puntoVenta/deleteCart",
+        url: URL+"adminPuntoVenta/deleteCart",
         data: {
             codigo:codigo
         },
@@ -267,7 +281,7 @@ function deleteCart(codigo){
 function dropCart(codigo){
     $.ajax({
         type: "POST",
-        url: URL+"puntoVenta/dropCart",
+        url: URL+"adminPuntoVenta/dropCart",
         data: {
         },
         cache: false,
@@ -283,7 +297,7 @@ function dropCart(codigo){
 function confirmarPago(){
     $.ajax({
         type: "POST",
-        url: URL+"puntoVenta/confirmarPago",
+        url: URL+"adminPuntoVenta/confirmarPago",
         data: {
         },
         cache: false,
@@ -299,7 +313,7 @@ function confirmarPago(){
 function formEmpresaEditar(datos){
      $.ajax({
         type: "POST",
-        url: URL+"empresa/formEmpresaEditar",
+        url: URL+"adminEmpresa/formEmpresaEditar",
         data: datos,
         cache: false,
         beforeSend: function() {
@@ -310,19 +324,19 @@ function formEmpresaEditar(datos){
                 if(data == 1){
                     $('#modificar').html('Utilize un correo valido');
                 }else{
-                    alert(data);
+                    notificacion("error",data);
                 }
             }else{
-                $('#modificar').html('Listo');
+                 notificacion("success","Listo");
             }
         }
     });
 }
 
 function formEmpresaNuevo(datos){
-     $.ajax({
+    $.ajax({
         type: "POST",
-        url: URL+"empresa/formEmpresaNuevo",
+        url: URL+"adminEmpresa/formEmpresaNuevo",
         data: datos,
         cache: false,
         beforeSend: function() {
@@ -331,13 +345,134 @@ function formEmpresaNuevo(datos){
         success: function(data){
             if(data != ""){
                 if(data == 1){
-                    $('#agregar').html('Utilize un correo valido');
+                    notificacion("warning","Utilize un correo valido");
                 }else{
-                    alert(data);
+                   notificacion("error",data);
                 }
             }else{
-                $('#agregar').html('Listo');
+                notificacion("success","Listo");
             }
         }
     });
 }
+
+function formEmpleadoServlet(datos){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminEmpleado/empleadoServlet",
+        data: datos,
+        cache: false,
+        beforeSend: function() {
+            $('#mensajeEmpleado').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                if(data == 1){
+                    notificacion("warning","Utilize un correo valido");
+                    $('#mensajeEmpleado').html('');
+                }else if(data == 2){
+                    $('#mensajeEmpleado').html('');
+                    notificacion("warning","Celular invalido");
+                }else if(data == 3){
+                   $('#mensajeEmpleado').html('');
+                   notificacion("warning","Salario invalido");
+                }else if(data == 4){
+                    $('#mensajeEmpleado').html('');
+                    notificacion("success","correo enviado");
+                }else if(data == 5){
+                    $('#mensajeEmpleado').html('');
+                    notificacion("success","Empleado modificado");
+                }else{
+                    $('#mensajeEmpleado').html('');
+                    notificacion("error",data);
+                }
+            }
+        }
+    });
+}
+
+function iniciarSesion(datos){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminLogin/iniciarSesion",
+        data: datos,
+        cache: false,
+        beforeSend: function() {
+            $('#mensajeAdminLogin').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data == 1){
+                window.location=URL+"adminAlmacen";
+            }else if(data == 2){
+                $('#mensajeAdminLogin').html('Usuario o contraseña incorrecto');
+            }else{
+                notificacion("error",data);
+            }
+        }
+    });
+}
+
+function cerrarSesion(){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminLogin/cerrarSesion",
+        data: {},
+        cache: false,
+        success: function(data){
+            window.location=URL+"adminLogin";
+        }
+    });
+}
+
+function activarCodigoVerificacion(datos){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminLogin/activarCodigoVerificacion",
+        data: datos,
+        cache: false,
+        beforeSend: function() {
+            $('#mensajeRecuperarPassword').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data == 1){
+                $('#mensajeRecuperarPassword').html('');
+                notificacion("success","Revisa tu correo electronico.");
+            }else if(data == 2){
+                $('#mensajeRecuperarPassword').html('');
+                notificacion("warning","Correo invalido.");
+            }else if(data == 3){
+                $('#mensajeRecuperarPassword').html('');
+                notificacion("warning","Correo no encontrado en el sistema.");
+            }else{
+                $('#mensajeRecuperarPassword').html(data);
+                notificacion("error",data);
+            }
+        }
+    });
+}
+
+function cambiarPassword(password,correo){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminLogin/cambiarPassword",
+        data: {
+            password:password,
+            correo:correo
+        },
+        cache: false,
+        beforeSend: function() {
+            $('#cargarPassword').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data == 1){
+                $('#cargarPassword').html('');
+                notificacion("success","¡Listo! vuelve a iniciar sesión.");
+                location=URL+"adminLogin";
+            }else{
+                $('#cargarPassword').html('');
+                notificacion("error",data);
+            }
+        }
+    });
+}
+

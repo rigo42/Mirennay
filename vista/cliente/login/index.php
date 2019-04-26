@@ -54,6 +54,9 @@
 <div class="section">
 	<!-- container -->
 	<div class="container">
+		<div class="section-title">
+			<h3 class="title">Iniciar sesión</h3>
+		</div>
 		<form id="formLogin">
 			<div class="row">
 				<div class="form-group col-md-5">
@@ -63,7 +66,7 @@
 					<input class="input" type="password" name="password" placeholder="Password" id="password" required="">
 				</div>
 				<div class="form-group col-md-2">
-					<input class="primary-btn order-submit" type="submit" name="Ingresar">
+					<input class="primary-btn order-submit" type="submit" value="Ingresar">
 				</div>
 				<!-- Input ocultos -->
 				<input type="hidden" name="actividad" value="<?php echo $actividad ?>">
@@ -85,46 +88,58 @@
 					<a href="<?php echo URL ?>login/nuevo">¿No tienes una cuenta?</a>
 				</div>
 			</div>	
-			<div id="loader"></div>
+			<div id="mensajeLogin"></div>
 		</form>
+
+		<!-- Recuperar password -->
+		<div class="shiping-details">
+			<div class="section-title">
+				<h3 class="title">Recuperar password</h3>
+			</div>
+			<div class="input-checkbox">
+				<input type="checkbox" id="recuperarPassword">
+				<label for="recuperarPassword">
+					<span></span>
+					Recuperar password
+				</label>
+				<div class="caption">
+					<form id="cambiarPassword">
+						<div class="form-group col-md-6">
+							<input maxlength="100" required="" class="input" type="text" name="correo" placeholder="A este correo se enviaran los pasos a seguir">
+						</div>
+						<div class="form-group col-md-2">
+							<button type="submit" class="primary-btn order-submit" id="gif">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /Recuperar password -->
 	</div>
 	<!-- /container -->
+
+	
 </div>
 <!-- /SECTION -->
 
 <script type="text/javascript">
 	$(document).ready(function(){
+
+		//Titulo para el html
+		tittlePage("#menuLogin","Login");
+
 		$("#formLogin").submit(function(e){
 			e.preventDefault();
 			var datos = $(this).serialize();
-			validarLogin(datos);
+			iniciarSesion(datos);
 		});
-		//Titulo para el html
-		tittlePage("#menuLogin","Login");
+
+		$("#cambiarPassword").submit(function(e){
+			e.preventDefault();
+			var datos = $(this).serialize();
+			activarCodigoVerificacion(datos);
+		});
+
 	});
-		function validarLogin(datos){
-			$.ajax({
-	            type: "POST",
-	            url: "login/iniciarSesion",
-	            data: datos,
-	            cache: false,
-	    		beforeSend: function() {
-	                $('#loader').html('<img src="libreria/img/espere.gif" alt="reload" width="20" height="20">');
-	            },
-	            success: function(data) {
-	            	var idProducto = $("input[name='idProductoUrlEncode']").val();
-	            	if(data == 1){
-	            		location="productoDetalle?idProducto="+idProducto;
-	            	}else if(data == 2){
-	            		location="productoDetalle?idProducto="+idProducto;
-	            	}else if(data == 3){
-	            		 location="inicio";
-	            	}else if(data == 4){
-	            		$('#loader').html('Usuario o contraseña es incorrecto');
-	            	}else{
-	            		alert(data);
-	            	}
-	            }
-       	    });
-		}
+		
 </script>

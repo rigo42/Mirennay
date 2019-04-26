@@ -24,16 +24,35 @@ CREATE TABLE empresa(
 	activo BIT(1) NOT NULL
 );
 
+CREATE TABLE rol(
+	id_rol INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	rol VARCHAR(20) NOT NULL,
+	fecha_alta DATETIME NOT NULL,
+	activo BIT(1) NOT NULL
+);
+
 CREATE TABLE empleado(
 	id_empleado INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_rol INT NOT NULL,
+	nombre VARCHAR(150) NOT NULL,
+	apellido_materno VARCHAR(150) NOT NULL,
+	apellido_paterno VARCHAR(150) NOT NULL,
+	nss VARCHAR(25) NULL,
+	salario FLOAT NULL,
 	empleado VARCHAR(150) NOT NULL,
 	password VARCHAR(200) NOT NULL,
 	correo VARCHAR(150) NOT NULL,
-	rol VARCHAR(150) NOT NULL,
+	celular VARCHAR(12) NOT NULL,
+	imagen VARCHAR(150) NOT NULL,
+	password_modificacion_activo BIT(1) NULL,
+	codigo_verificacion VARCHAR(150) NULL,
+	password_modificacion VARCHAR(150) NULL,
+	fecha_limite_verificacion DATETIME NULL,
 	fecha_inicio DATETIME NULL,
 	fecha_fin DATETIME NULL,
 	fecha_alta DATETIME NOT NULL,
-	activo BIT(1) NOT NULL
+	activo BIT(1) NOT NULL,
+	FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
 );
 
 CREATE TABLE usuario(
@@ -41,7 +60,11 @@ CREATE TABLE usuario(
 	usuario VARCHAR(150) NOT NULL,
 	password VARCHAR(200) NOT NULL,
 	correo VARCHAR(150) NOT NULL,
-	rol VARCHAR(150) NOT NULL,
+	imagen VARCHAR(150) NOT NULL,
+	password_modificacion_activo BIT(1) NULL,
+	codigo_verificacion VARCHAR(150) NULL,
+	password_modificacion VARCHAR(150) NULL,
+	fecha_limite_verificacion DATETIME NULL,
 	fecha_inicio DATETIME NULL,
 	fecha_fin DATETIME NULL,
 	fecha_alta DATETIME NOT NULL,
