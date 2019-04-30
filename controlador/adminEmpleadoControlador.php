@@ -155,9 +155,15 @@ class adminEmpleadoControlador {
 									$this->adminEmpleadoModelo->nuevo();
 
 									$asunto = "Datos de usuario";
-									$mensaje = "Usuario: $empleado\n Password: 12345678 \n Salario: \n $salario";
+									$texto = "Usuario: $empleado <br> Password: 12345678  <br> Salario: $salario";
 
 									$enviarCorreoControlador = new enviarCorreoControlador();
+
+									$mensaje = file_get_contents('vista/cliente/correo/basico.php');
+			                        $mensaje = str_replace("{{year}}", date('Y'), $mensaje);
+			                        $mensaje = str_replace("{{asunto}}", $asunto, $mensaje);
+			                        $mensaje = str_replace("{{mensaje}}", $texto, $mensaje);
+
 									$retorno = $enviarCorreoControlador->enviarCorreo($correo,$asunto,$mensaje);
 									if($retorno){
 										echo 4; //Todo bien se envio

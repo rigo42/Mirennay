@@ -76,7 +76,8 @@ function filePreview(input,id) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $(id).html("");
+            $(id).html('');
+            $(id+" + img").remove();
             $(id).after('<img class="col-md-2" src="'+e.target.result+'" />');
         }
         reader.readAsDataURL(input.files[0]);
@@ -110,7 +111,8 @@ function productoNuevo(datos){
         beforeSend: function() {
         },
         success: function(data) {
-           location=URL+"adminAlmacen";
+            notificacion("success","Producto agregado correctamente");
+            //location=URL+"adminAlmacen";
         }
     });
 }
@@ -125,7 +127,6 @@ function productoEditar(datos){
         beforeSend: function() {
         },
         success: function(data) {
-            alert(data);
             location=URL+"adminAlmacen";
         }
     });
@@ -144,7 +145,11 @@ function  productoActivo(idProducto,activo){
             //$('#tablaDinamica').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
-            location=URL+'almacen';
+            if(data != ""){
+                notificacion("error",data);
+            }else{
+                location=URL+'adminAlmacen';
+            }
         }
     });
 }
@@ -166,20 +171,25 @@ function eliminarProductoDetalle(idProductoDetalle){
     });
 }
 
-function eliminarImagen(idProductoDetalle,atributo){
+function eliminarImagen(idProductoDetalle,atributo,imagen){
     $.ajax({
         type: "POST",
         url: URL+"adminAlmacen/eliminarImagen",
         data: {
             idProductoDetalle:idProductoDetalle,
-            atributo:atributo
+            atributo:atributo,
+            imagen:imagen
         },
         cache: false,
         beforeSend: function() {
             //$('#tablaDinamica').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
-             //$('#tablaDinamica').html(data);
+            if(data == 1){
+                notificacion("success","Imagen eliminada");
+            }else{
+                notificacion("error",data);
+            }
         }
     });
 }
@@ -249,7 +259,7 @@ function addCart(search,cantidadPedido){
         },
         success: function(data){
             if(data != ""){
-                alert(data);
+                notificacion("error",data);
                 ventanaCart();
             }
             ventanaCart();
@@ -384,6 +394,61 @@ function formEmpleadoServlet(datos){
                     notificacion("success","Empleado modificado");
                 }else{
                     $('#mensajeEmpleado').html('');
+                    notificacion("error",data);
+                }
+            }
+        }
+    });
+}
+
+function formSubCategoriaServlet(datos){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminSubCategoria/subCategoriaServlet",
+        data: datos,
+        cache: false,
+        beforeSend: function() {
+            $('#gif').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                if(data == 1){
+                    notificacion("success","Sub categoria agregada");
+                    $('#gif').html('Listo');
+                }else if(data == 2){
+                    $('#gif').html('Listo');
+                    notificacion("success","Sub categoria modificada");
+                }else{
+                    $('#gif').html('Error');
+                    notificacion("error",data);
+                }
+            }
+        }
+    });
+}
+
+function formCategoriaServlet(datos){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminCategoria/categoriaServlet",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData : false,
+        beforeSend: function() {
+            $('#gif').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                if(data == 1){
+                    notificacion("success","Categoria agregada");
+                    $('#gif').html('Listo');
+                }else if(data == 2){
+                    $('#gif').html('Listo');
+                    notificacion("success","Categoria modificada");
+                    location=URL+"adminCategoria";
+                }else{
+                    $('#gif').html('Error');
                     notificacion("error",data);
                 }
             }

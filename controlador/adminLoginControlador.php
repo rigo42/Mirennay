@@ -30,9 +30,14 @@
 				$codigoVerificacionSQL = " AND codigo_verificacion = '$codigoVerificacion' ";
 				$this->adminLoginModelo->set("codigoVerificacion",$codigoVerificacionSQL);
 				$res = $this->adminLoginModelo->construir();
-				foreach ($res as $key => $value) {}
-				if($value['hoy'] < $value['fecha_limite_verificacion']){
-					include('vista/admin/login/password.php');
+				$row = $res->rowCount();
+           		if($row > 0){
+					foreach ($res as $key => $value) {}
+					if($value['hoy'] < $value['fecha_limite_verificacion']){
+						include('vista/admin/login/password.php');
+					}else{
+						echo "Ya fue vencido este codigo de su fecha limite";
+					}
 				}else{
 					echo "Ya fue vencido este codigo de su fecha limite";
 				}
@@ -87,8 +92,8 @@
 						$_SESSION['apellidoMaterno'] = $value['apellido_materno'];
 						$_SESSION['nss'] = $value['nss'];
 						$_SESSION['salario'] = $value['salario'];
-						$_SESSION['correo'] = $value['correo'];
-						$_SESSION['imagen'] = $value['imagen'];
+						$_SESSION['correoEmpleado'] = $value['correo'];
+						$_SESSION['imagenEmpleado'] = $value['imagen'];
 						$_SESSION['fechaAlta'] = $value['fecha_alta'];
 						echo 1; //Todo bien
 					}else{
@@ -130,7 +135,7 @@
 	            		$fechaLimiteVerificacion = date("Y-m-d H:i:s", strtotime('+24 hours'));
 	            		$asunto = "Recuperación de password";
 	            		$link = URL."adminLogin/password?codigoVerificacion=$codigoVerificacion";
-	            		$mensaje = "Entra a este link, solo tienes 24 horas antes de que caduque $link";
+	            		$texto = "Entra a este link, solo tienes 24 horas antes de que caduque <br> $link";
 
 	            		//Setear correo,codigo,fechaLimite
 	            		$this->adminLoginModelo->set("correo",$correo);
@@ -139,6 +144,12 @@
 
 	            		//Ejecutar la funcion que modifica que se activara el codigo
 	            		$this->adminLoginModelo->activarCodigoVerificacion();
+
+	            		$mensaje = file_get_contents('vista/cliente/correo/basico.php');
+                        $mensaje = str_replace("{{year}}", date('Y'), $mensaje);
+                        $mensaje = str_replace("{{asunto}}", $asunto, $mensaje);
+                        $mensaje = str_replace("{{mensaje}}", $texto, $mensaje);
+
 						$validarCorreo = $this->enviarCorreoControlador->enviarCorreo($correo,$asunto,$mensaje);
 						if($validarCorreo == 1){
 							echo 1;

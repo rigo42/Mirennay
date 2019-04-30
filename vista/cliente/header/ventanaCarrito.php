@@ -22,7 +22,7 @@
 			<button class="delete" data-idProductoDetalle="<?php echo openssl_encrypt( $datos[$i]['idProductoDetalle'], COD, KEY) ?>"><i class="fa fa-close"></i></button>
 		</div>
 		<?php } ?>
-	<?php
+	<?php 
 		}else{
 			echo "Actualmente no tiene nada en el carrito";
 		}
@@ -39,6 +39,7 @@
 
 		if(countDatos > 0){
 			$("#checkout").css("display","block");
+			$("#subTotal").css("display","block");
 			$("#subTotal").html("SUBTOTAL: $<?php echo $subTotalNeto ?> MXN");
 			$(".delete").click(function(e){
 				e.preventDefault();
@@ -47,6 +48,7 @@
 			});
 		}else{
 			$("#checkout").css("display","none");
+			$("#subTotal").css("display","none");
 		}
 
 		$(".cuantosProductosCarrito").html(countDatos);

@@ -39,6 +39,7 @@ class pedidoModelo{
 			$sqlCantidad = "SELECT cantidad FROM producto_detalle WHERE id_producto_detalle = ".$carrito[$i]['idProductoDetalle'];
 			$resCantidad = $this->conexion->mostrarSQL($sqlCantidad);
 
+			/*
 			foreach ($resCantidad as $keyCantidad){
 				$cantidad = $keyCantidad['cantidad'];
 				if($cantidad == 0){
@@ -46,8 +47,9 @@ class pedidoModelo{
 					$this->conexion->ejecutarSQL($sqlUpdateInactivo);
 				}
 			}			
+			*/
 		}
-		unset($_SESSION['carrito']);
+		return $folio;
 	}
 
 	public function folio_online(){

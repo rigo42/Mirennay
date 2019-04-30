@@ -52,7 +52,7 @@
                 <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
                 <!-- ============================================================== -->
                 <!-- create new -->
-                <!-- ============================================================== -->
+                <!-- ============================================================== 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                      <span class="d-none d-md-block">Create New <i class="fa fa-angle-down"></i></span>
@@ -65,7 +65,7 @@
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </li>
-                
+                -->
             </ul>
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->

@@ -1,17 +1,15 @@
 <?php
 
-require_once 'modelo/adminCategoriaModelo.php';
-require_once 'controlador/optimizarImagenControlador.php';
+require_once 'modelo/adminSubCategoriaModelo.php';
 
-class adminCategoriaControlador {
+class adminSubCategoriaControlador {
 
-    private $adminCategoriaModelo;
-    private $optimizarImagenControlador;
+    private $adminSubCategoriaModelo;
 
     //SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
     //PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
     public function __construct() {
-        $this->adminCategoriaModelo = new adminCategoriaModelo();
+        $this->adminSubCategoriaModelo = new adminSubCategoriaModelo();
     } 
 
     //SIRVE: Para mostrar la vista principal
@@ -24,7 +22,7 @@ class adminCategoriaControlador {
                 include('vista/admin/header/index.php');
                 include('vista/admin/menu/index.php');
 
-                include('vista/admin/categoria/index.php');
+                include('vista/admin/subCategoria/index.php');
 
                 include('vista/admin/footer/index.php');
             }else{
@@ -44,7 +42,7 @@ class adminCategoriaControlador {
                 include('vista/admin/header/index.php');
                 include('vista/admin/menu/index.php');
 
-                include('vista/admin/categoria/nuevo.php');
+                include('vista/admin/subCategoria/nuevo.php');
 
                 include('vista/admin/footer/index.php');
             }else{
@@ -63,13 +61,13 @@ class adminCategoriaControlador {
                 include('vista/admin/header/index.php');
                 include('vista/admin/menu/index.php');
 
-                if(isset($_GET['idCategoria'])){
-                    $idCategoria = htmlspecialchars(strip_tags(openssl_decrypt($_GET['idCategoria'], COD, KEY)));
-                    $idCategoriaSQL = " AND c.id_categoria = $idCategoria";
-                    $this->adminCategoriaModelo->set("idCategoria",$idCategoriaSQL);
-                    $res = $this->adminCategoriaModelo->construir();
+                if(isset($_GET['idSubCategoria'])){
+                    $idSubCategoria = htmlspecialchars(strip_tags(openssl_decrypt($_GET['idSubCategoria'], COD, KEY)));
+                    $idSubCategoriaSQL = " AND sc.id_sub_categoria = $idSubCategoria";
+                    $this->adminSubCategoriaModelo->set("idSubCategoria",$idSubCategoriaSQL);
+                    $res = $this->adminSubCategoriaModelo->construir();
                     foreach ($res as $key => $value) {}
-                    include('vista/admin/categoria/editar.php');
+                    include('vista/admin/subCategoria/editar.php');
                 }else{
                     echo "Por favor envie el identificador";
                 }
@@ -93,17 +91,17 @@ class adminCategoriaControlador {
                     $searchSQL = "";
                     if($_POST['search'] != ""){
                         $search = htmlspecialchars(strip_tags($_POST['search']));
-                        $searchSQL = " AND  (c.categoria like '%" .$search. "%') ";
-                        $this->adminCategoriaModelo->set("search",$searchSQL);
+                        $searchSQL = " AND  (sc.sub_categoria like '%" .$search. "%') ";
+                        $this->adminSubCategoriaModelo->set("search",$searchSQL);
                     }
                     $activoSQL = "";
                     if($_POST['activo'] != ""){
                         $activo = htmlspecialchars(strip_tags($_POST['activo']));
-                        $activoSQL = " AND  c.activo = $activo ";
-                        $this->adminCategoriaModelo->set("activo",$activoSQL);
+                        $activoSQL = " AND  sc.activo = $activo ";
+                        $this->adminSubCategoriaModelo->set("activo",$activoSQL);
                     }
-                    $res = $this->adminCategoriaModelo->mostrar();
-                    include('vista/admin/categoria/categoria.php');
+                    $res = $this->adminSubCategoriaModelo->mostrar();
+                    include('vista/admin/subCategoria/subCategoria.php');
                 }
             }else{
                 header("Location: ".URL."adminPuntoVenta");
@@ -113,59 +111,33 @@ class adminCategoriaControlador {
         }
     }
 
-    public function categoriaServlet(){
+    public function subCategoriaServlet(){
         session_start();
         if(isset($_SESSION['idEmpleado'])){
             if($_SESSION['rolEmpleado'] == "admin" || $_SESSION['rolEmpleado'] == "gerente"){
                 if($_POST){
-
-                    //Instancia 
-                    $this->optimizarImagenControlador = new optimizarImagenControlador();
-
-                    $extencion = ".webp";
-                    $calidad = 70;
-                    $ruta = "libreria/imgCategoria/";
-
                     //Obtenemos datos via post
-                    $categoria = htmlspecialchars(strip_tags($_POST['categoria']));
 
-                    if(!empty($_FILES['imagen']['name'])){
-
-                        //Eliminamos la anterior imagen
-                        if(!empty($_POST['imagenBackup'])){
-                            if(file_exists($ruta.$_POST['imagenBackup'])){
-                                unlink($ruta.$_POST['imagenBackup']);
-                            }else{
-                                echo "NO SE ENCUENTRO LA RUTA: ".$ruta.$_POST['imagenBackup'];
-                            }
-                        }
-
-                        //Obtenemos los datos de la nueva imagen e insertamos
-                        $imagen = date('i-s').$_FILES['imagen']['name'].$extencion;
-                        $imagenTmpName = $_FILES['imagen']['tmp_name'];
-                        $this->optimizarImagenControlador->optimizarImagen($imagenTmpName, $ruta.$imagen, $calidad);
-
-                    }else{
-                        $imagen = $_POST['imagenBackup'];
-                    }
+                    $idCategoria = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idCategoria'])), COD, KEY);
+                    $subCategoria = htmlspecialchars(strip_tags($_POST['subCategoria']));
 
                     //Seteamos los datos obtenidos al modelo
-                    $this->adminCategoriaModelo->set("categoria",$categoria);
-                    $this->adminCategoriaModelo->set("imagen",$imagen);
+                    $this->adminSubCategoriaModelo->set("idCategoria",$idCategoria);
+                    $this->adminSubCategoriaModelo->set("subCategoria",$subCategoria);
 
                     if($_POST['actividad'] == "nuevo"){
                         
-                        $this->adminCategoriaModelo->nuevo();
+                        $this->adminSubCategoriaModelo->nuevo();
                         echo 1; //Nuevo correctamente
                     }else if($_POST['actividad'] == "editar"){
 
-                        $idCategoria = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idCategoria'])), COD, KEY);
+                        $idSubCategoria = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idSubCategoria'])), COD, KEY);
                         $activo = htmlspecialchars(strip_tags($_POST['activo']));
 
-                        $this->adminCategoriaModelo->set("idCategoria",$idCategoria);
-                        $this->adminCategoriaModelo->set("activo",$activo);
+                        $this->adminSubCategoriaModelo->set("idSubCategoria",$idSubCategoria);
+                        $this->adminSubCategoriaModelo->set("activo",$activo);
 
-                        $this->adminCategoriaModelo->editar();
+                        $this->adminSubCategoriaModelo->editar();
                         echo 2; //Editado correctamente
                     }
                                 
@@ -178,10 +150,10 @@ class adminCategoriaControlador {
         }
     }
 
-    //Funcion especial para ver todas las categorias que estan ligadas a los productos por parte de las sub categorias para la pagina de incio
-	public function coleccion() {
-       return $this->adminCategoriaModelo->coleccion();
-	}
+    public function selectCategoria(){
+        return $this->adminSubCategoriaModelo->selectCategoria();
+    }
+
 
 }
 ?>

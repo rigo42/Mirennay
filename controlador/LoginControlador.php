@@ -57,10 +57,15 @@ class loginControlador {
             $codigoVerificacionSQL = " AND codigo_verificacion = '$codigoVerificacion' ";
             $this->loginModelo->set("codigoVerificacion",$codigoVerificacionSQL);
             $res = $this->loginModelo->construir();
-            foreach ($res as $key => $value) {}
+            $row = $res->rowCount();
+            if($row > 0){
+                foreach ($res as $key => $value) {}
            
-            if($value['hoy'] < $value['fecha_limite_verificacion']){
-                include('vista/cliente/login/password.php');
+                if($value['hoy'] < $value['fecha_limite_verificacion']){
+                    include('vista/cliente/login/password.php');
+                }else{
+                    echo "Ya fue vencido este codigo de su fecha limite";
+                }
             }else{
                 echo "Ya fue vencido este codigo de su fecha limite";
             }
@@ -188,8 +193,13 @@ class loginControlador {
                         //Insertamos el nuevo usuario
                         $this->loginModelo->usuarioNuevo();
                         $this->enviarCorreoControlador = new enviarCorreoControlador();
+
+                        $mensaje = file_get_contents('vista/cliente/correo/basico.php');
+                        $mensaje = str_replace("{{year}}", date('Y'), $mensaje);
+                        $mensaje = str_replace("{{asunto}}", "!Bienvenido!", $mensaje);
+                        $mensaje = str_replace("{{mensaje}}", "¡Gracias por registrarte con nosotros! ¡te esperan muchas ofertas y nuevos productos!.", $mensaje);
+
                         $asunto = "MIRENNAY te da la Bienvenida.";
-                        $mensaje = "¡Gracias por registrarte con nosotros! ¡te esperan muchas ofertas y nuevos productos!.";
                         $this->enviarCorreoControlador->enviarCorreo($correo,$asunto,$mensaje);
                         echo 1;
                     }
@@ -230,7 +240,7 @@ class loginControlador {
                     $fechaLimiteVerificacion = date("Y-m-d H:i:s", strtotime('+24 hours'));
                     $asunto = "Recuperación de password";
                     $link = URL."login/password?codigoVerificacion=$codigoVerificacion";
-                    $mensaje = "Entra a este link, solo tienes 24 horas antes de que caduque $link";
+                    $texto = "Entra a este link, solo tienes 24 horas antes de que caduque $link";
 
                     //Setear correo,codigo,fechaLimite
                     $this->loginModelo->set("correo",$correo);
@@ -239,6 +249,12 @@ class loginControlador {
 
                     //Ejecutar la funcion que modifica que se activara el codigo
                     $this->loginModelo->activarCodigoVerificacion();
+
+                    $mensaje = file_get_contents('vista/cliente/correo/basico.php');
+                    $mensaje = str_replace("{{year}}", date('Y'), $mensaje);
+                    $mensaje = str_replace("{{asunto}}", $asunto, $mensaje);
+                    $mensaje = str_replace("{{mensaje}}", $texto, $mensaje);
+
                     $validarCorreo = $this->enviarCorreoControlador->enviarCorreo($correo,$asunto,$mensaje);
                     if($validarCorreo == 1){
                         echo 1;

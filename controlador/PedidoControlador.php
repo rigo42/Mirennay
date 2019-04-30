@@ -2,11 +2,13 @@
 
 require_once 'modelo/pedidoModelo.php';
 require_once 'controlador/perfilControlador.php';
+require_once 'controlador/enviarCorreoControlador.php';
 
 class pedidoControlador {
 
     private $pedidoModelo;
     private $perfilControlador;
+    private $enviarCorreoControlador;
 
     //SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
     //PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
@@ -120,10 +122,47 @@ class pedidoControlador {
                 $actividad = $POST['actividad'];
                 if($actividad == "direccion"){ 
                     $idUsuarioDetalle = openssl_decrypt($POST['idUsuarioDetalle'], COD, KEY);
-               }else if($actividad=="direccionNueva"){
+                }else if($actividad=="direccionNueva"){
                     $idUsuarioDetalle = $this->perfilControlador->direccionNueva($POST);
-               }
-               $this->insertarPedido($idUsuarioDetalle);
+                }
+
+                $folio = $this->insertarPedido($idUsuarioDetalle);
+
+                $carrito = $_SESSION['carrito'];
+                $correo = $_SESSION['correo'];
+
+                $subTotal = 0;
+                $totalNeto = 0;
+                $tabla = "";
+
+                for ($i=0; $i<count($carrito); $i++) {
+                $subTotal = $carrito[$i]['precio'] * $carrito[$i]['idProductoDetalleCantidad'];
+                $totalNeto += $subTotal;
+                $tabla .=  '<tr>
+                                <td>'.$carrito[$i]['producto'].'</td>
+                                <td>'.$carrito[$i]['idProductoDetalleCantidad'].'</td>
+                                <td>'.$carrito[$i]['precio'].'</td>
+                                <td>'.$carrito[$i]['talla'].'</td>
+                                <td>'.$carrito[$i]['color'].'</td>
+                                <td>'.'$'.$subTotal.' MXN'.'</td>
+                            </tr>'; 
+                }
+
+                $texto = "¡Gracias por comprar con nosotros! Tu folio de compra es: $folio con un total de $ $totalNeto MXN.";
+                $correo = $_SESSION['correo'];
+
+                $this->enviarCorreoControlador = new enviarCorreoControlador();
+
+                $asunto = "Datos del pedido.";
+                $mensaje = file_get_contents('vista/cliente/correo/pedido.php');
+                $mensaje = str_replace("{{year}}", date('Y'), $mensaje);
+                $mensaje = str_replace("{{asunto}}", $asunto, $mensaje);
+                $mensaje = str_replace("{{mensaje}}", $texto, $mensaje);
+                $mensaje = str_replace("{{tabla}}", $tabla, $mensaje);
+                
+                $this->enviarCorreoControlador->enviarCorreo($correo,$asunto,$mensaje);
+
+                unset($_SESSION['carrito']);
             }else{
                 echo "No se aprovo el pago";
             }

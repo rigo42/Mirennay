@@ -12,7 +12,6 @@
 		}
 
 		public function optimizarImagen($origen, $destino, $calidad) {
-
 		      $info = getimagesize($origen);
 
 		      if ($info['mime'] == 'image/jpeg'){
@@ -27,13 +26,7 @@
 			    $imagen = imagecreatefrompng($origen);
 			  }
 
-			  imagejpeg($imagen, $destino, $calidad);
-			  
-			  return $destino;
-			  
+			  imagewebp($imagen, $destino, $calidad);			  
 		}
-		/* asi se llama la funcion
-			$imagen = optimizarImagen( $_FILES['imagen']['tmp_name'], $destino, 40 );
-		*/
 	}
  ?>

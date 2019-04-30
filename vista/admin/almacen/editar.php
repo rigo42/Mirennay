@@ -345,6 +345,7 @@
                                                       <td><img class="col-md-2" src="<?php echo URL ?>libreria/imgProducto/<?php echo $keyDetalle['imagen'.$i] ?>"></td>
                                                       <td title="Eliminar esta imagen" >
                                                         <i class="fas fa-trash eliminarImagen" 
+                                                            data-imagen="<?php echo $keyDetalle['imagen'.$i] ?>"
                                                             data-idProductoDetalle="<?php echo openssl_encrypt($keyDetalle['id_producto_detalle'], COD, KEY) ?>"
                                                             data-atributo="imagen<?php echo $i ?>"
                                                         ></i>
@@ -499,10 +500,11 @@ $(document).ready(function(){
     $(".eliminarImagen").click(function(e){
         e.preventDefault();
         if(confirm("¿Estás seguro que quieres eliminar esta imagen?")){
-             $(this).parent().parent().addClass("d-none");
+            $(this).parent().parent().addClass("d-none");
+            var imagen = $(this).attr("data-imagen");
             var idProductoDetalle = $(this).attr("data-idProductoDetalle");
             var atributo = $(this).attr("data-atributo");
-            eliminarImagen(idProductoDetalle,atributo);
+            eliminarImagen(idProductoDetalle,atributo,imagen);
         }
     });
 

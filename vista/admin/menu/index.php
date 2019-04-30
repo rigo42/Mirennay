@@ -19,11 +19,16 @@
                     <li id="menuEmpleado" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminEmpleado"><i class="fas fa-user"></i><span class="hide-menu">Empleados</span></a></li>
 
                     <li id="menuEmpresa" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminEmpresa"><i class="fas fa-university"></i><span class="hide-menu">Empresas</span></a></li>
+
+                    <li id="menuSubCategoria" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminSubCategoria"><i class="fas fa-clipboard"></i><span class="hide-menu">Sub categorias</span></a></li>
+
+                    <li id="menuCategoria" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminCategoria"><i class="fas fa-clipboard"></i><span class="hide-menu">Categorias</span></a></li>
                     <?php } ?>
                     <!-- Solo administradores y empleados-->
                     <?php if($_SESSION['rolEmpleado'] == "admin" || $_SESSION['rolEmpleado'] == "gerente" || $_SESSION['rolEmpleado'] == "cajero"){ ?>
                     <li id="menuPuntoVenta" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminPuntoVenta"><i class="fa fa-shopping-cart"></i><span class="hide-menu">Punto venta</span></a></li>
                     <?php } ?>
+                     <li id="" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>"><i class="fas fa-university"></i><span class="hide-menu">Mirennay</span></a></li>
 
                 <?php } ?>
                 

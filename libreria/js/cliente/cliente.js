@@ -503,7 +503,7 @@ $(document).ready(function(){
 	        },
 	        success: function(data) {
 	    		if(data != ""){
-	    			alert(data);
+	    			notificacion("error",data);
 	    		}else{
 	    			location=URL+"inicio";
 	    		}

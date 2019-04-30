@@ -55,6 +55,8 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
+		tittlePage("","Pedido");
+
 		var idEstado = $("select[name='idEstado']").val();
 		municipio(idEstado);
 
