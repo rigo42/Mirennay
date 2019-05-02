@@ -526,7 +526,7 @@ $(document).ready(function(){
             		location=URL+"productoDetalle?idProducto="+idProducto;
             	}else if(data == 2){
             		location=URL+"productoDetalle?idProducto="+idProducto;
-            	}else if(data == 3){
+            	}else if(data == 30){
             		 location=URL+"inicio";
             	}else if(data == 4){
             		$('#mensajeLogin').html('');
@@ -592,7 +592,7 @@ $(document).ready(function(){
 	        cache: false,
 	        beforeSend: function() {
 	            $('#gif').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
-	        },
+	        }, 
 	        success: function(data){
 	            if(data == 1){
 	                $('#gif').html('Listo');
@@ -604,7 +604,7 @@ $(document).ready(function(){
 	                $('#gif').html('Intente otra vez');
 	                notificacion("warning","Correo no encontrado en el sistema.");
 	            }else{
-	                $('#gif').html(data);
+	                $('#gif').html("Intente de nuevo");
 	                notificacion("error",data);
 	            }
 	        }

@@ -22,7 +22,7 @@ class adminSubCategoriaModelo{
 	public function construir(){
 		$sql = "SELECT sc.*,c.*,DATE_FORMAT(sc.fecha_alta, '%e %M, %Y') AS fechaAlta,sc.activo AS subCategoriaActivo
 				FROM sub_categoria sc
-				INNER JOIN categoria c ON c.id_categoria = sc.id_sub_categoria
+				INNER JOIN categoria c ON c.id_categoria = sc.id_categoria
 				WHERE 1 
 				$this->idSubCategoria
 				ORDER BY sc.sub_categoria ASC
@@ -33,7 +33,7 @@ class adminSubCategoriaModelo{
 	public function mostrar(){
 		$sql = "SELECT sc.*,c.*,DATE_FORMAT(sc.fecha_alta, '%e %M, %Y') AS fechaAlta
 				FROM sub_categoria sc
-				INNER JOIN categoria c ON c.id_categoria = sc.id_sub_categoria
+				INNER JOIN categoria c ON c.id_categoria = sc.id_categoria
 				WHERE 1 AND c.activo = 1
 				$this->search
 				$this->activo

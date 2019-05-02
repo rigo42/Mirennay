@@ -57,8 +57,8 @@ class adminEmpleadoModelo{
 	}
 
 	public function nuevo(){
-		$sql = "INSERT INTO empleado (id_rol,empleado,nombre,apellido_paterno,apellido_materno,nss,salario,password,correo,celular,fecha_alta,activo)
-				VALUES($this->idRol,'$this->empleado','$this->nombre','$this->apellidoPaterno','$this->apellidoMaterno','$this->nss','$this->salario','$this->password','$this->correo','$this->celular',NOW(),1)";
+		$sql = "INSERT INTO empleado (id_rol,empleado,nombre,apellido_paterno,apellido_materno,nss,salario,password,correo,celular,imagen,fecha_alta,activo)
+				VALUES($this->idRol,'$this->empleado','$this->nombre','$this->apellidoPaterno','$this->apellidoMaterno','$this->nss','$this->salario','$this->password','$this->correo','$this->celular','',NOW(),1)";
 		$this->conexion->ejecutarSQL($sql);
 	}
 

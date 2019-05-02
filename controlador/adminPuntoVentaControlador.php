@@ -161,10 +161,18 @@ class adminPuntoVentaControlador {
         session_start();
         if(isset($_SESSION['idEmpleado'])){
             $this->adminPuntoVentaModelo->confirmarPago();
+            unset($_SESSION['carritoFisico']);
         }else{
             header("Location: ".URL."adminLogin");
         }
     }
+
+    public function ticket(){
+        $res = $this->adminPuntoVentaModelo->ticket();
+        foreach ($res as $key => $value) { }
+        include('vista/admin/puntoVenta/ticket.php');
+    }
+
 
 }
 ?>

@@ -1,4 +1,4 @@
-<?php 
+<?php  
 	//imports
 	require_once 'modelo/adminLoginModelo.php';
 	require_once 'controlador/validarCorreoControlador.php';
@@ -154,7 +154,7 @@
 						if($validarCorreo == 1){
 							echo 1;
 						}else{
-							echo $validarCorreo;
+							echo "Error al enviar el correo: ".$validarCorreo;
 						}
 					}else{
 						echo 3; //No se encontro ningun dato con ese correo
@@ -162,6 +162,8 @@
 				}else{
 					echo 2;
 				}
+			}else{
+				echo "No se recibieron datos via post";
 			}
 		}
 

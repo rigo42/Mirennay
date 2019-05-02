@@ -54,7 +54,7 @@
      <!-- Notificaciones -->
     <script src="<?php echo URL ?>libreria/js/admin/toastr.min.js"></script>
     <!-- Admin -->
-    <script src="<?php echo URL ?>libreria/js/admin/admi.js"></script>
+    <script src="<?php echo URL ?>libreria/js/admin/adminn.js"></script>
     
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->

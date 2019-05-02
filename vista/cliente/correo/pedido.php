@@ -12,42 +12,6 @@
 body {
 width: 100% !important; height: 100%; margin: 0; line-height: 1.4; background-color: #F2F4F6; color: #74787E; -webkit-text-size-adjust: none;
 }
-.table {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 1rem;
-    background-color: transparent;
-}
-table {
-    border-collapse: collapse;
-}
-thead {
-    display: table-header-group;
-    vertical-align: middle;
-    border-color: inherit;
-}
-tr {
-    display: table-row;
-    vertical-align: inherit;
-    border-color: inherit;
-}
-.table th, .table thead th {
-    font-weight: 500;
-}
-
-.table thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
-}
-.table td, .table th {
-    padding: 1rem;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
-}
-
-th {
-    text-align: inherit;
-}
 
 @media only screen and (max-width: 600px) {
   .email-body_inner {

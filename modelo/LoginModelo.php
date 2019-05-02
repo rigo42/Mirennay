@@ -40,8 +40,8 @@ class loginModelo{
 	}
 
 	public function usuarioNuevo(){
-		$sql = "INSERT INTO usuario(usuario,password,correo,fecha_alta,activo)
-				VALUES('$this->usuario','$this->password','$this->correo',NOW(),1)";
+		$sql = "INSERT INTO usuario(usuario,password,correo,imagen,fecha_alta,activo)
+				VALUES('$this->usuario','$this->password','$this->correo','',NOW(),1)";
 		$this->conexion->ejecutarSQL($sql);
 	}
 

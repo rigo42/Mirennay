@@ -26,7 +26,11 @@
 			    $imagen = imagecreatefrompng($origen);
 			  }
 
-			  imagewebp($imagen, $destino, $calidad);			  
+			  if(imagewebp($imagen, $destino, $calidad)){
+			  	return true;
+			  }else{
+			  	return false;
+			  }
 		}
 	}
  ?>

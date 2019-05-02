@@ -104,8 +104,12 @@ class loginControlador {
                 $actividad = htmlspecialchars(addslashes($_POST['actividad']));
             }
 
-            //Setear en blanco el correo, que no interfiera con esta consulta a continuación
+            //Setear en blanco, que no interfiera con esta consulta a continuación
             $this->loginModelo->set("correo","");
+            $this->loginModelo->set("idUsuario","");
+            $this->loginModelo->set("codigoVerificacion","");
+            $this->loginModelo->set("activo","");
+
             //Setear el nombre de usuario que queramos obtener los datos
             $usuarioSQL = " AND (u.usuario = '$usuario') OR (u.correo = '$usuario') ";
             $this->loginModelo->set("usuario",$usuarioSQL);
@@ -140,7 +144,7 @@ class loginControlador {
                         $this->productoCarritoControlador->addProductoCarrito($idProducto);
                         echo 2; //Todo bien, inicia añadiendo al carrito
                     }else if($actividad == "normal"){
-                        echo 3; //todo bien, inicia normal
+                        echo 30; //todo bien, inicia normal
                     }
                 }else{
                     echo 4; //Usuario o contraseña mal
@@ -255,11 +259,11 @@ class loginControlador {
                     $mensaje = str_replace("{{asunto}}", $asunto, $mensaje);
                     $mensaje = str_replace("{{mensaje}}", $texto, $mensaje);
 
-                    $validarCorreo = $this->enviarCorreoControlador->enviarCorreo($correo,$asunto,$mensaje);
-                    if($validarCorreo == 1){
+                    $retorno = $this->enviarCorreoControlador->enviarCorreo($correo,$asunto,$mensaje);
+                    if($retorno){
                         echo 1;
                     }else{
-                        echo $validarCorreo;
+                        echo "Error: ".$retorno;
                     }
                 }else{
                     echo 3; //No se encontro ningun dato con ese correo
@@ -267,6 +271,8 @@ class loginControlador {
             }else{
                 echo 2;
             }
+        }else{
+            echo "No se enviaron datos via post";
         }
     }
 

@@ -49,13 +49,14 @@ class enviarCorreoControlador{
 			    
 			   	if(!$mail->send()) {
 	                return false;
+	                echo "Ocurrio un error: ".$mail->ErrorInfo;
 	            } else {
 	                return true;
 	            }
 	        } catch (Exception $e) {
 	            return false;
 	            // echo 'Message could not be sent.';
-	            // echo 'Mailer Error: ' . $mail->ErrorInfo;
+	            echo 'Mailer Error: ' . $mail->ErrorInfo;
 	        }
 	}
 

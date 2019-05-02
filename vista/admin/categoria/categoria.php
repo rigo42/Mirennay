@@ -1,6 +1,13 @@
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title m-b-0">Categorias</h5>
+        <div class="row">
+            <div class="col-md-6">
+              <h5 class="card-title m-b-0">Categorias</h5>
+            </div>
+            <div class="col-md-6" align="right">
+              <button class="btn btn-primary" id="reporte" data-url="adminCategoria/reporte">Reporte</button>
+            </div>
+        </div>
     </div>
     <div class="container">
       <div class="table-responsive">
@@ -30,3 +37,4 @@
       </div>
    </div>
 </div>
+<div id="salidaReporte"></div>

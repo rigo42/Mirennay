@@ -18,6 +18,7 @@ class conexion{
 	private $conexion;
 	*/
 	//localhost
+	
 	private $servidor = "localhost";
 	private $usuario = "root";
 	private $password = "";

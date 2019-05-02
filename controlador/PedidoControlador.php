@@ -63,9 +63,9 @@ class pedidoControlador {
                 }
             }
             if($validar == true){
-                echo "1";
+                echo "1"; //Todo bien puede seguir
             }else{
-                 echo "2";
+                 echo "2"; //Le falta rellenar mas datos para el formulario de envio
             }
         }
     }
@@ -158,7 +158,7 @@ class pedidoControlador {
                 $mensaje = str_replace("{{year}}", date('Y'), $mensaje);
                 $mensaje = str_replace("{{asunto}}", $asunto, $mensaje);
                 $mensaje = str_replace("{{mensaje}}", $texto, $mensaje);
-                $mensaje = str_replace("{{tabla}}", $tabla, $mensaje);
+                $mensaje = str_replace("{{tabla}}", $tabla);
                 
                 $this->enviarCorreoControlador->enviarCorreo($correo,$asunto,$mensaje);
 

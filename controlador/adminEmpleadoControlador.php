@@ -3,17 +3,20 @@
 require_once 'modelo/adminEmpleadoModelo.php';
 require_once 'controlador/validarCorreoControlador.php';
 require_once 'controlador/enviarCorreoControlador.php';
+require_once 'controlador/reportePlantillaFPDF.php';
 
 class adminEmpleadoControlador {
 
     private $adminEmpleadoModelo;
     private $validarCorreoControlador;
+    private $reportePlantillaFPDF;
 
     //SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
     //PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
     public function __construct() {
         $this->adminEmpleadoModelo = new adminEmpleadoModelo();
         $this->validarCorreoControlador = new validarCorreoControlador();
+        $this->reportePlantillaFPDF = new reportePlantillaFPDF();
     } 
 
 	//SIRVE: Para mostrar la vista principal
@@ -210,6 +213,44 @@ class adminEmpleadoControlador {
 	public function selectRol(){
 		return $this->adminEmpleadoModelo->selectRol();
 	}
+
+	public function reporte(){
+	        session_start();
+	        if(isset($_SESSION['idEmpleado'])){
+	            if($_SESSION['rolEmpleado'] == "admin" || $_SESSION['rolEmpleado'] == "gerente"){
+	                    
+	                    //Inicio
+	                    $this->reportePlantillaFPDF->inicio();
+	                     // Título
+	                    $this->reportePlantillaFPDF->titulo("Reporte de empleados");
+	                    //Encabezado
+	                    $this->reportePlantillaFPDF->Header();
+	                    //Encabezado de tablas
+	                    $this->reportePlantillaFPDF->fpdf->Cell(70,10,'Empleado',1,0,'C',0);
+	                    $this->reportePlantillaFPDF->fpdf->Cell(30,10,'NSS',1,0,'C',0);
+	                    $this->reportePlantillaFPDF->fpdf->Cell(30,10,'Salario',1,0,'C',0);
+	                    $this->reportePlantillaFPDF->fpdf->Cell(30,10,'Rol',1,0,'C',0);
+	                    $this->reportePlantillaFPDF->fpdf->Cell(30,10,'Fecha',1,1,'C',0);
+	                    //Cuerpo
+	                    $res = $this->adminEmpleadoModelo->mostrar();
+	                    foreach ($res as $key) {
+	                        $this->reportePlantillaFPDF->fpdf->Cell(70,10,$key['empleado'],1,0,'C',0);
+	                        $this->reportePlantillaFPDF->fpdf->Cell(30,10,$key['nss'],1,0,'C',0);
+	                    	$this->reportePlantillaFPDF->fpdf->Cell(30,10,$key['salario'],1,0,'C',0);
+	                    	$this->reportePlantillaFPDF->fpdf->Cell(30,10,$key['rol'],1,0,'C',0);
+	                        $this->reportePlantillaFPDF->fpdf->Cell(30,10,$key['fecha_alta'],1,1,'C',0);
+	                    }
+	                   // $this->reportePlantillaFPDF->Footer();
+	                    $this->reportePlantillaFPDF->fpdf->Output();
+	                   
+
+	            }else{
+	                header("Location: ".URL."adminPuntoVenta");
+	            }
+	        }else{
+	            header("Location: ".URL."adminLogin");
+	        }
+	    }
 
 }
 ?>

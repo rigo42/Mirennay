@@ -20,9 +20,6 @@ class inicioControlador {
 
 	public function index() {
         session_start();
-       // $_SESSION['idEmpleado'] = 3; //quitar esto despues
-       // $_SESSION['rolEmpleado'] = "empleado"; //quitar esto despues
-        
 		include('vista/cliente/head/index.php');
         include('vista/cliente/header/index.php');
 		include('vista/cliente/menu/index.php');

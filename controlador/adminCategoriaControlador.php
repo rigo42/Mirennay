@@ -1,17 +1,20 @@
 <?php
 
 require_once 'modelo/adminCategoriaModelo.php';
-require_once 'controlador/optimizarImagenControlador.php';
+require_once 'controlador/optimizarImagenControlador.php'; 
+require_once 'controlador/reportePlantillaFPDF.php';
 
-class adminCategoriaControlador {
+class adminCategoriaControlador{
 
     private $adminCategoriaModelo;
     private $optimizarImagenControlador;
+    private $reportePlantillaFPDF;
 
     //SIRVE: Para hacer un objeto mediante la instancia de este controlador al modelo de este mismo
     //PORQUE: Por que es necesario tener conectividad con el modelo que es el que se encarga de la base de datos
     public function __construct() {
         $this->adminCategoriaModelo = new adminCategoriaModelo();
+        $this->reportePlantillaFPDF = new reportePlantillaFPDF();
     } 
 
     //SIRVE: Para mostrar la vista principal
@@ -170,6 +173,38 @@ class adminCategoriaControlador {
                     }
                                 
                 }
+            }else{
+                header("Location: ".URL."adminPuntoVenta");
+            }
+        }else{
+            header("Location: ".URL."adminLogin");
+        }
+    }
+
+    public function reporte(){
+        session_start();
+        if(isset($_SESSION['idEmpleado'])){
+            if($_SESSION['rolEmpleado'] == "admin" || $_SESSION['rolEmpleado'] == "gerente"){
+                    
+                    //Inicio
+                    $this->reportePlantillaFPDF->inicio();
+                     // Título
+                    $this->reportePlantillaFPDF->titulo("Reporte de categorias");
+                    //Encabezado
+                    $this->reportePlantillaFPDF->Header();
+                    //Encabezado de tablas
+                    $this->reportePlantillaFPDF->fpdf->Cell(100,10,'Categoria',1,0,'C',0);
+                    $this->reportePlantillaFPDF->fpdf->Cell(45,10,'Fecha',1,1,'C',0);
+                    //Cuerpo
+                    $res = $this->adminCategoriaModelo->mostrar();
+                    foreach ($res as $key) {
+                        $this->reportePlantillaFPDF->fpdf->Cell(100,10,$key['categoria'],1,0,'C',0);
+                        $this->reportePlantillaFPDF->fpdf->Cell(45,10,$key['fechaAlta'],1,1,'C',0);
+                    }
+                   // $this->reportePlantillaFPDF->Footer();
+                    $this->reportePlantillaFPDF->fpdf->Output();
+                   
+
             }else{
                 header("Location: ".URL."adminPuntoVenta");
             }

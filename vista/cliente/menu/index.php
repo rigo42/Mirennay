@@ -6,13 +6,9 @@
 		<div id="responsive-nav">
 			<!-- NAV -->
 			<ul class="main-nav nav navbar-nav">
-			<?php 
-				if(isset($_SESSION['idEmpleado'])){
-			?>
+			<?php if(isset($_SESSION['idEmpleado'])){ ?>
 				<li><a href="<?php echo URL ?>adminAlmacen">Administración</a></li>
-			<?php
-				}
-			?>
+			<?php } ?>
 				<li id="menuInicio"><a href="<?php echo URL ?>inicio">Inicio</a></li>
 				<li id="menuTienda"><a href="<?php echo URL ?>tienda">Tienda</a></li>
 			<?php if(isset($_SESSION['idUsuario'])){ ?>	

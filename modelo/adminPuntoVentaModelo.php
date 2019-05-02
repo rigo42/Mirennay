@@ -19,7 +19,7 @@ class adminPuntoVentaModelo{
 				FROM producto p 
 				INNER JOIN producto_detalle pd ON pd.id_producto = p.id_producto 
 				INNER JOIN producto_talla t ON t.id_talla = pd.id_talla
-				WHERE p.activo = 1 AND pd.activo = 1 $this->codigo ";
+				WHERE p.activo = 1 AND pd.activo = 1 AND pd.cantidad > 0 $this->codigo ";
 		return $this->conexion->mostrarSQL($sql);
 	}
 
@@ -50,15 +50,17 @@ class adminPuntoVentaModelo{
 			$sqlCantidad = "SELECT cantidad FROM producto_detalle WHERE id_producto_detalle = ".$datos[$i]['idProductoDetalle'];
 			$resCantidad = $this->conexion->mostrarSQL($sqlCantidad);
 
+			/*
 			foreach ($resCantidad as $keyCantidad){
 				$cantidad = $keyCantidad['cantidad'];
 				if($cantidad == 0){
 					$sqlUpdateInactivo = "UPDATE producto_detalle SET activo = 0 WHERE id_producto_detalle =  ".$datos[$i]['idProductoDetalle']." ";
 					$this->conexion->ejecutarSQL($sqlUpdateInactivo);
 				}
-			}			
+			}	
+			*/		
 		}
-		unset($_SESSION['carritoFisico']);
+		
 	}
 
 	public function folio_fisico(){
@@ -73,6 +75,16 @@ class adminPuntoVentaModelo{
  		}
 	 	return $folio;
 	}
+
+	public function ticket(){
+        $sql = "SELECT vf.*,pd.*, e.*,p.*,vf.subtotal AS subTotal
+        		FROM venta_fisica vf
+        		INNER JOIN producto_detalle pd ON vf.id_producto_detalle = pd.id_producto_detalle
+        		INNER JOIN producto p ON p.id_producto = pd.id_producto
+        		INNER JOIN empleado e ON e.id_empleado = vf.id_empleado
+        		WHERE pd.activo = 1 AND e.activo = 1 AND vf.activo = 1 AND vf.id_venta_fisica = (SELECT MAX(id_venta_fisica) FROM venta_fisica WHERE activo = 1) ";
+		return $res = $this->conexion->mostrarSQL($sql);
+    }
 
     public function set($atributo,$contenido){
 		$this->$atributo = $contenido;

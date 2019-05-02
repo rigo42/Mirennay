@@ -60,7 +60,7 @@
 
 		//SIRVE: Para mostrar la vista de "editar"
 		//PORQUE: Es nesesario 
-		public function editar(){
+		public function editar(){ 
 			session_start();
 			if(isset($_SESSION['idEmpleado'])){
 				if($_SESSION['rolEmpleado'] == "admin"){
@@ -169,70 +169,80 @@
 
 						$imagenPrincipal = date('i-s').$_FILES['imagenPrincipal']['name'].$extencion;
 						$imagenPrincipalTmpName = $_FILES['imagenPrincipal']['tmp_name'];
-						$this->optimizarImagenControlador->optimizarImagen($imagenPrincipalTmpName, $ruta.$imagenPrincipal, $calidad);
 
-						$observacion = $_POST['observacion'];
-						$activoOferta = 0;
-						$precioOferta = "";
-						$titulo = "";
-						$subTitulo = "";
-						$fechaFinOferta = "";
-						$imagenOferta = "";
-						//Si existe una oferta obtenemos los datos correspondientes a la oferta
-						if(isset($_POST['oferta']) && $_POST['oferta'] == "on"){
-							$activoOferta = 1;
-							$precioOferta = $descripcion = htmlspecialchars(strip_tags($_POST['precioOferta']));
-							$titulo = htmlspecialchars(strip_tags($_POST['titulo']));
-							$subTitulo = htmlspecialchars(strip_tags($_POST['subTitulo']));
-							$fechaFinOferta = htmlspecialchars(strip_tags($_POST['fechaFinOferta']));
-							$imagenOferta = date("i-s").$_FILES['imagenOferta']['name'].$extencion;
-							$imagenOfertaTmpName = $_FILES['imagenOferta']['tmp_name'];
-							$this->optimizarImagenControlador->optimizarImagen($imagenOfertaTmpName, $rutaOferta.$imagenOferta, $calidad);
-						}
+						if($this->optimizarImagenControlador->optimizarImagen($imagenPrincipalTmpName, $ruta.$imagenPrincipal, $calidad)){
 
-						$idProducto = $this->adminAlmacenModelo->productoNuevo($producto,$precio,$idProveedor,$idSubCategoria,$idGenero,$descripcion,$imagenPrincipal,$observacion,$activoOferta,$precioOferta,$titulo,$subTitulo,$fechaFinOferta,$imagenOferta);
+							$observacion = $_POST['observacion'];
+							$activoOferta = 0;
+							$precioOferta = "";
+							$titulo = "";
+							$subTitulo = "";
+							$fechaFinOferta = "";
+							$imagenOferta = "";
 
-						for ($i=1; $i <= $cantidadColor; $i++) { 
-							
-							$idTalla = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idTalla'.$i])), COD, KEY);
-							$color = htmlspecialchars(strip_tags($_POST['color'.$i]));
-							$cantidad = htmlspecialchars(strip_tags($_POST['cantidad'.$i]));
-							$cantidadAlerta = htmlspecialchars(strip_tags($_POST['cantidadAlerta'.$i]));
-							$codigo = htmlspecialchars(strip_tags($_POST['codigo'.$i]));
-							$imagen1 = "";
-							$imagen2 = "";
-							$imagen3 = "";
-							$imagen4 = ""; 
-							$imagen5 = "";
-							$imagen6 = "";
-
-							if(isset($_FILES['imagen1'.$i]['name']) && $_FILES['imagen1'.$i]['name'] != ""){
-								$imagen1 = date("i-s").$_FILES['imagen1'.$i]['name'].$extencion;
-								$imagen1TmpName = $_FILES['imagen1'.$i]['tmp_name'];
-								$this->optimizarImagenControlador->optimizarImagen($imagen1TmpName, $ruta.$imagen1, $calidad);
-							}if(isset($_FILES['imagen2'.$i]['name']) && $_FILES['imagen2'.$i]['name'] != ""){
-								$imagen2 = date("i-s").$_FILES['imagen2'.$i]['name'].$extencion;
-								$imagen2TmpName = $_FILES['imagen2'.$i]['tmp_name'];
-								$this->optimizarImagenControlador->optimizarImagen($imagen2TmpName, $ruta.$imagen2, $calidad);
-							}if(isset($_FILES['imagen3'.$i]['name']) && $_FILES['imagen3'.$i]['name'] != ""){
-								$imagen3 = date("i-s").$_FILES['imagen3'.$i]['name'].$extencion;
-								$imagen3TmpName = $_FILES['imagen3'.$i]['tmp_name'];
-								$this->optimizarImagenControlador->optimizarImagen($imagen3TmpName, $ruta.$imagen3, $calidad);
-							}if(isset($_FILES['imagen4'.$i]['name']) && $_FILES['imagen4'.$i]['name'] != ""){
-								$imagen4 = date("i-s").$_FILES['imagen4'.$i]['name'].$extencion;
-								$imagen4TmpName = $_FILES['imagen4'.$i]['tmp_name'];
-								$this->optimizarImagenControlador->optimizarImagen($imagen4TmpName, $ruta.$imagen4, $calidad);
-							}if(isset($_FILES['imagen5'.$i]['name']) && $_FILES['imagen5'.$i]['name'] != ""){
-								$imagen5 = date("i-s").$_FILES['imagen5'.$i]['name'].$extencion;
-								$imagen5TmpName = $_FILES['imagen5'.$i]['tmp_name'];
-								$this->optimizarImagenControlador->optimizarImagen($imagen5TmpName, $ruta.$imagen5, $calidad);
-							}if(isset($_FILES['imagen6'.$i]['name']) && $_FILES['imagen6'.$i]['name'] != ""){
-								$imagen6 = date("i-s").$_FILES['imagen6'.$i]['name'].$extencion;
-								$imagen6TmpName = $_FILES['imagen6'.$i]['tmp_name'];
-								$this->optimizarImagenControlador->optimizarImagen($imagen6TmpName, $ruta.$imagen6, $calidad);
+							//Si existe una oferta obtenemos los datos correspondientes a la oferta
+							if(isset($_POST['oferta']) && $_POST['oferta'] == "on"){
+								$activoOferta = 1;
+								$precioOferta = $descripcion = htmlspecialchars(strip_tags($_POST['precioOferta']));
+								$titulo = htmlspecialchars(strip_tags($_POST['titulo']));
+								$subTitulo = htmlspecialchars(strip_tags($_POST['subTitulo']));
+								$fechaFinOferta = htmlspecialchars(strip_tags($_POST['fechaFinOferta']));
+								$imagenOferta = date("i-s").$_FILES['imagenOferta']['name'].$extencion;
+								$imagenOfertaTmpName = $_FILES['imagenOferta']['tmp_name'];
+								if(!$this->optimizarImagenControlador->optimizarImagen($imagenOfertaTmpName, $rutaOferta.$imagenOferta, $calidad)){
+									echo "No se pudo guardar la imagen oferta";
+								}
 							}
-							$this->adminAlmacenModelo->productoNuevoDetalle($idProducto,$idTalla,$color,$codigo,$imagen1,$imagen2,$imagen3,$imagen4,$imagen5,$imagen6,$cantidad,$cantidadAlerta);
+
+							$idProducto = $this->adminAlmacenModelo->productoNuevo($producto,$precio,$idProveedor,$idSubCategoria,$idGenero,$descripcion,$imagenPrincipal,$observacion,$activoOferta,$precioOferta,$titulo,$subTitulo,$fechaFinOferta,$imagenOferta);
+
+							for ($i=1; $i <= $cantidadColor; $i++) { 
+								
+								$idTalla = openssl_decrypt(htmlspecialchars(strip_tags($_POST['idTalla'.$i])), COD, KEY);
+								$color = htmlspecialchars(strip_tags($_POST['color'.$i]));
+								$cantidad = htmlspecialchars(strip_tags($_POST['cantidad'.$i]));
+								$cantidadAlerta = htmlspecialchars(strip_tags($_POST['cantidadAlerta'.$i]));
+								$codigo = htmlspecialchars(strip_tags($_POST['codigo'.$i]));
+								$imagen1 = "";
+								$imagen2 = "";
+								$imagen3 = "";
+								$imagen4 = ""; 
+								$imagen5 = "";
+								$imagen6 = "";
+
+								if(isset($_FILES['imagen1'.$i]['name']) && $_FILES['imagen1'.$i]['name'] != ""){
+									$imagen1 = date("i-s").$_FILES['imagen1'.$i]['name'].$extencion;
+									$imagen1TmpName = $_FILES['imagen1'.$i]['tmp_name'];
+									$this->optimizarImagenControlador->optimizarImagen($imagen1TmpName, $ruta.$imagen1, $calidad);
+								}if(isset($_FILES['imagen2'.$i]['name']) && $_FILES['imagen2'.$i]['name'] != ""){
+									$imagen2 = date("i-s").$_FILES['imagen2'.$i]['name'].$extencion;
+									$imagen2TmpName = $_FILES['imagen2'.$i]['tmp_name'];
+									$this->optimizarImagenControlador->optimizarImagen($imagen2TmpName, $ruta.$imagen2, $calidad);
+								}if(isset($_FILES['imagen3'.$i]['name']) && $_FILES['imagen3'.$i]['name'] != ""){
+									$imagen3 = date("i-s").$_FILES['imagen3'.$i]['name'].$extencion;
+									$imagen3TmpName = $_FILES['imagen3'.$i]['tmp_name'];
+									$this->optimizarImagenControlador->optimizarImagen($imagen3TmpName, $ruta.$imagen3, $calidad);
+								}if(isset($_FILES['imagen4'.$i]['name']) && $_FILES['imagen4'.$i]['name'] != ""){
+									$imagen4 = date("i-s").$_FILES['imagen4'.$i]['name'].$extencion;
+									$imagen4TmpName = $_FILES['imagen4'.$i]['tmp_name'];
+									$this->optimizarImagenControlador->optimizarImagen($imagen4TmpName, $ruta.$imagen4, $calidad);
+								}if(isset($_FILES['imagen5'.$i]['name']) && $_FILES['imagen5'.$i]['name'] != ""){
+									$imagen5 = date("i-s").$_FILES['imagen5'.$i]['name'].$extencion;
+									$imagen5TmpName = $_FILES['imagen5'.$i]['tmp_name'];
+									$this->optimizarImagenControlador->optimizarImagen($imagen5TmpName, $ruta.$imagen5, $calidad);
+								}if(isset($_FILES['imagen6'.$i]['name']) && $_FILES['imagen6'.$i]['name'] != ""){
+									$imagen6 = date("i-s").$_FILES['imagen6'.$i]['name'].$extencion;
+									$imagen6TmpName = $_FILES['imagen6'.$i]['tmp_name'];
+									$this->optimizarImagenControlador->optimizarImagen($imagen6TmpName, $ruta.$imagen6, $calidad);
+								}
+								$this->adminAlmacenModelo->productoNuevoDetalle($idProducto,$idTalla,$color,$codigo,$imagen1,$imagen2,$imagen3,$imagen4,$imagen5,$imagen6,$cantidad,$cantidadAlerta);
+							}
+							echo 1;
+						}else{
+							echo "No se pudo guardar la imagen principal";
 						}
+					}else{
+						echo "Envie los datos post";
 					}
 				}else{
 					header("Location: ".URL."adminPuntoVenta");
@@ -330,6 +340,18 @@
 						$activo = htmlspecialchars(strip_tags($_POST['activo']));
 
 						if(!empty($_FILES['imagenPrincipal']['name'])){
+
+							//Eliminamos la anterior imagen
+	                        if(!empty($_POST['imagenPrincipalBackup'])){
+	                            if(file_exists($ruta.$_POST['imagenPrincipalBackup'])){
+	                               if(!unlink($ruta.$_POST['imagenPrincipalBackup'])){
+	                               		echo "No se pudo eliminar la imagen anterior para actualizar a esta nueva: ".$_POST['imagenPrincipalBackup'];
+									}
+	                            }else{
+	                            	echo "No existe la ruta para eliminar la imagen ".$ruta.$_POST['imagenPrincipalBackup'];
+	                            }
+	                        }
+
 							$imagenPrincipal = date('i-s').$_FILES['imagenPrincipal']['name'].$extencion;
 							$imagenPrincipalTmpName = $_FILES['imagenPrincipal']['tmp_name'];
 							$this->optimizarImagenControlador->optimizarImagen($imagenPrincipalTmpName, $ruta.$imagenPrincipal, $calidad);
@@ -353,6 +375,13 @@
 							$subTitulo = htmlspecialchars(strip_tags($_POST['subTitulo']));
 							$fechaFinOferta = htmlspecialchars(strip_tags($_POST['fechaFinOferta']));
 							if(!empty($_FILES['imagenOferta']['name'])){
+								//Eliminamos la anterior imagen
+		                        if(!empty($_POST['imagenOfertaBackup'])){
+		                            if(file_exists($ruta.$_POST['imagenOfertaBackup'])){
+		                                unlink($ruta.$_POST['imagenOfertaBackup']);
+		                            }
+		                        }
+
 								$imagenOferta = date("i-s").$_FILES['imagenOferta']['name'].$extencion;
 								$imagenOfertaTmpName = $_FILES['imagenOferta']['tmp_name'];
 								$this->optimizarImagenControlador->optimizarImagen($imagenOfertaTmpName, $rutaOferta.$imagenOferta, $calidad);
@@ -447,7 +476,9 @@
 							}
 							$this->adminAlmacenModelo->productoNuevoDetalle($idProducto,$idTalla,$color,$codigo,$imagen1,$imagen2,$imagen3,$imagen4,$imagen5,$imagen6,$cantidad,$cantidadAlerta);
 						} 
-						
+						echo 1;
+					}else{
+						echo "No envio los datos post";
 					}
 				}else{
 					header("Location: ".URL."adminPuntoVenta");

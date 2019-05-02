@@ -9,6 +9,7 @@ var URL = "http://localhost/mirennayv3/";
 
 $(document).ready(function(){
 
+    //Tablas dinamicas
     $(".activo").click(function(e){
         e.preventDefault();
         var search = $("input[name='search']").val();
@@ -30,6 +31,13 @@ $(document).ready(function(){
             var url = $("#tablaDinamica").attr("data-url");
             tablaDinamica(search,url,"1");
         }
+    });
+
+    //Reporte
+    $("#reporte").click(function(e){
+        e.preventDefault();
+        var url = $(this).attr("data-url");
+        reporte(url);
     });
 
 
@@ -68,6 +76,22 @@ function tablaDinamica(search,url,activo){
         },
         success: function(data){
              $('#tablaDinamica').html(data);
+        }
+    });
+}
+
+function reporte(url){
+    $.ajax({
+        type: "POST",
+        url: URL+url,
+        data: {
+        },
+        cache: false,
+        beforeSend: function() {
+            //$('#tablaDinamica').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+             $('#salidaReporte').html(data);
         }
     });
 }
@@ -111,8 +135,12 @@ function productoNuevo(datos){
         beforeSend: function() {
         },
         success: function(data) {
-            notificacion("success","Producto agregado correctamente");
-            //location=URL+"adminAlmacen";
+            if(data == 1){
+                notificacion("success","Producto agregado correctamente");
+                location=URL+"adminAlmacen";
+            }else{
+                notificacion("error",data);
+            }
         }
     });
 }
@@ -127,7 +155,12 @@ function productoEditar(datos){
         beforeSend: function() {
         },
         success: function(data) {
-            location=URL+"adminAlmacen";
+           if(data == 1){
+                notificacion("success","Producto modificado correctamente");
+                location=URL+"adminAlmacen";
+            }else{
+                 notificacion("error",data);
+            }
         }
     });
 }
@@ -145,10 +178,11 @@ function  productoActivo(idProducto,activo){
             //$('#tablaDinamica').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
-            if(data != ""){
-                notificacion("error",data);
-            }else{
+            if(data === ""){
                 location=URL+'adminAlmacen';
+            }else{
+                notificacion("error",data);
+                
             }
         }
     });
@@ -260,7 +294,6 @@ function addCart(search,cantidadPedido){
         success: function(data){
             if(data != ""){
                 notificacion("error",data);
-                ventanaCart();
             }
             ventanaCart();
         }
@@ -280,7 +313,7 @@ function deleteCart(codigo){
         },
         success: function(data){
             if(data != ""){
-                alert(data);
+                //notificacion("error",data);
                 ventanaCart();
             }
             ventanaCart();
@@ -302,7 +335,7 @@ function dropCart(codigo){
             ventanaCart();
         }
     });
-}
+} 
 
 function confirmarPago(){
     $.ajax({
@@ -315,9 +348,17 @@ function confirmarPago(){
             $('#cambioPago').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
-            window.location.reload(true); 
+            $('#cambioPago').html('');
+            ticket();
+            //window.location.reload(true); 
         }
     });
+}
+
+function ticket(){
+    $("#modal").modal("hide");
+    window.open(URL+"adminPuntoVenta/ticket", "Ticket", "width=300, height=500");
+    window.location.reload(true); 
 }
 
 function formEmpresaEditar(datos){
