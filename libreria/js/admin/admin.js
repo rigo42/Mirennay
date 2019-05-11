@@ -1,11 +1,14 @@
 //Inifinity free
-//var URL = "http://mirennay.epizy.com/"; 
+var URL = "http://mirennay.epizy.com/"; 
 
 //000WebHost
 //var URL = "https://fb-foto-movile.000webhostapp.com/"; 
 
+//MiPropia
+//var URL = "http://mirennay.mipropia.com/"; 
+
 //localhost
-var URL = "http://localhost/mirennayv3/"; 
+//var URL = "http://localhost/mirennayv3/"; 
 
 $(document).ready(function(){
 
@@ -132,13 +135,16 @@ function productoNuevo(datos){
         data:datos,
         contentType: false,
         processData : false,
-        beforeSend: function() {
+        beforeSend: function() { 
+            $('#gif').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data) {
             if(data == 1){
+                $('#gif').html('');
                 notificacion("success","Producto agregado correctamente");
                 location=URL+"adminAlmacen";
             }else{
+                $('#gif').html('');
                 notificacion("error",data);
             }
         }
@@ -153,13 +159,16 @@ function productoEditar(datos){
         contentType: false,
         processData : false,
         beforeSend: function() {
+            $('#gif').html('<img src=" '+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data) {
            if(data == 1){
+                $('#gif').html('');
                 notificacion("success","Producto modificado correctamente");
                 location=URL+"adminAlmacen";
             }else{
-                 notificacion("error",data);
+                $('#gif').html('');
+                notificacion("error",data);
             }
         }
     });

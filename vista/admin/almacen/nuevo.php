@@ -196,6 +196,7 @@
                         </section>
                     </div>
                 </form>
+                <div id="gif"></div>
             </div>
         </div>
 

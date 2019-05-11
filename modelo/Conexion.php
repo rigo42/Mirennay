@@ -17,6 +17,14 @@ class conexion{
 	private $bd = "id4198174_mirennay";
 	private $conexion;
 	*/
+	//MiPropia
+	/*
+	private $servidor = "sql107.mipropia.com";
+	private $usuario = "mipc_23873246";
+	private $password = "terribibibi42";
+	private $bd = "mipc_23873246_mirennay";
+	private $conexion;
+	*/
 	//localhost
 	
 	private $servidor = "localhost";
@@ -24,7 +32,7 @@ class conexion{
 	private $password = "";
 	private $bd = "mirennayv2";
 	private $conexion;
-
+		
 	public function __construct(){
 		try{
 		$this->conexion = new PDO('mysql:host='.$this->servidor.';dbname='.$this->bd, $this->usuario, $this->password);

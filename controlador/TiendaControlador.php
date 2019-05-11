@@ -6,7 +6,7 @@ require_once 'controlador/productoFavoritoControlador.php';
 require_once 'controlador/productoEstrellaControlador.php';
 require_once 'controlador/productoMasVendidoControlador.php';
 
-class TiendaControlador{
+class tiendaControlador{
 
 	//variable para generar el objeto de la instancia al modelo de este controlador
 	private $tiendaModelo; 
@@ -23,7 +23,6 @@ class TiendaControlador{
 		$this->productoFavoritoControlador = new productoFavoritoControlador();
         $this->productoEstrellaControlador = new productoEstrellaControlador();
         $this->productoMasVendidoControlador = new productoMasVendidoControlador();
-
 	} 
 
 	public function index() {
@@ -40,21 +39,21 @@ class TiendaControlador{
 	
 	//SIRVE: Para paginar los registros
 	//PORQUE: Porque permite mantener el tamaño de cada página dentro de lo manejable
-	public function tiendaPaginadorEnlistar(){ 
+	public function tiendaPaginadorEnlistar1(){ 
 		session_start();
 		if($_POST){
-			$cantidadPagina = 9;
+			$cantidadPagina = 1;
 			if(isset($_POST['cantidadPagina'])){
 				$cantidadPagina = $_POST['cantidadPagina'];
 			}
 			$paginaNumero = 1;
 			if(isset($_POST['paginaNumero'])){
-				$paginaNumero = $_POST['paginaNumero'];
+				$paginaNumero = $_POST['paginaNumero']; 
 			}
 			$idSubCategoriaSQL = "";
+			$idSubCategoria = [];
 			if(!empty($_POST['idSubCategoria'])){
-				$idSubCategoriaArray = $_POST['idSubCategoria'];
-				$idSubCategoria = json_decode($_POST['idSubCategoria']);
+				$idSubCategoria = $_POST['idSubCategoria'];
 				$longitudIdSubCategoria = count($idSubCategoria);
 				if($longitudIdSubCategoria > 0){
 					for ($i=0; $i < $longitudIdSubCategoria ; $i++) { 
@@ -141,9 +140,9 @@ class TiendaControlador{
 					//Si hay resultados pues los mostramos
 					$pagina = "tienda";
 					include 'vista/cliente/producto/index.php';
-					include 'vista/cliente/tienda/paginador.php';
+					include 'vista/cliente/tienda/paginador.php'; 
 				}else{
-					echo "Lociento no hay productos";
+					echo "Lociento no hay productos (2)";
 				}
 			}else{ 
 				echo "Lociento no hay productos";

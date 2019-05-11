@@ -5,10 +5,10 @@
 ?>
 	<div class="product-widget">
 		<div class="product-img">
-			<img src="<?php echo URL ?>libreria/imgProducto/<?php echo $key['imagen_principal'] ?>" alt="" data-id="<?php echo $key['id_producto'] ?>">
+			<img src="<?php echo URL ?>libreria/imgProducto/<?php echo $key['imagen_principal'] ?>" alt="">
 		</div>
 		<div class="product-body">
-			<h3 class="product-name"><a href="<?php echo URL ?>productoDetalle?idProducto=<?php echo openssl_encrypt($key['id_producto'], COD, KEY) ?>"><?php echo $key['producto'] ?></a></h3>
+			<h3 class="product-name"><a href="<?php echo URL ?>productoDetalle?idProducto=<?php echo urlencode(openssl_encrypt($key['id_producto'], COD, KEY)) ?>"><?php echo $key['producto'] ?></a></h3>
 			<h4 class="product-price"><span class="qty"><?php echo $key['sumaCantidad'] ?> In Stock
 			<?php 
 			if($key['activo_oferta'] == 1){ ?>

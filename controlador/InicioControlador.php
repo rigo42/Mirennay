@@ -20,6 +20,7 @@ class inicioControlador {
 
 	public function index() {
         session_start();
+        
 		include('vista/cliente/head/index.php');
         include('vista/cliente/header/index.php');
 		include('vista/cliente/menu/index.php');

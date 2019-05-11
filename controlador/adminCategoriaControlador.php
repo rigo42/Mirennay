@@ -125,7 +125,7 @@ class adminCategoriaControlador{
                     //Instancia 
                     $this->optimizarImagenControlador = new optimizarImagenControlador();
 
-                    $extencion = ".webp";
+                    $extencion = ".jpeg";
                     $calidad = 70;
                     $ruta = "libreria/imgCategoria/";
 

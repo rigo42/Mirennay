@@ -154,7 +154,7 @@
 				if($_SESSION['rolEmpleado'] == "admin" || $_SESSION['rolEmpleado'] == "gerente"){
 					if($_POST){
 
-						$extencion = ".webp";
+						$extencion = ".jpeg";
 						$calidad = 70;
 		                $ruta = "libreria/imgProducto/";
 		                $rutaOferta = "libreria/imgProductoOferta/";
@@ -324,7 +324,7 @@
 					
 					if($_POST){
 
-						$extencion = ".webp";
+						$extencion = ".jpeg";
 						$calidad = 70;
 		                $ruta = "libreria/imgProducto/";
 		                $rutaOferta = "libreria/imgProductoOferta/";
@@ -354,7 +354,9 @@
 
 							$imagenPrincipal = date('i-s').$_FILES['imagenPrincipal']['name'].$extencion;
 							$imagenPrincipalTmpName = $_FILES['imagenPrincipal']['tmp_name'];
-							$this->optimizarImagenControlador->optimizarImagen($imagenPrincipalTmpName, $ruta.$imagenPrincipal, $calidad);
+							if(!$this->optimizarImagenControlador->optimizarImagen($imagenPrincipalTmpName, $ruta.$imagenPrincipal, $calidad)){
+								echo "Error al optimizar la imagen principal";
+							}
 						}else{
 							$imagenPrincipal = $_POST['imagenPrincipalBackup'];
 						}

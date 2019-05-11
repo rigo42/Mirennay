@@ -6,10 +6,16 @@ define('COD',"AES-128-ECB");
 //Enrutadores
 define('DS',DIRECTORY_SEPARATOR);
 define('ROOT',realpath(dirname(__FILE__)).DS);
+
 //Infinity free
 //define('URL',"http://mirennay.epizy.com/");
+
 //000WebHost
 //define('URL',"https://fb-foto-movile.000webhostapp.com/");
+
+//MiPropia
+//define('URL',"http://mirennay.mipropia.com/");
+
 //localhost
 define('URL',"http://localhost/mirennayv3/");
 

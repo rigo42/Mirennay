@@ -4,7 +4,11 @@
 //000WebHost
 //var URL = "https://fb-foto-movile.000webhostapp.com/"; 
 
+//MiPropia
+//var URL = "http://mirennay.mipropia.com/"; 
+
 //localhost
+
 var URL = "http://localhost/mirennayv3/"; 
 
 
@@ -185,6 +189,32 @@ $(document).ready(function(){
 	    }if(tipo == "error"){
 	        toastr.error(mensaje);
 	    }
+	}
+
+
+	//Paginador de productos
+	function paginadorProducto(search,idCategoria,precioMin,precioMax,idGenero,idSubCategoria,cantidadPagina,paginaNumero){
+		$.ajax({
+	        type: "POST",
+	        url: URL+"tienda/tiendaPaginadorEnlistar1",
+	        data: {
+	        	search:search,
+	        	idCategoria:idCategoria,
+	        	precioMax:precioMax,
+	        	precioMin:precioMin,
+	        	idGenero:idGenero,
+	        	idSubCategoria:idSubCategoria,
+	        	paginaNumero:paginaNumero,
+	        	cantidadPagina:cantidadPagina
+	        },
+	        cache: false,
+			beforeSend: function() {
+				$('#tienda').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+	        },
+	        success: function(data) {
+	    		$("#tienda").html(data);
+	        }
+		});
 	}
 
 
@@ -526,14 +556,14 @@ $(document).ready(function(){
             		location=URL+"productoDetalle?idProducto="+idProducto;
             	}else if(data == 2){
             		location=URL+"productoDetalle?idProducto="+idProducto;
-            	}else if(data == 30){
+            	}else if(data == 3){
             		 location=URL+"inicio";
             	}else if(data == 4){
             		$('#mensajeLogin').html('');
             		notificacion("error","Usuario o contraseña es incorrecto");
             	}else{
             		$('#mensajeLogin').html('');
-            		notificacion("error",data);
+            		notificacion("error","ERROR: "+data);
             	}
             }
    	    });
@@ -636,12 +666,16 @@ $(document).ready(function(){
 	    });
 	}
 
-
-
 	function cerrarSesion(){
-		$.post(URL+'login/cerrarSesion',{},function(data){
-			location=URL+"inicio";
-		});
+		$.ajax({
+	        type: "POST",
+	        url: URL+"login/cerrarSesion",
+	        data: {},
+	        cache: false,
+	        success: function(data){
+	            window.location=URL+"inicio";
+	        }
+	    });
 	}
 
 	

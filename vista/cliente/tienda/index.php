@@ -159,8 +159,6 @@
             		paginadorProducto("","",precioMin,precioMax,idGenero,idSubCategoria,9,1);
         		}
         	}
-
-			
 		});
 
 		// Price Slider
@@ -215,28 +213,4 @@
 		});
 
 	});
-
-	function paginadorProducto(search,idCategoria,precioMin,precioMax,idGenero,idSubCategoria,cantidadPagina,paginaNumero){
-		$.ajax({
-	        type: "POST",
-	        url: "<?php echo URL?>tienda/tiendaPaginadorEnlistar",
-	        data: {
-	        	search:search,
-	        	idCategoria:idCategoria,
-	        	precioMax:precioMax,
-	        	precioMin:precioMin,
-	        	idGenero:idGenero,
-	        	idSubCategoria:JSON.stringify(idSubCategoria),
-	        	paginaNumero:paginaNumero,
-	        	cantidadPagina:cantidadPagina
-	        },
-	        cache: false,
-			beforeSend: function() {
-				$('#tienda').html('<img src="<?php echo URL ?>libreria/img/espere.gif" alt="reload" width="20" height="20">');
-	        },
-	        success: function(data) {
-	    		$("#tienda").html(data);
-	        }
-		});
-	}
 </script>

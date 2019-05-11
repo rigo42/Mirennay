@@ -408,7 +408,7 @@
                 </form>
             </div>
         </div>
-
+        <div id="gif"></div>
     </div>
 
 </div>

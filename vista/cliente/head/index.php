@@ -43,4 +43,4 @@
 		<script src="<?php echo URL ?>libreria/js/cliente/jquery.zoom.min.js"></script>
 		<script src="<?php echo URL ?>libreria/js/cliente/toastr.min.js"></script>
 		<script src="<?php echo URL ?>libreria/js/cliente/paypal.js"></script>
-		<script src="<?php echo URL ?>libreria/js/cliente/clientes.js"></script>
+		<script src="<?php echo URL ?>libreria/js/cliente/cliente.js"></script>

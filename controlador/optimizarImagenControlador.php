@@ -12,25 +12,26 @@
 		}
 
 		public function optimizarImagen($origen, $destino, $calidad) {
-		      $info = getimagesize($origen);
+		    $info = getimagesize($origen);
 
-		      if ($info['mime'] == 'image/jpeg'){
+		    if ($info['mime'] == 'image/jpeg'){
 			    $imagen = imagecreatefromjpeg($origen);
-		      }
+		    }
 
-			  else if ($info['mime'] == 'image/gif'){
+			else if ($info['mime'] == 'image/gif'){
 			    $imagen = imagecreatefromgif($origen);
-			  }
+			}
 
-			  else if ($info['mime'] == 'image/png'){
-			    $imagen = imagecreatefrompng($origen);
-			  }
+			else if ($info['mime'] == 'image/png'){
+				$imagen = imagecreatefrompng($origen);
+			}
 
-			  if(imagewebp($imagen, $destino, $calidad)){
+			if(imagejpeg($imagen, $destino, $calidad)){
 			  	return true;
-			  }else{
-			  	return false;
-			  }
+		  	}else{
+		  		return false;
+		  	}
+			  
 		}
 	}
  ?>

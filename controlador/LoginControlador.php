@@ -94,6 +94,7 @@ class loginControlador {
         }
 
     public function iniciarSesion(){
+        session_start();
         if($_POST){
             $usuario = htmlspecialchars(addslashes($_POST['usuario']));
             $password = htmlspecialchars(addslashes($_POST['password']));
@@ -119,32 +120,36 @@ class loginControlador {
 
             $row = $res->rowCount();
             if($row > 0){
-                foreach ($res as $key => $value) { }
 
-                if($value['password_modificacion_activo'] == 1){
-                    $hash = $value['password_modificacion'];
-                }else{
-                    $hash = $value['password'];
-                }
+                foreach ($res as $key){
+                    if($key['password_modificacion_activo'] == 1){
+                        $hash = $key['password_modificacion'];
+                    }else{
+                        $hash = $key['password'];
+                    }
+                    $idUsuario =  $key['id_usuario'];
+                    $usuario = $key['usuario'];
+                    $correo = $key['correo'];
+                    $imagen = $key['imagen'];
+                }                
 
                 if(password_verify($password, $hash)){
+                    
+                    $_SESSION['idUsuario'] = $idUsuario;
+                    $_SESSION['usuario'] = $usuario;
+                    $_SESSION['correo'] = $correo;
+                    $_SESSION['imagen'] = $imagen;
 
-                    session_start();
-                    $_SESSION['idUsuario'] = $value['id_usuario'];
-                    $_SESSION['usuario'] = $value['usuario'];
-                    $_SESSION['correo'] = $value['correo'];
-                    $_SESSION['imagen'] = $value['imagen'];
-
-                    if($actividad == "favorito"){
+                    if($actividad === "favorito"){
                         $idProducto = htmlspecialchars(addslashes($_POST['idProducto']));
                         $this->productoFavoritoControlador->productoFavorito($idProducto);
                         echo 1; //Todo bien, inicia añadiendo en favorito
-                    }elseif($actividad == "carrito"){
+                    }elseif($actividad === "carrito"){
                         $idProducto = htmlspecialchars(addslashes($_POST['idProducto']));
                         $this->productoCarritoControlador->addProductoCarrito($idProducto);
                         echo 2; //Todo bien, inicia añadiendo al carrito
-                    }else if($actividad == "normal"){
-                        echo 30; //todo bien, inicia normal
+                    }else if($actividad === "normal"){
+                        echo 3; //todo bien, inicia normal
                     }
                 }else{
                     echo 4; //Usuario o contraseña mal

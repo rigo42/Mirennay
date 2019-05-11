@@ -31,7 +31,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-		tittlePage("#menuInicio","Incio");
+		tittlePage("#menuInicio","Inicio");
 		
 		$(".shop").click(function(e){
 			e.preventDefault();
