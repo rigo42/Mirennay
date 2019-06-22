@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-04-2019 a las 18:15:09
+-- Tiempo de generación: 30-04-2019 a las 20:21:48
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -34,16 +34,52 @@ CREATE TABLE `categoria` (
   `imagen_principal` varchar(100) DEFAULT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `categoria`
 --
 
 INSERT INTO `categoria` (`id_categoria`, `categoria`, `imagen_principal`, `fecha_alta`, `activo`) VALUES
-(1, 'Electronicos', 'electronicoColeccion.png', '2019-01-16 00:00:00', b'1'),
-(2, 'Accesorio', 'accesorioColeccion.png', '2019-01-16 00:00:00', b'1'),
-(3, 'Ropa', 'ropaColeccion.jpg', '2019-01-16 00:00:00', b'1');
+(1, 'Electronicos', '08-43fondoPantalla1.jpg.webp', '2019-04-26 00:44:00', b'1'),
+(2, 'Accesorios', '36-55Fondo de escritorio.jpg.webp', '2019-04-26 00:00:00', b'1'),
+(3, 'Ropas', '45-14grrrt.jpg.webp', '2019-04-26 00:00:00', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado`
+--
+
+CREATE TABLE `empleado` (
+  `id_empleado` int(11) NOT NULL,
+  `id_rol` int(11) NOT NULL,
+  `nombre` varchar(150) NOT NULL,
+  `apellido_materno` varchar(150) NOT NULL,
+  `apellido_paterno` varchar(150) NOT NULL,
+  `nss` varchar(25) DEFAULT NULL,
+  `salario` float DEFAULT NULL,
+  `empleado` varchar(150) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `correo` varchar(150) NOT NULL,
+  `celular` varchar(12) NOT NULL,
+  `imagen` varchar(150) NOT NULL,
+  `password_modificacion_activo` bit(1) DEFAULT NULL,
+  `codigo_verificacion` varchar(150) DEFAULT NULL,
+  `password_modificacion` varchar(150) DEFAULT NULL,
+  `fecha_limite_verificacion` datetime DEFAULT NULL,
+  `fecha_inicio` datetime DEFAULT NULL,
+  `fecha_fin` datetime DEFAULT NULL,
+  `fecha_alta` datetime NOT NULL,
+  `activo` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `empleado`
+--
+
+INSERT INTO `empleado` (`id_empleado`, `id_rol`, `nombre`, `apellido_materno`, `apellido_paterno`, `nss`, `salario`, `empleado`, `password`, `correo`, `celular`, `imagen`, `password_modificacion_activo`, `codigo_verificacion`, `password_modificacion`, `fecha_limite_verificacion`, `fecha_inicio`, `fecha_fin`, `fecha_alta`, `activo`) VALUES
+(1, 1, 'Rigoberto', 'Villa', 'Rodríguez', 'AJP125879H', 120, 'rigoBoykaa42', '$2y$15$avn79wKyDtbHzZWi6QtN3.BJI2HGXAkWEKYnVnYSHIUwdKGctaWa2', 'rigoberto.villa42@gmail.com', '3231153678', '', NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-26 00:00:00', b'1');
 
 -- --------------------------------------------------------
 
@@ -56,18 +92,18 @@ CREATE TABLE `empresa` (
   `empresa` varchar(100) NOT NULL,
   `direccion` varchar(100) NOT NULL,
   `celular` varchar(15) DEFAULT NULL,
+  `correo` varchar(60) DEFAULT NULL,
   `observacion` text,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `empresa`
 --
 
-INSERT INTO `empresa` (`id_empresa`, `empresa`, `direccion`, `celular`, `observacion`, `fecha_alta`, `activo`) VALUES
-(1, 'Dior', 'Francia', '3233256875', 'Dior la empresa francesa donde venden productos de calidad\r\nEmail: dior@gmail.com', '2018-12-30 19:11:59', b'1'),
-(2, 'Mirennay', 'Santiago Ixcuintla', '3231153678', 'Mirennay futuro exito!', '2018-12-30 19:15:24', b'1');
+INSERT INTO `empresa` (`id_empresa`, `empresa`, `direccion`, `celular`, `correo`, `observacion`, `fecha_alta`, `activo`) VALUES
+(1, 'MIRENNAY', 'Calle francisco villa #27', '3231153678', 'rigoberto.villa42@gmail.com', '¡La mejor!', '2019-04-26 00:00:00', b'1');
 
 -- --------------------------------------------------------
 
@@ -131,7 +167,7 @@ CREATE TABLE `municipio` (
   `id_estado` int(11) NOT NULL,
   `municipio` varchar(100) NOT NULL,
   `nom_cab` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `municipio`
@@ -2613,17 +2649,14 @@ CREATE TABLE `pedido_usuario` (
   `folio` varchar(150) NOT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `pedido_usuario`
 --
 
 INSERT INTO `pedido_usuario` (`id_pedido_usuario`, `id_producto_detalle`, `id_usuario_detalle`, `cantidad`, `subtotal`, `folio`, `fecha_alta`, `activo`) VALUES
-(1, 49, 15, 1, 250, 'MIRENNAY0000000001', '2019-04-11 18:13:45', b'1'),
-(2, 52, 15, 1, 1, 'MIRENNAY0000000001', '2019-04-11 18:13:45', b'1'),
-(3, 14, 14, 1, 15000, 'MIRENNAY0000000002', '2019-04-11 18:15:42', b'1'),
-(4, 9, 14, 1, 250, 'MIRENNAY0000000002', '2019-04-11 18:15:42', b'1');
+(1, 2, 2, 1, 5, 'MIRENNAY0000000001', '2019-04-30 10:43:31', b'1');
 
 -- --------------------------------------------------------
 
@@ -2649,27 +2682,14 @@ CREATE TABLE `producto` (
   `imagen_oferta` varchar(100) DEFAULT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `producto`
 --
 
 INSERT INTO `producto` (`id_producto`, `id_proveedor`, `id_sub_categoria`, `id_genero`, `producto`, `descripcion`, `observacion`, `precio`, `imagen_principal`, `activo_oferta`, `precio_oferta`, `titulo`, `sub_titulo`, `fecha_fin_oferta`, `imagen_oferta`, `fecha_alta`, `activo`) VALUES
-(1, 1, 1, 1, 'Blusa', 'Esta es la descripción de la imagen', '', 150, 'BlusaMujer1.jpg', b'1', 100, 'Camisa', 'Llevatela', '2019-01-05 04:17:19', NULL, '2019-01-03 00:00:00', b'1'),
-(2, 1, 1, 1, 'Camiseta de hombre ', '42', '<p><strong><em><u>OLAAAAA SO]Y</u></em></strong></p>', 200, 'camisaHombre1.jpg', b'1', 42, 'YO', 'YOO', '2019-04-08 00:00:00', '50-295853315072.jpg', '2019-01-03 00:00:00', b'1'),
-(3, 1, 1, 1, 'Vestido :3', 'Este vestido esta chevere', '<p><br></p>', 500, 'Vestido1.jpg', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-01-03 00:00:00', b'1'),
-(4, 1, 1, 2, 'Anime camisa', 'Esta camisa es la polla :v', '<p><br></p>', 300, 'Anime1.png', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-01-03 00:00:00', b'1'),
-(5, 1, 1, 2, 'Sudadera Anime', '250', '<p>Varios estilos, KUKU! Natsu y puro anime de por ahi que me encontre :V</p>', 500, 'sudaderaAnime1.jpg', b'1', 250, 'Sudadera chingona', 'HABER :V', '2019-01-10 00:00:00', '', '2019-01-09 00:00:00', b'1'),
-(6, 2, 1, 2, 'Laptito nombre', '10000 tb de ram', '<p>observaciones</p>', 15000, '29-11fondoPantalla1.jpg', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-01-16 00:00:00', b'1'),
-(28, 1, 1, 2, 'MemeInactivo', 'Descripcion jejeje', '<h1><strong><u>Un meme</u></strong></h1><h3><strong><em><u>Probando formato</u></em></strong></h3>', 500, '59-51pasa el selda perro.jpg', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-04-04 08:59:51', b'0'),
-(29, 2, 1, 3, 'Nuevo3', '2', '<p>2</p>', 102, '45-28Fondo de escritorio.jpg', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-04-08 18:44:54', b'0'),
-(30, 1, 1, 1, '10', '2', '<p>observa cerda te va a llevar la cuerda</p>', 10, '06-57ConfgRedUTC.PNG', b'1', 2, '2', '2', '2019-12-31 00:00:00', '06-57Proctector  de pantalla.jpg', '2019-04-08 20:06:57', b'1'),
-(31, 1, 1, 1, 'ayuwoki!', '122', '<p><strong>HEEE HEEE!!</strong></p>', 22, '09-01fondoPantalla1.jpg', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-04-08 20:09:01', b'0'),
-(32, 1, 2, 1, 'Camiseta de hombre', '111', '<p>jj</p>', 222, '35-24Proctector  de pantalla.jpg', b'1', 111, 'kkk', 'kk', '1970-01-01 00:00:00', '35-24Proctector  de pantalla.jpg', '2019-04-09 12:34:06', b'0'),
-(33, 1, 3, 2, 'camisa slim fit', 'camisa estampada', '<ul><li><strong><em>Camisa ajustada al cuerpo </em></strong></li><li><strong><em>Tela de algodon </em></strong></li><li><strong><em>Estampado anime </em></strong></li></ul>', 250, '44-34Niña_lovo.jpg', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-04-09 19:44:34', b'1'),
-(34, 1, 1, 1, 'codigo', 'kskks', '<p>AMamamma</p>', 11, '56-11Dibujo2_Paint.png', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-04-10 12:56:11', b'1'),
-(35, 1, 1, 1, 'alert(&quot;olaNo,bre&quot;)', '&lt;script&gt;alert(\'olaDescripcion\')&lt;/script&gt;', '<p>aa</p>', 1, '20-09Sin título.png', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-04-10 15:20:09', b'1');
+(2, 1, 1, 1, 'codigo', 'pp', '<p><strong>Aqui son las observaciones</strong></p><ol><li><strong>Observacion 1</strong></li><li><strong>Observacíón 2</strong></li></ol>', 5, '46-17fondoPantalla1.jpg.webp', b'0', 0, '', '', '0000-00-00 00:00:00', '', '2019-04-26 18:46:18', b'1');
 
 -- --------------------------------------------------------
 
@@ -2685,56 +2705,7 @@ CREATE TABLE `producto_comentario` (
   `cantidad_estrella` int(11) NOT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `producto_comentario`
---
-
-INSERT INTO `producto_comentario` (`id_producto_comentario`, `id_producto`, `id_usuario`, `comentario`, `cantidad_estrella`, `fecha_alta`, `activo`) VALUES
-(5, 3, 1, 'mmmmmmmmmm', 2, '2019-01-04 00:00:00', b'1'),
-(6, 3, 2, 'Este vestido esta bueno por que ya me lo medi y lo cale y pum!! soy divina', 5, '2019-01-05 11:18:17', b'1'),
-(21, 3, 1, '3', 2, '2019-01-07 16:24:33', b'1'),
-(22, 3, 1, '4', 2, '2019-01-07 16:24:37', b'1'),
-(23, 3, 1, '5', 2, '2019-01-07 16:24:41', b'1'),
-(24, 3, 1, '6', 2, '2019-01-07 16:24:45', b'1'),
-(25, 3, 1, '7', 2, '2019-01-07 16:24:49', b'1'),
-(26, 3, 1, '8', 5, '2019-01-07 16:26:21', b'1'),
-(27, 3, 1, '9', 1, '2019-01-07 16:26:37', b'1'),
-(28, 3, 1, '10', 5, '2019-01-07 16:28:25', b'1'),
-(29, 4, 1, 'Esta chido el anime\n', 3, '2019-01-07 16:35:54', b'1'),
-(30, 4, 1, 'haber', 5, '2019-01-07 16:49:11', b'1'),
-(31, 4, 1, 'jeje', 2, '2019-01-07 17:06:39', b'1'),
-(32, 4, 1, 'nuevo', 1, '2019-01-07 17:13:05', b'1'),
-(33, 4, 1, 'nuevo 5', 1, '2019-01-07 17:13:15', b'1'),
-(34, 4, 1, 'nuevo 5', 5, '2019-01-07 17:13:28', b'1'),
-(35, 4, 1, 'nuevo 7', 3, '2019-01-07 17:16:20', b'1'),
-(36, 4, 1, 'nuevo 8', 3, '2019-01-07 17:16:58', b'1'),
-(37, 1, 1, 'Prueba 1', 5, '2019-01-07 17:23:01', b'1'),
-(38, 4, 2, 'jeej', 3, '2019-01-08 17:26:20', b'1'),
-(39, 5, 2, 'Aun no la compro pero esta chidori xd', 5, '2019-01-09 11:01:32', b'0'),
-(40, 1, 2, 'prueb2klhifñosjhdfñvudfñ.ok', 3, '2019-01-09 16:07:53', b'1'),
-(41, 3, 2, '11', 5, '2019-01-10 10:51:48', b'1'),
-(42, 2, 2, 'haha', 1, '2019-01-10 18:12:01', b'1'),
-(44, 1, 1, 'tfryguhijdtfyguhFELIXXXX', 4, '2019-01-15 08:54:41', b'1'),
-(46, 1, 1, 'mmm', 1, '2019-01-15 12:02:28', b'1'),
-(47, 1, 1, '', 1, '2019-01-15 12:02:40', b'1'),
-(48, 1, 1, '', 3, '2019-01-15 12:04:46', b'1'),
-(49, 1, 1, 'si', 1, '2019-01-15 12:10:02', b'1'),
-(51, 6, 2, 'mmm', 4, '2019-01-20 16:10:29', b'1'),
-(52, 6, 2, '2', 2, '2019-01-20 16:12:04', b'1'),
-(53, 1, 1, 'ola v3', 2, '2019-03-05 21:27:00', b'1'),
-(54, 1, 1, 'ola v3', 2, '2019-03-05 21:27:56', b'1'),
-(55, 1, 1, 'ola v3-2', 2, '2019-03-05 21:29:57', b'1'),
-(56, 1, 1, 'ola', 1, '2019-03-05 21:32:12', b'1'),
-(57, 1, 1, 'hh', 2, '2019-03-05 21:35:04', b'1'),
-(58, 3, 1, '12', 1, '2019-03-05 21:38:29', b'1'),
-(59, 2, 1, 'm', 5, '2019-03-11 21:34:09', b'1'),
-(60, 5, 1, 'oli', 1, '2019-03-14 18:04:29', b'1'),
-(61, 2, 1, 'olj', 3, '2019-03-20 14:48:13', b'1'),
-(62, 2, 1, 'm', 4, '2019-03-20 14:51:54', b'1'),
-(64, 2, 1, 'la', 2, '2019-03-22 17:39:23', b'1'),
-(70, 2, 1, '&lt;script&gt;alert(&quot;ola4&quot;)&lt;/script&gt;', 1, '2019-03-22 18:19:07', b'1');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -2746,7 +2717,7 @@ CREATE TABLE `producto_detalle` (
   `id_producto_detalle` int(11) NOT NULL,
   `id_producto` int(11) NOT NULL,
   `id_talla` int(11) DEFAULT NULL,
-  `codigo` varchar(100) NOT NULL,
+  `codigo` varchar(200) NOT NULL,
   `color` varchar(50) DEFAULT NULL,
   `imagen1` varchar(100) DEFAULT NULL,
   `imagen2` varchar(100) DEFAULT NULL,
@@ -2754,47 +2725,18 @@ CREATE TABLE `producto_detalle` (
   `imagen4` varchar(100) DEFAULT NULL,
   `imagen5` varchar(100) DEFAULT NULL,
   `imagen6` varchar(100) DEFAULT NULL,
+  `imagen7` varchar(100) DEFAULT NULL,
   `cantidad` int(11) NOT NULL,
   `cantidad_alerta` int(11) NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `producto_detalle`
 --
 
-INSERT INTO `producto_detalle` (`id_producto_detalle`, `id_producto`, `id_talla`, `codigo`, `color`, `imagen1`, `imagen2`, `imagen3`, `imagen4`, `imagen5`, `imagen6`, `cantidad`, `cantidad_alerta`, `activo`) VALUES
-(1, 1, 5, '', 'Blanca', 'BlusaMujer1-1.jpg', 'BlusaMujer1-2.jpg', 'BlusaMujer1-3.jpg', NULL, NULL, NULL, 9, 0, b'1'),
-(2, 1, 5, '', 'Gris', 'BlusaMujer1-4.jpg', NULL, NULL, NULL, NULL, NULL, 5, 0, b'1'),
-(3, 2, 7, '', 'NEGRO', 'camisaHombre1.jpg', '52-29Algo de hambre.jpg', '09-11A caray! Eso si me vale verga!.jpg', '10-41nani.jpg', '10-41No necesitaba ver eso.jpg', '34-54Cloro.jpg', 10, 0, b'1'),
-(4, 2, 7, '', 'NEGRO', '10-41fornais xD.PNG', '20-10nani.jpg', '10-41No cierto.jpg', '22-34Ste men.jpg', '10-41ya comi.jpg', '16-50Casi te doy like.jpg', 10, 0, b'1'),
-(5, 2, 7, '', 'NEGRIO', 'camisaHombre1-1.jpg', '10-41pikashu asombrado.PNG', '12-20Ash me chocas.jpg', '12-20Adios.jpg', '12-20hola..PNG', '17-01estoy bien menzo.jpg', 10, 0, b'1'),
-(6, 3, 6, '', 'Verde', 'Vestido1.jpg', NULL, NULL, NULL, NULL, NULL, 2, 0, b'1'),
-(7, 3, 6, '', 'Azul pistache', 'Vestido1-1.jpg', NULL, NULL, NULL, NULL, NULL, 9, 0, b'1'),
-(8, 4, 4, '', 'Blanco con gris', 'Anime1-1.png', NULL, NULL, NULL, NULL, NULL, 8, 0, b'1'),
-(9, 5, 5, '', 'Gogeta', 'sudaderaAnime1.jpg', NULL, NULL, NULL, NULL, NULL, 5, 0, b'1'),
-(10, 5, 4, '', 'Vegueta ', 'sudaderaAnime1-1.jpg', NULL, NULL, NULL, NULL, NULL, 3, 0, b'1'),
-(11, 5, 3, '', 'Goku Black', 'sudaderaAnime1-2.jpg', NULL, NULL, NULL, NULL, NULL, 5, 0, b'1'),
-(12, 5, 6, '', 'Fayri tail', 'sudaderaAnime1-3.jpg', NULL, NULL, NULL, NULL, NULL, 3, 0, b'1'),
-(13, 5, 4, '', 'Dragon ball world', 'sudaderaAnime1-4.jpg', NULL, NULL, NULL, NULL, NULL, 5, 0, b'1'),
-(14, 6, 3, '', 'Blanca con poco azul', 'Lapto1-1.jpeg', 'Lapto1-2.jpeg', 'Lapto1-3.jpeg', 'Lapto1-4.jpeg', NULL, NULL, 0, 0, b'0'),
-(36, 28, 1, '', 'COLOR VERDE', '59-51Adios.jpg', '59-51Cimon jakjajj.jpg', '', '', '', '24-3410300260352.jpg', 2, 0, b'1'),
-(37, 28, 2, '', 'Azul', '59-51estoy bien menzo.jpg', '59-51nani.jpg', '59-51te aplaudo.jpeg', '', '', '', 6, 0, b'1'),
-(38, 29, 2, '', '2', '47-27grrrt.jpg', '', '04-28Imagen de cuenta.jpg', '04-28Fondo de escritorio.jpg', '', '', 2, 0, b'1'),
-(39, 29, 7, '', '2', '47-27mira este meme.jpg', '59-11A caray! Eso si me vale verga!.jpg', '', '04-28protectorPantalla1.jpg', '', '', 2, 0, b'1'),
-(40, 29, 4, '', '2', '51-59A caray! Eso si me vale verga!.jpg', '52-53Adios popo.jpg', '04-28protectorPantalla1.jpg', '', '', '', 2, 0, b'1'),
-(41, 29, 4, '', 'PRUEBA NUEVO', '52-53Hi.PNG', '', '59-11pasa el selda perro.jpg', '', '', '', 52, 0, b'1'),
-(42, 29, 2, '', 'JEJE', '59-11Fondo de escritorio.jpg', '59-11Imagen de cuenta.jpg', '', '', '', '', 5, 0, b'1'),
-(43, 29, 6, '', '2', '04-28protectorPantalla1.jpg', '', '', '', '', '', -7, 0, b'1'),
-(44, 30, 1, '22', '2', '06-57Proctector  de pantalla.jpg', '', '', '', '', '', 1, 0, b'1'),
-(45, 31, 1, '', 'kkk', '09-01Proctector  de pantalla.jpg', '', '', '', '', '', 22, 0, b'1'),
-(46, 32, 1, '', 'jj', '34-06protectorPantalla1.jpg', '34-06protectorPantalla1.jpg', '35-24Fondo de escritorio.jpg', '', '', '', 22, 0, b'1'),
-(47, 32, 4, '', 'kjj', '35-24Fondo de escritorio.jpg', '', '', '', '', '', 41, 0, b'1'),
-(48, 28, 6, '', 'vvv', '24-3410300293120.jpg', '', '', '', '', '', 55, 0, b'1'),
-(49, 33, 4, '', 'rojo', '44-34Scorpion.jpg', '44-34Sin título.png', '', '', '', '', 0, 0, b'0'),
-(50, 34, 1, 'llllllllllllllll', 'codigo', '', '', '', '', '', '', 1, 10, b'1'),
-(51, 30, 1, '222', 'kkk', '15-31Scorpion.jpg', '', '', '', '', '', 22, 0, b'1'),
-(52, 35, 4, '7835420', 'Verde', '', '', '', '', '', '', 8960, 0, b'1');
+INSERT INTO `producto_detalle` (`id_producto_detalle`, `id_producto`, `id_talla`, `codigo`, `color`, `imagen1`, `imagen2`, `imagen3`, `imagen4`, `imagen5`, `imagen6`, `imagen7`, `cantidad`, `cantidad_alerta`, `activo`) VALUES
+(2, 2, 1, 'llllllllllllllll', 'Verde', '', '', '', '', '', '', NULL, 0, 1, b'1');
 
 -- --------------------------------------------------------
 
@@ -2808,24 +2750,7 @@ CREATE TABLE `producto_favorito` (
   `id_usuario` int(11) NOT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `producto_favorito`
---
-
-INSERT INTO `producto_favorito` (`id_producto_favorito`, `id_producto`, `id_usuario`, `fecha_alta`, `activo`) VALUES
-(54, 5, 1, '2019-02-11 20:21:07', b'0'),
-(55, 1, 1, '2019-02-11 20:31:47', b'0'),
-(56, 2, 1, '2019-02-11 21:48:47', b'0'),
-(57, 3, 1, '2019-02-11 21:48:57', b'0'),
-(58, 4, 1, '2019-02-11 21:49:02', b'0'),
-(59, 6, 1, '2019-02-11 21:49:04', b'0'),
-(60, 2, 2, '2019-02-18 22:40:55', b'1'),
-(61, 1, 2, '2019-02-18 22:40:57', b'0'),
-(62, 4, 2, '2019-03-17 16:23:32', b'0'),
-(63, 33, 1, '2019-04-09 19:47:48', b'0'),
-(64, 30, 1, '2019-04-10 15:21:21', b'0');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -2838,17 +2763,14 @@ CREATE TABLE `producto_genero` (
   `genero` varchar(150) NOT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `producto_genero`
 --
 
 INSERT INTO `producto_genero` (`id_genero`, `genero`, `fecha_alta`, `activo`) VALUES
-(1, 'Mujer', '2019-01-03 00:00:00', b'1'),
-(2, 'Hombre', '2019-01-03 00:00:00', b'1'),
-(3, 'Niño', '2019-01-03 00:00:00', b'1'),
-(4, 'Niña', '2019-01-03 00:00:00', b'1');
+(1, 'Hombre', '2019-04-26 00:00:00', b'1');
 
 -- --------------------------------------------------------
 
@@ -2861,20 +2783,14 @@ CREATE TABLE `producto_talla` (
   `talla` varchar(150) NOT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `producto_talla`
 --
 
 INSERT INTO `producto_talla` (`id_talla`, `talla`, `fecha_alta`, `activo`) VALUES
-(1, 'XXS', '2019-01-03 16:03:30', b'1'),
-(2, 'XS', '2019-01-03 16:03:33', b'1'),
-(3, 'S', '2019-01-03 16:03:34', b'1'),
-(4, 'M', '2019-01-03 16:03:35', b'1'),
-(5, 'L', '2019-01-03 16:03:36', b'1'),
-(6, 'XL', '2019-01-03 16:03:41', b'1'),
-(7, 'XXL', '2019-01-03 16:03:48', b'1');
+(1, 'Xl', '2019-04-26 00:00:00', b'1');
 
 -- --------------------------------------------------------
 
@@ -2893,15 +2809,36 @@ CREATE TABLE `proveedor` (
   `observacion` text,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `proveedor`
 --
 
 INSERT INTO `proveedor` (`id_proveedor`, `id_empresa`, `id_municipio`, `proveedor`, `direccion`, `codigo_postal`, `celular`, `observacion`, `fecha_alta`, `activo`) VALUES
-(1, 2, 942, 'RIGOBERTO VILLA RODRIGUEZ', 'Calle francisco villa #27', '63341', '3231153678', 'Jefe de esta misma empresa Mirennay', '2018-12-31 07:23:05', b'1'),
-(2, 1, 3, 'PROVEEDOR DE DIOR', 'En francia de mexico', '36578', '3112564785', '', '2018-12-31 20:31:36', b'1');
+(1, 1, 942, 'Rigoberto Villa Rodriguez', 'Calle Francisco Villa #27', '63300', '3231153678', '¡El mejor!', '2019-04-26 00:00:00', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `rol`
+--
+
+CREATE TABLE `rol` (
+  `id_rol` int(11) NOT NULL,
+  `rol` varchar(20) NOT NULL,
+  `fecha_alta` datetime NOT NULL,
+  `activo` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `rol` (`id_rol`, `rol`, `fecha_alta`, `activo`) VALUES
+(1, 'admin', '2019-04-26 00:00:00', b'1'),
+(2, 'gerente', '2019-04-26 00:00:00', b'1'),
+(3, 'cajero', '2019-04-26 00:00:00', b'1');
 
 -- --------------------------------------------------------
 
@@ -2915,17 +2852,15 @@ CREATE TABLE `sub_categoria` (
   `sub_categoria` varchar(150) NOT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `sub_categoria`
 --
 
 INSERT INTO `sub_categoria` (`id_sub_categoria`, `id_categoria`, `sub_categoria`, `fecha_alta`, `activo`) VALUES
-(1, 3, 'Camisetas - Blusas', '2019-01-03 15:50:57', b'1'),
-(2, 3, 'Vestidos - Faldas', '2019-01-03 15:51:55', b'1'),
-(3, 3, 'Anime', '2019-01-03 21:42:51', b'1'),
-(4, 1, 'Laptos', '2019-01-16 00:00:00', b'1');
+(1, 1, 'Celular', '2019-04-26 00:00:00', b'1'),
+(2, 1, 'Laptos', '2019-04-29 16:15:11', b'1');
 
 -- --------------------------------------------------------
 
@@ -2938,20 +2873,23 @@ CREATE TABLE `usuario` (
   `usuario` varchar(150) NOT NULL,
   `password` varchar(200) NOT NULL,
   `correo` varchar(150) NOT NULL,
-  `rol` varchar(150) NOT NULL,
+  `imagen` varchar(150) NOT NULL,
+  `password_modificacion_activo` bit(1) DEFAULT NULL,
+  `codigo_verificacion` varchar(150) DEFAULT NULL,
+  `password_modificacion` varchar(150) DEFAULT NULL,
+  `fecha_limite_verificacion` datetime DEFAULT NULL,
   `fecha_inicio` datetime DEFAULT NULL,
   `fecha_fin` datetime DEFAULT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `usuario`, `password`, `correo`, `rol`, `fecha_inicio`, `fecha_fin`, `fecha_alta`, `activo`) VALUES
-(1, 'admin', 'admin', 'admin', 'admin', '2019-01-04 00:00:00', NULL, '2019-01-04 00:00:00', b'1'),
-(2, 'cliente', 'cliente', 'cliente', 'cliente', '2019-01-05 00:00:00', NULL, '2019-01-05 00:00:00', b'1');
+INSERT INTO `usuario` (`id_usuario`, `usuario`, `password`, `correo`, `imagen`, `password_modificacion_activo`, `codigo_verificacion`, `password_modificacion`, `fecha_limite_verificacion`, `fecha_inicio`, `fecha_fin`, `fecha_alta`, `activo`) VALUES
+(16, 'rigoBoykaa42', '$2y$15$VGK3FiJ5a9rNz9tc5PnTpu6auh9zyRrHXT6rtV5sWrUjk6vn98f2m', 'rigo.villa52@gmail.com', '', b'1', '1556427224IcAYDDSP', '$2y$15$xHRePqiLjAikeahNAv22n..AVKu7B80uMnrqUT6lLGGJRstq7vqpq', '2019-04-28 23:53:44', NULL, NULL, '2019-04-26 22:22:02', b'1');
 
 -- --------------------------------------------------------
 
@@ -2970,16 +2908,15 @@ CREATE TABLE `usuario_detalle` (
   `celular` varchar(20) DEFAULT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuario_detalle`
 --
 
 INSERT INTO `usuario_detalle` (`id_usuario_detalle`, `id_usuario`, `id_municipio`, `nombre_completo`, `direccion`, `observacion`, `codigo_postal`, `celular`, `fecha_alta`, `activo`) VALUES
-(13, 1, 1, 'Rigo', 'l', 'l', 'l', 'l', '2019-03-19 18:25:31', b'1'),
-(14, 2, 1, '&lt;script&gt;(&quot;oladiferente&quot;)&lt;/script&gt;', '&lt;script&gt;(&quot;oladiferente&quot;)&lt;/script&gt;', '&lt;script&gt;(&quot;oladiferente&quot;)&lt;/script&gt;', '&lt;script', '&lt;script&gt;(&quot', '2019-03-22 18:28:52', b'1'),
-(15, 1, 942, 'Rigoberto Villa Rodriguez', 'Francisco Villa #27', 'jeje', '63300', '3231153678', '2019-04-10 22:26:31', b'1');
+(1, 16, 285, 'Rigoberto Villa Rodriguez', 'Francisco Villa #27', '', '63300', '32311355316', '2019-04-27 23:44:41', b'1'),
+(2, 16, 942, 'Fernando Diaz Barrera', 'Por ahi', '', '63300', '3231153678', '2019-04-30 10:43:31', b'1');
 
 -- --------------------------------------------------------
 
@@ -2990,12 +2927,30 @@ INSERT INTO `usuario_detalle` (`id_usuario_detalle`, `id_usuario`, `id_municipio
 CREATE TABLE `venta_fisica` (
   `id_venta_fisica` int(11) NOT NULL,
   `id_producto_detalle` int(11) NOT NULL,
+  `id_empleado` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `subtotal` float NOT NULL,
   `folio` varchar(150) NOT NULL,
   `fecha_alta` datetime NOT NULL,
   `activo` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `venta_fisica`
+--
+
+INSERT INTO `venta_fisica` (`id_venta_fisica`, `id_producto_detalle`, `id_empleado`, `cantidad`, `subtotal`, `folio`, `fecha_alta`, `activo`) VALUES
+(1, 2, 1, 1, 5, 'MIRENNAY0000000001', '2019-04-29 21:38:00', b'1'),
+(2, 2, 1, 1, 5, 'MIRENNAY0000000002', '2019-04-29 21:44:29', b'1'),
+(3, 2, 1, 1, 5, 'MIRENNAY0000000003', '2019-04-29 22:08:28', b'1'),
+(4, 2, 1, 1, 5, 'MIRENNAY0000000004', '2019-04-29 22:12:36', b'1'),
+(5, 2, 1, 1, 5, 'MIRENNAY0000000005', '2019-04-29 22:17:42', b'1'),
+(6, 2, 1, 1, 5, 'MIRENNAY0000000006', '2019-04-29 22:18:30', b'1'),
+(7, 2, 1, 1, 5, 'MIRENNAY0000000007', '2019-04-29 22:21:37', b'1'),
+(8, 2, 1, 1, 5, 'MIRENNAY0000000008', '2019-04-29 22:24:44', b'1'),
+(9, 2, 1, 1, 5, 'MIRENNAY0000000009', '2019-04-29 22:29:20', b'1'),
+(10, 2, 1, 1, 5, 'MIRENNAY0000000010', '2019-04-29 22:33:12', b'1'),
+(11, 2, 1, 1, 5, 'MIRENNAY0000000011', '2019-04-29 22:34:32', b'1');
 
 -- --------------------------------------------------------
 
@@ -3011,14 +2966,6 @@ CREATE TABLE `venta_online` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `venta_online`
---
-
-INSERT INTO `venta_online` (`id_venta_online`, `id_pedido_usuario`, `fecha_alta`, `activo`) VALUES
-(1, 1, '2019-04-11 18:19:22', b'1'),
-(2, 2, '2019-04-11 18:19:22', b'1');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -3027,6 +2974,13 @@ INSERT INTO `venta_online` (`id_venta_online`, `id_pedido_usuario`, `fecha_alta`
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id_categoria`);
+
+--
+-- Indices de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD PRIMARY KEY (`id_empleado`),
+  ADD KEY `id_rol` (`id_rol`);
 
 --
 -- Indices de la tabla `empresa`
@@ -3061,7 +3015,7 @@ ALTER TABLE `pedido_usuario`
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id_producto`),
   ADD KEY `id_proveedor` (`id_proveedor`),
-  ADD KEY `id_categoria` (`id_sub_categoria`),
+  ADD KEY `id_sub_categoria` (`id_sub_categoria`),
   ADD KEY `id_genero` (`id_genero`);
 
 --
@@ -3109,11 +3063,17 @@ ALTER TABLE `proveedor`
   ADD KEY `id_municipio` (`id_municipio`);
 
 --
+-- Indices de la tabla `rol`
+--
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`id_rol`);
+
+--
 -- Indices de la tabla `sub_categoria`
 --
 ALTER TABLE `sub_categoria`
   ADD PRIMARY KEY (`id_sub_categoria`),
-  ADD KEY `id_categoria_padre` (`id_categoria`);
+  ADD KEY `id_categoria` (`id_categoria`);
 
 --
 -- Indices de la tabla `usuario`
@@ -3134,7 +3094,8 @@ ALTER TABLE `usuario_detalle`
 --
 ALTER TABLE `venta_fisica`
   ADD PRIMARY KEY (`id_venta_fisica`),
-  ADD KEY `id_producto_detalle` (`id_producto_detalle`);
+  ADD KEY `id_producto_detalle` (`id_producto_detalle`),
+  ADD KEY `id_empleado` (`id_empleado`);
 
 --
 -- Indices de la tabla `venta_online`
@@ -3154,10 +3115,16 @@ ALTER TABLE `categoria`
   MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `empresa`
 --
 ALTER TABLE `empresa`
-  MODIFY `id_empresa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_empresa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `estado`
@@ -3166,86 +3133,104 @@ ALTER TABLE `estado`
   MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
+-- AUTO_INCREMENT de la tabla `municipio`
+--
+ALTER TABLE `municipio`
+  MODIFY `id_municipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2458;
+
+--
 -- AUTO_INCREMENT de la tabla `pedido_usuario`
 --
 ALTER TABLE `pedido_usuario`
-  MODIFY `id_pedido_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pedido_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_comentario`
 --
 ALTER TABLE `producto_comentario`
-  MODIFY `id_producto_comentario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id_producto_comentario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_detalle`
 --
 ALTER TABLE `producto_detalle`
-  MODIFY `id_producto_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_producto_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_favorito`
 --
 ALTER TABLE `producto_favorito`
-  MODIFY `id_producto_favorito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id_producto_favorito` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_genero`
 --
 ALTER TABLE `producto_genero`
-  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_talla`
 --
 ALTER TABLE `producto_talla`
-  MODIFY `id_talla` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_talla` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `rol`
+--
+ALTER TABLE `rol`
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `sub_categoria`
 --
 ALTER TABLE `sub_categoria`
-  MODIFY `id_sub_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_sub_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_detalle`
 --
 ALTER TABLE `usuario_detalle`
-  MODIFY `id_usuario_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_usuario_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_fisica`
 --
 ALTER TABLE `venta_fisica`
-  MODIFY `id_venta_fisica` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta_fisica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_online`
 --
 ALTER TABLE `venta_online`
-  MODIFY `id_venta_online` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_venta_online` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD CONSTRAINT `empleado_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
 
 --
 -- Filtros para la tabla `municipio`
@@ -3313,7 +3298,8 @@ ALTER TABLE `usuario_detalle`
 -- Filtros para la tabla `venta_fisica`
 --
 ALTER TABLE `venta_fisica`
-  ADD CONSTRAINT `venta_fisica_ibfk_1` FOREIGN KEY (`id_producto_detalle`) REFERENCES `producto_detalle` (`id_producto_detalle`);
+  ADD CONSTRAINT `venta_fisica_ibfk_1` FOREIGN KEY (`id_producto_detalle`) REFERENCES `producto_detalle` (`id_producto_detalle`),
+  ADD CONSTRAINT `venta_fisica_ibfk_2` FOREIGN KEY (`id_empleado`) REFERENCES `empleado` (`id_empleado`);
 
 --
 -- Filtros para la tabla `venta_online`

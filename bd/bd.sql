@@ -89,7 +89,6 @@ CREATE TABLE usuario_detalle(
 CREATE TABLE proveedor(
 	id_proveedor INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	id_empresa INT NOT NULL,
-	id_municipio INT NOT NULL,
 	proveedor VARCHAR(150) NOT NULL,
 	direccion VARCHAR(150) NOT NULL,
 	codigo_postal VARCHAR(10) NOT NULL,
@@ -97,8 +96,7 @@ CREATE TABLE proveedor(
 	observacion TEXT NULL,
 	fecha_alta DATETIME NOT NULL,
 	activo BIT(1) NOT NULL,
-	FOREIGN KEY(id_empresa) REFERENCES empresa(id_empresa),
-	FOREIGN KEY(id_municipio) REFERENCES municipio(id_municipio)
+	FOREIGN KEY(id_empresa) REFERENCES empresa(id_empresa)
 );
 
 CREATE TABLE categoria(

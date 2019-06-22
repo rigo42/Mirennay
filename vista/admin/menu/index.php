@@ -13,6 +13,7 @@
                     <?php if($_SESSION['rolEmpleado'] == "admin"){  ?>
                     <li id="menuPedido" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminPedido"><i class="fas fa-clipboard"></i><span class="hide-menu">Pedidos</span></a></li>
                     
+                     <!-- Solo administradores  y gerentes-->
                     <?php if($_SESSION['rolEmpleado'] == "admin" || $_SESSION['rolEmpleado'] == "gerente"){  ?>
                     <li id="menuProducto" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminAlmacen"><i class="fas fa-box-open"></i><span class="hide-menu">Almacen</span></a></li>
                     <?php } ?>
@@ -20,9 +21,15 @@
 
                     <li id="menuEmpresa" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminEmpresa"><i class="fas fa-university"></i><span class="hide-menu">Empresas</span></a></li>
 
+                    <li id="menuProveedor" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminProveedor"><i class="fas fa-users"></i></i><span class="hide-menu">Proveedores</span></a></li>
+
                     <li id="menuSubCategoria" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminSubCategoria"><i class="fas fa-clipboard"></i><span class="hide-menu">Sub categorias</span></a></li>
 
                     <li id="menuCategoria" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminCategoria"><i class="fas fa-clipboard"></i><span class="hide-menu">Categorias</span></a></li>
+
+                    <li id="menuGenero" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminGenero"><i class="fas fa-venus-mars"></i><span class="hide-menu">Generos</span></a></li>
+
+                    <li id="menuTalla" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo URL ?>adminTalla"><i class="fas fa-text-height"></i></i><span class="hide-menu">Tallas</span></a></li>
                     <?php } ?>
                     <!-- Solo administradores y empleados-->
                     <?php if($_SESSION['rolEmpleado'] == "admin" || $_SESSION['rolEmpleado'] == "gerente" || $_SESSION['rolEmpleado'] == "cajero"){ ?>

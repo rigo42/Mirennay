@@ -2,13 +2,13 @@
 class conexion{
 	
 	//Inifini free
-	/*
+	
 	private $servidor = "sql202.epizy.com";
 	private $usuario = "epiz_21423647";
 	private $password = "6qYUZrr7xazk";
 	private $bd = "epiz_21423647_carritocompras";
 	private $conexion;
-	*/
+	
 	//000webhost
 	/*
 	private $servidor = "localhost";
@@ -26,13 +26,13 @@ class conexion{
 	private $conexion;
 	*/
 	//localhost
-	
+	/*
 	private $servidor = "localhost";
 	private $usuario = "root";
 	private $password = "";
 	private $bd = "mirennayv2";
 	private $conexion;
-		
+	*/
 	public function __construct(){
 		try{
 		$this->conexion = new PDO('mysql:host='.$this->servidor.';dbname='.$this->bd, $this->usuario, $this->password);

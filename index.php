@@ -8,7 +8,7 @@ define('DS',DIRECTORY_SEPARATOR);
 define('ROOT',realpath(dirname(__FILE__)).DS);
 
 //Infinity free
-//define('URL',"http://mirennay.epizy.com/");
+define('URL',"http://mirennay.epizy.com/");
 
 //000WebHost
 //define('URL',"https://fb-foto-movile.000webhostapp.com/");
@@ -17,7 +17,7 @@ define('ROOT',realpath(dirname(__FILE__)).DS);
 //define('URL',"http://mirennay.mipropia.com/");
 
 //localhost
-define('URL',"http://localhost/mirennayv3/");
+//define('URL',"http://localhost/mirennayv3/");
 
 //Ejecutar funcion automatizada
 require_once('ajuste/autoload.php');

@@ -403,14 +403,16 @@ function formEmpresaNuevo(datos){
             $('#agregar').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
         },
         success: function(data){
-            if(data != ""){
+            console.log(data);
+            $('#agregar').html('');
+            if(data == " "){ 
+                 notificacion("success","Listo");
+            }else{
                 if(data == 1){
                     notificacion("warning","Utilize un correo valido");
                 }else{
                    notificacion("error",data);
                 }
-            }else{
-                notificacion("success","Listo");
             }
         }
     });
@@ -505,6 +507,88 @@ function formCategoriaServlet(datos){
         }
     });
 }
+
+function formGeneroServlet(datos){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminGenero/generoServlet",
+        data: datos,
+        cache: false,
+        beforeSend: function() {
+            $('#gif').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                if(data == 1){
+                    notificacion("success","Genero agregado");
+                    $('#gif').html('Listo');
+                }else if(data == 2){
+                    $('#gif').html('Listo');
+                    notificacion("success","Genero modificado");
+                    location=URL+"adminGenero";
+                }else{
+                    $('#gif').html('Error');
+                    notificacion("error",data);
+                }
+            }
+        }
+    });
+}
+
+function formProveedorServlet(datos){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminProveedor/proveedorServlet",
+        data: datos,
+        cache: false,
+        beforeSend: function() {
+            $('#gif').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                if(data == 1){
+                    notificacion("success","Proveedor agregado");
+                    $('#gif').html('Listo');
+                }else if(data == 2){
+                    $('#gif').html('Listo');
+                    notificacion("success","Proveedor modificado");
+                    location=URL+"adminProveedor";
+                }else{
+                    $('#gif').html('Error');
+                    notificacion("error",data);
+                }
+            }
+        }
+    });
+}
+
+function formTallaServlet(datos){
+    $.ajax({
+        type: "POST",
+        url: URL+"adminTalla/tallaServlet",
+        data: datos,
+        cache: false,
+        beforeSend: function() {
+            $('#gif').html('<img src="'+URL+'libreria/img/espere.gif" alt="reload" width="20" height="20">');
+        },
+        success: function(data){
+            if(data != ""){
+                if(data == 1){
+                    notificacion("success","Talla agregada");
+                    $('#gif').html('Listo');
+                }else if(data == 2){
+                    $('#gif').html('Listo');
+                    notificacion("success","Talla modificada");
+                    location=URL+"adminTalla";
+                }else{
+                    $('#gif').html('Error');
+                    notificacion("error",data);
+                }
+            }
+        }
+    });
+}
+
 
 function iniciarSesion(datos){
     $.ajax({

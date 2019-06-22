@@ -10,7 +10,7 @@
 			 ?>
 			 <!-- shop -->
 			<div class="col-md-4 col-xs-6">
-				<div class="shop" data-idCategoria="<?php echo openssl_encrypt($key['id_categoria'], COD, KEY)?>">
+				<div class="shop" data-idCategoria="<?php echo urlencode(openssl_encrypt($key['id_categoria'], COD, KEY)) ?>">
 					<div class="shop-img">
 						<img src="<?php echo URL ?>libreria/imgCategoria/<?php echo $key['imagen_principal'] ?>" alt="">
 					</div>

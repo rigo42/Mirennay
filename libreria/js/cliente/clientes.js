@@ -1,5 +1,5 @@
 //Inifinity free
-//var URL = "http://mirennay.epizy.com/"; 
+var URL = "http://mirennay.epizy.com/"; 
 
 //000WebHost
 //var URL = "https://fb-foto-movile.000webhostapp.com/"; 
@@ -9,7 +9,7 @@
 
 //localhost
 
-var URL = "http://localhost/mirennayv3/"; 
+//var URL = "http://localhost/mirennayv3/"; 
 
 
 $(document).ready(function(){

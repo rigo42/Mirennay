@@ -117,13 +117,10 @@ if($rowProducto > 0){
 							?>
 						</div>
 
-						<a class="review-link" href="#">
+						<a class="review-link">
 							<?php 
 							echo $comentarioRow = $this->comentarioRow($idProducto);
 							echo " Comentario(s) "; 
-							if(isset($_SESSION['idUsuario'])){
-								echo "| Add your review";
-							} 
 							?>
 						</a>
 					</div>
@@ -312,11 +309,13 @@ if($rowProducto > 0){
 
  <script type="text/javascript">
  	$(document).ready(function(){
+
  		tittlePage("#menuTienda",$("input[name='producto']").val());
  		var idProducto = $("#ventanaEncuestaEstrella").attr("data-idProducto");
  		ventanaEncuestaEstrella(idProducto);
 		ventanaEncuestaComentario(idProducto,3,1);
 		ventanaEncuestaFormulario(idProducto);
+
 	});
 	
  </script>

@@ -1,3 +1,6 @@
+ <!-- Img galery -->
+<script src="<?php echo URL ?>libreria/js/admin/jquery.magnific-popup.min.js"></script>
+<script src="<?php echo URL ?>libreria/js/admin/meg.init.js"></script>
 <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -53,12 +56,15 @@
                             ?>
                             <tr>
                               <th scope="row"><?php echo ++$n ?></th>
-                              <td><img class="img-fluid" src="<?php echo URL ?>libreria/imgProducto/<?php echo $key['imagen_principal'] ?>"></td>
+                              <td class="imagen" data-imagen="libreria/imgProducto/<?php echo $key['imagen_principal'] ?>">
+                               <img class="img-fluid" src="<?php echo URL ?>libreria/imgProducto/<?php echo $key['imagen_principal'] ?>">
+                              </td>
                               <td><?php echo $key['producto'] ?></td>
                               <td><?php echo $key['cantidad'] ?></td>
                               <td><?php echo $key['talla'] ?></td>
                               <td><?php echo $key['color'] ?></td>
                             </tr>
+
                           <?php } ?>
                           </tbody>
                     </table>
@@ -75,10 +81,13 @@
   </div>
 </div>
 
+
+
 <script type="text/javascript">
 	$(document).ready(function(){
 
 		$("#modal").modal("show");
 
+    
 	});
 </script>
